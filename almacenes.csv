@@ -1,0 +1,39 @@
+DEPARTAMENTO,UBICACION,LATITUD,LONGITUD,TIPO ALMACEN
+PIURA,Zona Industrial Mza. 241 Lote 2.,-5.185681,-80.642924,NACIONAL
+AMAZONAS,Cercado de Bagua Mz. 80 LT. 5,-5.634881,-78.535408,NACIONAL
+LA LIBERTAD,Calle Filadelfia N° 406-Urb. Santa Isabel,-8.103847,-79.039899,NACIONAL
+LIMA,Almacen General - Frente a la Av. Argentina S/N 3017,-12.049439,-77.1123,NACIONAL
+ICA,Av. Arenales Nº 1616 (ex Pronaa) Ica,-14.059943,-75.736639,NACIONAL
+JUNIN,"Ex Mercado del Pueblo ""San Isidro"" interseccion del Jr. Abelardo Quiñonez y Psje. Leoncio Prado - Huancayo",-12.047996,-75.217312,NACIONAL
+AREQUIPA,"Calle Colon 122 Urb. Alas del Sur-Distrito José Luis Bustamante y Rivero, Arequipa",-16.434164,-71.51059,NACIONAL
+PUNO,Jr. Talara N° 120 - Barrio Bellavista - Puno,-15.834485,-70.025341,NACIONAL
+TACNA,Av. Ejercito Nº 480,-18.026282,-70.269941,NACIONAL
+CUZCO,Av. Pedro Vilca Apaza B-7 Wanchaq,-13.524855,-71.962474,NACIONAL
+SAN MARTIN,Carretera Yurimaguas Nº 408 - Banda Shilcayo,-6.494411,-76.352799,NACIONAL
+LORETO,Calle Loreto 442 - Iquitos,-3.745511,-73.244136,NACIONAL
+MADRE DE DIOS,Jr. Gonzales Prada N° 1127,-12.59037,-69.186423,REGIONAL
+LAMBAYEQUE,"Km. 775 de la Carretera Panamericana Norte del Pueblo Joven Ricardo Palma,",-6.763383,-79.859732,REGIONAL
+ANCASH,Campamento Vichay S/N Distrito de Independencia -Huaraz,-9.492844,-77.537996,REGIONAL
+AYACUCHO,"Urb. Mariscal Cáceres Mz. C, Lt. 25 (Calle Las Begonias N° 249)",-13.17986,-74.197256,REGIONAL
+UCAYALI,Av. Centenario 4200,-8.398375,-74.605246,REGIONAL
+LA LIBERTAD,Cuartel del Ejército El Tablazo,-8.095782,-79.018508,REGIONAL
+AREQUIPA,Km. 7.5 de Carretera Yura - Cerro Colorado,-16.252098,-71.68365,REGIONAL
+MOQUEGUA,"Urb. Villa Hermoza Ma. F, Lote 06, Centro Poblado San Francisco, Moquegua",-17.196428,-70.944909,REGIONAL
+TUMBES,Prolongación Tumbes N° 100 - Zarumilla,-3.506053,-80.278101,REGIONAL
+TACNA,Calle Inclan 402 - Tacna,-18.012456,-70.2527,REGIONAL
+LORETO,Calle Miraflores - PP. JJ. 9 de Octubre,-3.774221,-73.287595,REGIONAL
+APURÍMAC,Prolongación Cusco N° 1001 (Ref: Frente a Radio Amistad). Provincia y Departamento Abancay,-13.628498,-72.878424,REGIONAL
+PASCO,"Carretera Central Km. 22, Ubicada en la Comunidad Campesina de Villa Pasco",-10.780337,-76.246598,REGIONAL
+AMAZONAS,Jr. Áncash N° 580. Almacén 2,-84.167422,-78.534586,REGIONAL
+PIURA,"Av. Miguel Grau 905. Talara, Perú",-4.577138,-81.278765,REGIONAL
+PIURA,"Urb. San Antonio Mz. C, Lt. 6",-5.190525,-80.6038,REGIONAL
+CAJAMARCA,Calle Los Cipreses N° 1327,-7.1466535,-78.51446,REGIONAL
+HUÁNUCO,Jr. Damaso Beraun N° 401,-9.926926,-76.242484,REGIONAL
+LIMA,Carretera Panamericana Sur N° 2001. Km. 38 Punta Hermosa,-12.330528,-76.822826,REGIONAL
+ICA,Av. Arenales S/N. AAHH Señor de los Milagros,-13.414475,-76.123298,REGIONAL
+JUNÍN,Jr. Tacna 540 (Esquina Loreto) - Huancayo,-11.94589,-75.287918,REGIONAL
+PUNO,"Urb. Taparachi Mz. A, Lt. 3, Km. 1.5 Carretera Juliaca",-15.508102,-70.120746,REGIONAL
+HUANCAVELICA,Av. 28 de Abril s/n. Mz. Z - Centro Poblado San Cristóbal,-12.783162,-74.972849,REGIONAL
+CUZCO,Pasaje Ramón Castilla 1101,-13.525304,-71.963322,REGIONAL
+SAN MARTIN,Gobierno Regional de San Martín - Calle Aeropuerto N° 150. Barrio Lluyllucucha - Moyobamba,-6.021703,-76.988864,REGIONAL
+CALLAO,Av. Elmer Faucett 3970,-12.010658,-77.111094,REGIONAL

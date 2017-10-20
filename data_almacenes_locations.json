@@ -1,0 +1,268 @@
+[
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-80.642924,
+      "LATITUD":-5.185681,
+      "UBICACION":"Zona Industrial Mza. 241 Lote 2.",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AMAZONAS",
+      "LONGITUD":-78.53540799999999,
+      "LATITUD":-5.634881,
+      "UBICACION":"Cercado de Bagua Mz. 80 LT. 5",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LA LIBERTAD",
+      "LONGITUD":-79.039899,
+      "LATITUD":-8.103847,
+      "UBICACION":"Calle Filadelfia N\u00b0 406-Urb. Santa Isabel",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LIMA",
+      "LONGITUD":-77.1123,
+      "LATITUD":-12.049439,
+      "UBICACION":"Almacen General - Frente a la Av. Argentina S/N 3017",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ICA",
+      "LONGITUD":-75.736639,
+      "LATITUD":-14.059942999999999,
+      "UBICACION":"Av. Arenales N\u00ba 1616 (ex Pronaa) Ica",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"JUNIN",
+      "LONGITUD":-75.21731199999999,
+      "LATITUD":-12.047996000000001,
+      "UBICACION":"Ex Mercado del Pueblo \"San Isidro\" interseccion del Jr. Abelardo Qui\u00f1onez y Psje. Leoncio Prado - Huancayo",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AREQUIPA",
+      "LONGITUD":-71.51059000000001,
+      "LATITUD":-16.434164000000003,
+      "UBICACION":"Calle Colon 122 Urb. Alas del Sur-Distrito Jos\u00e9 Luis Bustamante y Rivero, Arequipa",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PUNO",
+      "LONGITUD":-70.025341,
+      "LATITUD":-15.834485,
+      "UBICACION":"Jr. Talara N\u00b0 120 - Barrio Bellavista - Puno",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TACNA",
+      "LONGITUD":-70.269941,
+      "LATITUD":-18.026282000000002,
+      "UBICACION":"Av. Ejercito N\u00ba 480",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CUZCO",
+      "LONGITUD":-71.962474,
+      "LATITUD":-13.524854999999999,
+      "UBICACION":"Av. Pedro Vilca Apaza B-7 Wanchaq",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"SAN MARTIN",
+      "LONGITUD":-76.352799,
+      "LATITUD":-6.494411,
+      "UBICACION":"Carretera Yurimaguas N\u00ba 408 - Banda Shilcayo",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LORETO",
+      "LONGITUD":-73.244136,
+      "LATITUD":-3.745511,
+      "UBICACION":"Calle Loreto 442 - Iquitos",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"MADRE DE DIOS",
+      "LONGITUD":-69.186423,
+      "LATITUD":-12.59037,
+      "UBICACION":"Jr. Gonzales Prada N\u00b0 1127",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LAMBAYEQUE",
+      "LONGITUD":-79.859732,
+      "LATITUD":-6.763383,
+      "UBICACION":"Km. 775 de la Carretera Panamericana Norte del Pueblo Joven Ricardo Palma,",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ANCASH",
+      "LONGITUD":-77.53799599999999,
+      "LATITUD":-9.492844,
+      "UBICACION":"Campamento Vichay S/N Distrito de Independencia -Huaraz",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AYACUCHO",
+      "LONGITUD":-74.19725600000001,
+      "LATITUD":-13.179860000000001,
+      "UBICACION":"Urb. Mariscal C\u00e1ceres Mz. C, Lt. 25 (Calle Las Begonias N\u00b0 249)",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"UCAYALI",
+      "LONGITUD":-74.605246,
+      "LATITUD":-8.398375,
+      "UBICACION":"Av. Centenario 4200",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LA LIBERTAD",
+      "LONGITUD":-79.018508,
+      "LATITUD":-8.095782,
+      "UBICACION":"Cuartel del Ej\u00e9rcito El Tablazo",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AREQUIPA",
+      "LONGITUD":-71.68365,
+      "LATITUD":-16.252098,
+      "UBICACION":"Km. 7.5 de Carretera Yura - Cerro Colorado",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"MOQUEGUA",
+      "LONGITUD":-70.944909,
+      "LATITUD":-17.196428,
+      "UBICACION":"Urb. Villa Hermoza Ma. F, Lote 06, Centro Poblado San Francisco, Moquegua",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TUMBES",
+      "LONGITUD":-80.278101,
+      "LATITUD":-3.506053,
+      "UBICACION":"Prolongaci\u00f3n Tumbes N\u00b0 100 - Zarumilla",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TACNA",
+      "LONGITUD":-70.2527,
+      "LATITUD":-18.012456,
+      "UBICACION":"Calle Inclan 402 - Tacna",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LORETO",
+      "LONGITUD":-73.287595,
+      "LATITUD":-3.774221,
+      "UBICACION":"Calle Miraflores - PP. JJ. 9 de Octubre",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"APUR\u00cdMAC",
+      "LONGITUD":-72.878424,
+      "LATITUD":-13.628498,
+      "UBICACION":"Prolongaci\u00f3n Cusco N\u00b0 1001 (Ref: Frente a Radio Amistad). Provincia y Departamento Abancay",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PASCO",
+      "LONGITUD":-76.24659799999999,
+      "LATITUD":-10.780337,
+      "UBICACION":"Carretera Central Km. 22, Ubicada en la Comunidad Campesina de Villa Pasco",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AMAZONAS",
+      "LONGITUD":-78.534586,
+      "LATITUD":-84.167422,
+      "UBICACION":"Jr. \u00c1ncash N\u00b0 580. Almac\u00e9n 2",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-81.278765,
+      "LATITUD":-4.577138,
+      "UBICACION":"Av. Miguel Grau 905. Talara, Per\u00fa",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-80.6038,
+      "LATITUD":-5.190525,
+      "UBICACION":"Urb. San Antonio Mz. C, Lt. 6",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CAJAMARCA",
+      "LONGITUD":-78.51446,
+      "LATITUD":-7.1466535,
+      "UBICACION":"Calle Los Cipreses N\u00b0 1327",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"HU\u00c1NUCO",
+      "LONGITUD":-76.24248399999999,
+      "LATITUD":-9.926926,
+      "UBICACION":"Jr. Damaso Beraun N\u00b0 401",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LIMA",
+      "LONGITUD":-76.822826,
+      "LATITUD":-12.330528,
+      "UBICACION":"Carretera Panamericana Sur N\u00b0 2001. Km. 38 Punta Hermosa",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ICA",
+      "LONGITUD":-76.12329799999999,
+      "LATITUD":-13.414475,
+      "UBICACION":"Av. Arenales S/N. AAHH Se\u00f1or de los Milagros",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"JUN\u00cdN",
+      "LONGITUD":-75.287918,
+      "LATITUD":-11.945889999999999,
+      "UBICACION":"Jr. Tacna 540 (Esquina Loreto) - Huancayo",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PUNO",
+      "LONGITUD":-70.120746,
+      "LATITUD":-15.508102,
+      "UBICACION":"Urb. Taparachi Mz. A, Lt. 3, Km. 1.5 Carretera Juliaca",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"HUANCAVELICA",
+      "LONGITUD":-74.972849,
+      "LATITUD":-12.783161999999999,
+      "UBICACION":"Av. 28 de Abril s/n. Mz. Z - Centro Poblado San Crist\u00f3bal",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CUZCO",
+      "LONGITUD":-71.96332199999999,
+      "LATITUD":-13.525304,
+      "UBICACION":"Pasaje Ram\u00f3n Castilla 1101",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"SAN MARTIN",
+      "LONGITUD":-76.988864,
+      "LATITUD":-6.021703,
+      "UBICACION":"Gobierno Regional de San Mart\u00edn - Calle Aeropuerto N\u00b0 150. Barrio Lluyllucucha - Moyobamba",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CALLAO",
+      "LONGITUD":-77.111094,
+      "LATITUD":-12.010658,
+      "UBICACION":"Av. Elmer Faucett 3970",
+      "TIPO ALMACEN":"REGIONAL"
+   }
+]
