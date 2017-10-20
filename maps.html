@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      function initMap() {
+        var locations = [
+            {lat: -14.1, lng: -70.2},
+            {lat: -13.88991, lng: -70.647842},
+            {lat: -14.34538, lng: -70.0320969},
+            {lat: -14.072176, lng: -70.4253389},
+            {lat: -14.1254679, lng: -69.9661586}
+        ];
+     
+        var myLatLng = {
+          lat: (locations.map(a => a.lat)).reduce(function(sum, value){return sum+value}, 1) / 5,
+          lng: (locations.map(a => a.lng)).reduce(function(sum, value){return sum+value}, 1) / 5
+        };
+
+        console.log(myLatLng);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: myLatLng
+        });
+
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: location,
+            label: labels[i % labels.length]
+          });
+        });
+
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});    
+      
+      }
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwEGVgrRQcCARFvNqQqb622fY791_w128&callback=initMap">
+    </script>
+  </body>
+</html>
