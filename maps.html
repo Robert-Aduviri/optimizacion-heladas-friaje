@@ -1651,7 +1651,7 @@
               'lng': location.tambo.longitud,
             },
             // label: location.tambo.nombre + " " + location.tambo.poblacion
-            // 'icon': 'http://maps.google.com/mapfiles/ms/icons/blue.png'
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue.png'
           });
         });
 
@@ -1667,8 +1667,8 @@
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
               infowindow.setContent(locations[i].tambo.nombre + " " + locations[i].tambo.poblacion +
-               " " + locations[i].tambo.departamento + " ; " + locations[i].tambo.longitud + " " + 
-               locations[i].tambo.latitud);
+               " " + locations[i].tambo.departamento + " (" + locations[i].tambo.longitud + ", " + 
+               locations[i].tambo.latitud + ")");
               infowindow.open(map, marker);
             }
           })(marker, i));
@@ -1950,24 +1950,24 @@
               'lat': almacen.LATITUD,
               'lng': almacen.LONGITUD,
             },
-            label: "A",
+            // label: "A",
             icon: 'https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
           });
         }); 
 
         for (i = 0; i < almacen_markers.length; i++) {  
-          marker = markers[i];
+          marker = almacen_markers[i];
           marker.setMap(map);
 
           console.log(marker)
 
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-              infowindow.setContent(almacenes[i].DEPARTAMENTO + " " + almacenes[i].UBICACION + " ; " + 
-               almacenes[i].LATITUD, almacenes[i].LONGITUD);
+              infowindow.setContent(almacenes[i].DEPARTAMENTO + " " + almacenes[i].UBICACION + " (" + 
+               almacenes[i].LATITUD + ", " + almacenes[i].LONGITUD + ") ");
               infowindow.open(map, marker);
             }
-          })(marker, i + locations.length));
+          })(marker, i));
         }
 
         // var markerCluster = new MarkerClusterer(map, markers,
