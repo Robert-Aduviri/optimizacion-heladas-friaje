@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      function initMap() { 
+        var locations = [
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"AJOYANI",
+            "latitud":-14.1,
+            "longitud":-70.2,
+            "poblacion":2099,
+            "provincia":"CARABAYA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"CORANI",
+            "latitud":-13.88991,
+            "longitud":-70.647842,
+            "poblacion":3956,
+            "provincia":"CARABAYA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"CRUCERO",
+            "latitud":-14.345379999999999,
+            "longitud":-70.0320969,
+            "poblacion":9306,
+            "provincia":"CARABAYA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"MACUSANI",
+            "latitud":-14.072176,
+            "longitud":-70.42533890000001,
+            "poblacion":13015,
+            "provincia":"CARABAYA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"USICAYOS",
+            "latitud":-14.1254679,
+            "longitud":-69.96615859999999,
+            "poblacion":23937,
+            "provincia":"CARABAYA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"CORANI",
+         "latitud":-13.88991,
+         "longitud":-70.647841999999997,
+         "nombre":"TAMBO AYMAÑA",
+         "poblacion":52313,
+         "provincia":"CARABAYA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"HUACULLANI",
+            "latitud":-16.630951,
+            "longitud":-69.31997700000001,
+            "poblacion":23369,
+            "provincia":"CHUCUITO"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"HUACULLANI",
+         "latitud":-16.630951,
+         "longitud":-69.319977000000009,
+         "nombre":"TAMBO AURICONTA",
+         "poblacion":23369,
+         "provincia":"CHUCUITO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"KELLUYO",
+            "latitud":-16.7053271,
+            "longitud":-69.24364059999999,
+            "poblacion":25606,
+            "provincia":"CHUCUITO"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"PISACOMA",
+            "latitud":-16.907391,
+            "longitud":-69.366249,
+            "poblacion":13672,
+            "provincia":"CHUCUITO"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"ZEPITA",
+            "latitud":-16.4981761,
+            "longitud":-69.1014935,
+            "poblacion":18961,
+            "provincia":"CHUCUITO"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"KELLUYO",
+         "latitud":-16.705327100000002,
+         "longitud":-69.243640599999992,
+         "nombre":"TAMBO MANANTIALES CHIARAQUE",
+         "poblacion":58239,
+         "provincia":"CHUCUITO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"CAPAZO",
+            "latitud":-17.183725,
+            "longitud":-69.744498,
+            "poblacion":2265,
+            "provincia":"EL COLLAO"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"CONDURIRI",
+            "latitud":-16.6217471,
+            "longitud":-69.70915490000002,
+            "poblacion":4418,
+            "provincia":"EL COLLAO"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"CAPAZO",
+         "latitud":-17.183724999999999,
+         "longitud":-69.744497999999993,
+         "nombre":"TAMBO CAPAZO",
+         "poblacion":6683,
+         "provincia":"EL COLLAO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"ILAVE",
+            "latitud":-16.0825395,
+            "longitud":-69.6384724,
+            "poblacion":58210,
+            "provincia":"EL COLLAO"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"SANTA ROSA",
+            "latitud":-16.766667,
+            "longitud":-69.85,
+            "poblacion":7822,
+            "provincia":"EL COLLAO"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"ILAVE",
+         "latitud":-16.082539499999999,
+         "longitud":-69.638472399999998,
+         "nombre":"TAMBO CAMICACHI",
+         "poblacion":66032,
+         "provincia":"EL COLLAO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"COJATA",
+            "latitud":-15.0139992,
+            "longitud":-69.36671940000001,
+            "poblacion":4346,
+            "provincia":"HUANCANE"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"HUATASANI",
+            "latitud":-15.055320499999999,
+            "longitud":-69.8024099,
+            "poblacion":5475,
+            "provincia":"HUANCANE"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"INCHUPALLA",
+            "latitud":-15.00646,
+            "longitud":-69.683113,
+            "poblacion":3331,
+            "provincia":"HUANCANE"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"PUSI",
+            "latitud":-15.441943599999998,
+            "longitud":-69.9289784,
+            "poblacion":6366,
+            "provincia":"HUANCANE"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"ROSASPATA",
+            "latitud":-15.24014,
+            "longitud":-69.52763399999999,
+            "poblacion":5188,
+            "provincia":"HUANCANE"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"ROSASPATA",
+         "latitud":-15.24014,
+         "longitud":-69.527633999999992,
+         "nombre":"TAMBO ROSASPATA",
+         "poblacion":24706,
+         "provincia":"HUANCANE"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"VILQUE CHICO",
+            "latitud":-15.2159658,
+            "longitud":-69.68922540000001,
+            "poblacion":8343,
+            "provincia":"HUANCANE"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"VILQUE CHICO",
+         "latitud":-15.215965799999999,
+         "longitud":-69.689225400000012,
+         "nombre":"TAMBO CATAHUI",
+         "poblacion":8343,
+         "provincia":"HUANCANE"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"CALAPUJA",
+            "latitud":-15.319820000000002,
+            "longitud":-70.224693,
+            "poblacion":1481,
+            "provincia":"LAMPA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"LAMPA",
+            "latitud":-15.3612378,
+            "longitud":-70.3628516,
+            "poblacion":10331,
+            "provincia":"LAMPA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"NICASIO",
+            "latitud":-15.24381,
+            "longitud":-70.265129,
+            "poblacion":2675,
+            "provincia":"LAMPA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"OCUVIRI",
+            "latitud":-15.12142,
+            "longitud":-70.929367,
+            "poblacion":3136,
+            "provincia":"LAMPA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"OCUVIRI",
+         "latitud":-15.121420000000001,
+         "longitud":-70.929366999999999,
+         "nombre":"TAMBO PARINA",
+         "poblacion":17623,
+         "provincia":"LAMPA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"PALCA",
+            "latitud":-15.353655599999998,
+            "longitud":-70.3857788,
+            "poblacion":2849,
+            "provincia":"LAMPA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"PALCA",
+         "latitud":-15.353655599999998,
+         "longitud":-70.385778799999997,
+         "nombre":"TAMBO CHULLUNQUIANI",
+         "poblacion":2849,
+         "provincia":"LAMPA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"PARATIA",
+            "latitud":-15.465570000000001,
+            "longitud":-70.609261,
+            "poblacion":9181,
+            "provincia":"LAMPA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"PARATIA",
+         "latitud":-15.465570000000001,
+         "longitud":-70.609261000000004,
+         "nombre":"TAMBO QUILLISANI",
+         "poblacion":9181,
+         "provincia":"LAMPA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"VILAVILA",
+            "latitud":-15.19755,
+            "longitud":-70.677307,
+            "poblacion":4263,
+            "provincia":"LAMPA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"VILAVILA",
+         "latitud":-15.19755,
+         "longitud":-70.677306999999999,
+         "nombre":"TAMBO PARCIALIDAD DE CHIVAY",
+         "poblacion":4263,
+         "provincia":"LAMPA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"ANTAUTA",
+            "latitud":-14.4,
+            "longitud":-70.366667,
+            "poblacion":4458,
+            "provincia":"MELGAR"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"AYAVIRI",
+            "latitud":-14.884294199999998,
+            "longitud":-70.58896120000001,
+            "poblacion":22367,
+            "provincia":"MELGAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"AYAVIRI",
+         "latitud":-14.884294199999998,
+         "longitud":-70.588961200000014,
+         "nombre":"TAMBO TOCCO TOCCO",
+         "poblacion":26825,
+         "provincia":"MELGAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"CUPI",
+            "latitud":-14.904254000000002,
+            "longitud":-70.8669938,
+            "poblacion":3377,
+            "provincia":"MELGAR"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"LLALLI",
+            "latitud":-14.9479605,
+            "longitud":-70.87962759999999,
+            "poblacion":4835,
+            "provincia":"MELGAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"CUPI",
+         "latitud":-14.904254000000002,
+         "longitud":-70.866993800000003,
+         "nombre":"TAMBO CORANI",
+         "poblacion":8212,
+         "provincia":"MELGAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"ORURILLO",
+            "latitud":-14.727960000000001,
+            "longitud":-70.52285,
+            "poblacion":10852,
+            "provincia":"MELGAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"NUÑOA",
+         "latitud":-14.727960000000001,
+         "longitud":-70.522850000000005,
+         "nombre":"TAMBO ANANSAYA PUNA",
+         "poblacion":10852,
+         "provincia":"MELGAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"SANTA ROSA",
+            "latitud":-14.611479999999998,
+            "longitud":-70.791023,
+            "poblacion":7396,
+            "provincia":"MELGAR"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"UMACHIRI",
+            "latitud":-14.852604999999999,
+            "longitud":-70.7540166,
+            "poblacion":4422,
+            "provincia":"MELGAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"SANTA ROSA",
+         "latitud":-14.611479999999998,
+         "longitud":-70.791022999999996,
+         "nombre":"TAMBO BUENA VISTA",
+         "poblacion":11818,
+         "provincia":"MELGAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PUNO",
+            "distrito":"PEDRO VILCA APAZA",
+            "latitud":-15.0624,
+            "longitud":-69.88371670000001,
+            "poblacion":2978,
+            "provincia":"SAN ANTONIO DE PUTINA"
+         },
+         {
+            "departamento":"PUNO",
+            "distrito":"QUILCAPUNCU",
+            "latitud":-14.8925425,
+            "longitud":-69.73316070000001,
+            "poblacion":5806,
+            "provincia":"SAN ANTONIO DE PUTINA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PUNO",
+         "distrito":"PEDRO VILCA APAZA",
+         "latitud":-15.0624,
+         "longitud":-69.883716700000008,
+         "nombre":"TAMBO TUPAC AMARU AYRAMPUNI",
+         "poblacion":8784,
+         "provincia":"SAN ANTONIO DE PUTINA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"APURIMAC",
+            "distrito":"CIRCA",
+            "latitud":-13.8791041,
+            "longitud":-72.875917,
+            "poblacion":2506,
+            "provincia":"ABANCAY"
+         },
+         {
+            "departamento":"APURIMAC",
+            "distrito":"LAMBRAMA",
+            "latitud":-13.870634099999998,
+            "longitud":-72.7697594,
+            "poblacion":5558,
+            "provincia":"ABANCAY"
+         }
+      ],
+      "tambo":{
+         "departamento":"APURIMAC",
+         "distrito":"CIRCA",
+         "latitud":-13.879104099999999,
+         "longitud":-72.875917000000001,
+         "nombre":"TAMBO YACA",
+         "poblacion":8064,
+         "provincia":"ABANCAY"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"APURIMAC",
+            "distrito":"ANTABAMBA",
+            "latitud":-14.365153400000002,
+            "longitud":-72.8778527,
+            "poblacion":3166,
+            "provincia":"ANTABAMBA"
+         }
+      ],
+      "tambo":{
+         "departamento":"APURIMAC",
+         "distrito":"ANTABAMBA",
+         "latitud":-14.365153400000002,
+         "longitud":-72.877852700000005,
+         "nombre":"TAMBO CULLCUNCHINI",
+         "poblacion":3166,
+         "provincia":"ANTABAMBA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"APURIMAC",
+            "distrito":"JUAN ESPINOZA MEDRANO",
+            "latitud":-13.8,
+            "longitud":-72.5169444,
+            "poblacion":2049,
+            "provincia":"ANTABAMBA"
+         },
+         {
+            "departamento":"APURIMAC",
+            "distrito":"OROPESA",
+            "latitud":-14.2603902,
+            "longitud":-72.5633132,
+            "poblacion":3113,
+            "provincia":"ANTABAMBA"
+         }
+      ],
+      "tambo":{
+         "departamento":"APURIMAC",
+         "distrito":"JUAN ESPINOZA MEDRANO",
+         "latitud":-13.800000000000001,
+         "longitud":-72.5169444,
+         "nombre":"TAMBO CALCAUSO",
+         "poblacion":5162,
+         "provincia":"ANTABAMBA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"APURIMAC",
+            "distrito":"SABAINO",
+            "latitud":-14.326629999999998,
+            "longitud":-72.9516979,
+            "poblacion":1653,
+            "provincia":"ANTABAMBA"
+         }
+      ],
+      "tambo":{
+         "departamento":"APURIMAC",
+         "distrito":"SABAINO",
+         "latitud":-14.326629999999998,
+         "longitud":-72.951697899999999,
+         "nombre":"TAMBO ANTILLA",
+         "poblacion":1653,
+         "provincia":"ANTABAMBA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"APURIMAC",
+            "distrito":"CHALLHUAHUACHO",
+            "latitud":-14.118784900000001,
+            "longitud":-72.2475967,
+            "poblacion":9933,
+            "provincia":"COTABAMBAS"
+         },
+         {
+            "departamento":"APURIMAC",
+            "distrito":"HAQUIRA",
+            "latitud":-14.2234,
+            "longitud":-72.194618,
+            "poblacion":11833,
+            "provincia":"COTABAMBAS"
+         },
+         {
+            "departamento":"APURIMAC",
+            "distrito":"MARA",
+            "latitud":-14.100470000000001,
+            "longitud":-72.108879,
+            "poblacion":6693,
+            "provincia":"COTABAMBAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"APURIMAC",
+         "distrito":"CHALLHUAHUACHO",
+         "latitud":-14.118784900000001,
+         "longitud":-72.247596700000003,
+         "nombre":"TAMBO CHOCCOLLO",
+         "poblacion":28459,
+         "provincia":"COTABAMBAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"TAPAY",
+            "latitud":-15.577126199999999,
+            "longitud":-71.93902259999999,
+            "poblacion":531,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"YANQUE",
+            "latitud":-15.6501,
+            "longitud":-71.6584358,
+            "poblacion":2112,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"ICHUPAMPA",
+            "latitud":-15.6500913,
+            "longitud":-71.6869874,
+            "poblacion":652,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"LARI",
+            "latitud":-15.6208297,
+            "longitud":-71.76892059999999,
+            "poblacion":1528,
+            "provincia":"CAYLLOMA"
+         }
+      ],
+      "tambo":{
+         "departamento":"AREQUIPA",
+         "distrito":"YANQUE",
+         "latitud":-15.6501,
+         "longitud":-71.658435800000007,
+         "nombre":"TAMBO CHALHUANCA",
+         "poblacion":4823,
+         "provincia":"CAYLLOMA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"SAN ANTONIO DE CHUCA",
+            "latitud":-15.928889000000002,
+            "longitud":-71.105278,
+            "poblacion":1561,
+            "provincia":"CAYLLOMA"
+         }
+      ],
+      "tambo":{
+         "departamento":"AREQUIPA",
+         "distrito":"SAN ANTONIO DE CHUCA",
+         "latitud":-15.928889000000002,
+         "longitud":-71.105277999999998,
+         "nombre":"TAMBO SAN ANTONIO DE CHUCA",
+         "poblacion":1561,
+         "provincia":"CAYLLOMA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"SIBAYO",
+            "latitud":-15.493570000000002,
+            "longitud":-71.46597299999999,
+            "poblacion":661,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"CALLALLI",
+            "latitud":-15.5072929,
+            "longitud":-71.4429233,
+            "poblacion":1946,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"TISCO",
+            "latitud":-15.3471443,
+            "longitud":-71.4438761,
+            "poblacion":1409,
+            "provincia":"CAYLLOMA"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"TUTI",
+            "latitud":-15.531920499999998,
+            "longitud":-71.54902709999999,
+            "poblacion":744,
+            "provincia":"CAYLLOMA"
+         }
+      ],
+      "tambo":{
+         "departamento":"AREQUIPA",
+         "distrito":"TISCO",
+         "latitud":-15.3471443,
+         "longitud":-71.443876099999997,
+         "nombre":"TAMBO TISCO",
+         "poblacion":4760,
+         "provincia":"CAYLLOMA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"CAYARANI",
+            "latitud":-14.68116,
+            "longitud":-72.020866,
+            "poblacion":3085,
+            "provincia":"CONDESUYOS"
+         },
+         {
+            "departamento":"AREQUIPA",
+            "distrito":"SALAMANCA",
+            "latitud":-15.5475134,
+            "longitud":-72.9184484,
+            "poblacion":855,
+            "provincia":"CONDESUYOS"
+         }
+      ],
+      "tambo":{
+         "departamento":"AREQUIPA",
+         "distrito":"CAYARANI",
+         "latitud":-14.68116,
+         "longitud":-72.020865999999998,
+         "nombre":"TAMBO VISCA VISCA",
+         "poblacion":3940,
+         "provincia":"CONDESUYOS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AYACUCHO",
+            "distrito":"PARAS",
+            "latitud":-13.584810000000001,
+            "longitud":-74.524353,
+            "poblacion":4582,
+            "provincia":"CANGALLO"
+         }
+      ],
+      "tambo":{
+         "departamento":"AYACUCHO",
+         "distrito":"PARAS",
+         "latitud":-13.584810000000001,
+         "longitud":-74.524353000000005,
+         "nombre":"TAMBO SANTA CRUZ DE HOSPICIO",
+         "poblacion":4582,
+         "provincia":"CANGALLO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"AYACUCHO",
+            "distrito":"MORCOLLA",
+            "latitud":-14.110262200000001,
+            "longitud":-73.8720449,
+            "poblacion":1050,
+            "provincia":"SUCRE"
+         }
+      ],
+      "tambo":{
+         "departamento":"AYACUCHO",
+         "distrito":"HUACAÑA",
+         "latitud":-14.110262200000001,
+         "longitud":-73.872044900000006,
+         "nombre":"TAMBO SANTA ALUZPAMPA",
+         "poblacion":1050,
+         "provincia":"SUCRE"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"HUAROCONDO",
+            "latitud":-13.4133237,
+            "longitud":-72.20824870000001,
+            "poblacion":5803,
+            "provincia":"ANTA"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"HUAROCONDO",
+         "latitud":-13.413323699999999,
+         "longitud":-72.208248700000013,
+         "nombre":"TAMBO HUAYLLACOCHA",
+         "poblacion":5803,
+         "provincia":"ANTA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"CHECCA",
+            "latitud":-14.476526300000002,
+            "longitud":-71.3957971,
+            "poblacion":6292,
+            "provincia":"CANAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"CHECCA",
+         "latitud":-14.476526300000002,
+         "longitud":-71.395797099999996,
+         "nombre":"TAMBO ANANSAYA",
+         "poblacion":6292,
+         "provincia":"CANAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"KUNTURKANKI",
+            "latitud":-14.534618799999999,
+            "longitud":-71.30698129999999,
+            "poblacion":5745,
+            "provincia":"CANAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"KUNTURKANKI",
+         "latitud":-14.534618799999999,
+         "longitud":-71.30698129999999,
+         "nombre":"TAMBO SAUSAYA",
+         "poblacion":5745,
+         "provincia":"CANAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"LANGUI",
+            "latitud":-14.432332999999998,
+            "longitud":-71.2733149,
+            "poblacion":2510,
+            "provincia":"CANAS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"LAYO",
+            "latitud":-14.50557,
+            "longitud":-71.15529599999999,
+            "poblacion":6373,
+            "provincia":"CANAS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"PAMPAMARCA",
+            "latitud":-14.146286499999999,
+            "longitud":-71.4603621,
+            "poblacion":2034,
+            "provincia":"CANAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"LANGUI",
+         "latitud":-14.432332999999998,
+         "longitud":-71.273314900000003,
+         "nombre":"TAMBO PAYAPUNKU",
+         "poblacion":10917,
+         "provincia":"CANAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"QUEHUE",
+            "latitud":-14.3808339,
+            "longitud":-71.4551677,
+            "poblacion":3582,
+            "provincia":"CANAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"QUEHUE",
+         "latitud":-14.380833900000001,
+         "longitud":-71.455167700000004,
+         "nombre":"TAMBO PERCCARO",
+         "poblacion":3582,
+         "provincia":"CANAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"TUPAC AMARU",
+            "latitud":-13.529285699999999,
+            "longitud":-71.9592263,
+            "poblacion":2906,
+            "provincia":"CANAS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"YANAOCA",
+            "latitud":-14.2171388,
+            "longitud":-71.4314206,
+            "poblacion":10049,
+            "provincia":"CANAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"TUPAC AMARU",
+         "latitud":-13.529285699999999,
+         "longitud":-71.959226299999997,
+         "nombre":"TAMBO URAY AYLLU",
+         "poblacion":12955,
+         "provincia":"CANAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"COMBAPATA",
+            "latitud":-14.100748699999999,
+            "longitud":-71.4306785,
+            "poblacion":5398,
+            "provincia":"CANCHIS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"MARANGANI",
+            "latitud":-14.3568964,
+            "longitud":-71.1693594,
+            "poblacion":11195,
+            "provincia":"CANCHIS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"PITUMARCA",
+            "latitud":-13.979235800000001,
+            "longitud":-71.41657790000001,
+            "poblacion":7541,
+            "provincia":"CANCHIS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"SICUANI",
+            "latitud":-14.2713299,
+            "longitud":-71.2220832,
+            "poblacion":60363,
+            "provincia":"CANCHIS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"COMBAPATA",
+         "latitud":-14.100748699999999,
+         "longitud":-71.430678499999999,
+         "nombre":"TAMBO CULLCUIRE",
+         "poblacion":84497,
+         "provincia":"CANCHIS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"CAPACMARCA",
+            "latitud":-14.0074812,
+            "longitud":-72.00230040000001,
+            "poblacion":4596,
+            "provincia":"CHUMBIVILCAS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"CHAMACA",
+            "latitud":-14.3005171,
+            "longitud":-71.8497212,
+            "poblacion":8894,
+            "provincia":"CHUMBIVILCAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"CHAMACA",
+         "latitud":-14.3005171,
+         "longitud":-71.849721200000005,
+         "nombre":"TAMBO CCONCHA CCOLLO",
+         "poblacion":13490,
+         "provincia":"CHUMBIVILCAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"COLQUEMARCA",
+            "latitud":-14.2908,
+            "longitud":-72.044647,
+            "poblacion":8582,
+            "provincia":"CHUMBIVILCAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"COLQUEMARCA",
+         "latitud":-14.290800000000001,
+         "longitud":-72.044646999999998,
+         "nombre":"TAMBO YANQUE LACCA LACCA",
+         "poblacion":8582,
+         "provincia":"CHUMBIVILCAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"LIVITACA",
+            "latitud":-14.311516699999999,
+            "longitud":-71.6880998,
+            "poblacion":13406,
+            "provincia":"CHUMBIVILCAS"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"LLUSCO",
+            "latitud":-14.34823,
+            "longitud":-72.12155899999999,
+            "poblacion":7100,
+            "provincia":"CHUMBIVILCAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"LIVITACA",
+         "latitud":-14.311516699999999,
+         "longitud":-71.688099800000003,
+         "nombre":"TAMBO QUEHUINCHA",
+         "poblacion":20506,
+         "provincia":"CHUMBIVILCAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"SANTO TOMAS",
+            "latitud":-14.4485861,
+            "longitud":-72.0794063,
+            "poblacion":26707,
+            "provincia":"CHUMBIVILCAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"SANTO TOMAS",
+         "latitud":-14.4485861,
+         "longitud":-72.079406300000002,
+         "nombre":"TAMBO MELLOTOTORA COLCA",
+         "poblacion":26707,
+         "provincia":"CHUMBIVILCAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"VELILLE",
+            "latitud":-14.516879999999999,
+            "longitud":-71.88636,
+            "poblacion":8514,
+            "provincia":"CHUMBIVILCAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"VELILLE",
+         "latitud":-14.516879999999999,
+         "longitud":-71.886359999999996,
+         "nombre":"TAMBO AYACCASI",
+         "poblacion":8514,
+         "provincia":"CHUMBIVILCAS"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"ALTO PICHIGUA",
+            "latitud":-14.7777354,
+            "longitud":-71.2514448,
+            "poblacion":3147,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"CONDOROMA",
+            "latitud":-15.25055,
+            "longitud":-71.09272790000001,
+            "poblacion":1412,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"COPORAQUE",
+            "latitud":-14.7981305,
+            "longitud":-71.53233459999998,
+            "poblacion":17877,
+            "provincia":"ESPINAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"COPORAQUE",
+         "latitud":-14.798130499999999,
+         "longitud":-71.532334599999984,
+         "nombre":"TAMBO HUAYHUAHUASI",
+         "poblacion":22436,
+         "provincia":"ESPINAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"ESPINAR",
+            "latitud":-14.787947599999999,
+            "longitud":-71.405896,
+            "poblacion":33520,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"OCORURO",
+            "latitud":-14.355554999999999,
+            "longitud":-71.197499,
+            "poblacion":1593,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"PALLPATA",
+            "latitud":-14.8913059,
+            "longitud":-71.2121815,
+            "poblacion":5552,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"PICHIGUA",
+            "latitud":-14.6784615,
+            "longitud":-71.4047033,
+            "poblacion":3607,
+            "provincia":"ESPINAR"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"SUYCKUTAMBO",
+            "latitud":-15.008823800000002,
+            "longitud":-71.64308390000001,
+            "poblacion":2767,
+            "provincia":"ESPINAR"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"SUYCKUTAMBO",
+         "latitud":-15.008823800000002,
+         "longitud":-71.643083900000008,
+         "nombre":"TAMBO ESCALERAYOC",
+         "poblacion":47039,
+         "provincia":"ESPINAR"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"CCARHUAYO",
+            "latitud":-13.6908547,
+            "longitud":-71.6421194,
+            "poblacion":3143,
+            "provincia":"QUISPICANCHI"
+         },
+         {
+            "departamento":"CUSCO",
+            "distrito":"MARCAPATA",
+            "latitud":-13.5911247,
+            "longitud":-70.9769245,
+            "poblacion":4512,
+            "provincia":"QUISPICANCHI"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"CCARHUAYO",
+         "latitud":-13.690854699999999,
+         "longitud":-71.642119399999999,
+         "nombre":"TAMBO ANCASSI",
+         "poblacion":7655,
+         "provincia":"QUISPICANCHI"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"CUSCO",
+            "distrito":"QUIQUIJANA",
+            "latitud":-13.82901,
+            "longitud":-71.539787,
+            "poblacion":11002,
+            "provincia":"QUISPICANCHI"
+         }
+      ],
+      "tambo":{
+         "departamento":"CUSCO",
+         "distrito":"QUIQUIJANA",
+         "latitud":-13.82901,
+         "longitud":-71.539787000000004,
+         "nombre":"TAMBO HUACCAYTAQUI",
+         "poblacion":11002,
+         "provincia":"QUISPICANCHI"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"CASTROVIRREYNA",
+            "latitud":-13.289179999999998,
+            "longitud":-75.31815300000001,
+            "poblacion":3245,
+            "provincia":"CASTROVIRREYNA"
+         },
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"COCAS",
+            "latitud":-13.0746594,
+            "longitud":-75.64626609999999,
+            "poblacion":911,
+            "provincia":"CASTROVIRREYNA"
+         },
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"MOLLEPAMPA",
+            "latitud":-13.310816699999998,
+            "longitud":-75.41025379999999,
+            "poblacion":1672,
+            "provincia":"CASTROVIRREYNA"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANCAVELICA",
+         "distrito":"CASTROVIRREYNA",
+         "latitud":-13.289179999999998,
+         "longitud":-75.318153000000009,
+         "nombre":"TAMBO SAN ISIDRO DE COCHA",
+         "poblacion":5828,
+         "provincia":"CASTROVIRREYNA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"SANTA ANA",
+            "latitud":-13.073053100000001,
+            "longitud":-75.13976770000001,
+            "poblacion":2168,
+            "provincia":"CASTROVIRREYNA"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANCAVELICA",
+         "distrito":"SANTA ANA",
+         "latitud":-13.073053100000001,
+         "longitud":-75.139767700000007,
+         "nombre":"TAMBO PUCAPAMPA",
+         "poblacion":2168,
+         "provincia":"CASTROVIRREYNA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"HUACHOCOLPA",
+            "latitud":-13.03502,
+            "longitud":-74.94431290000001,
+            "poblacion":2875,
+            "provincia":"HUANCAVELICA"
+         },
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"PILCHACA",
+            "latitud":-12.4,
+            "longitud":-75.1,
+            "poblacion":497,
+            "provincia":"HUANCAVELICA"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANCAVELICA",
+         "distrito":"HUACHOCOLPA",
+         "latitud":-13.035019999999999,
+         "longitud":-74.944312900000014,
+         "nombre":"TAMBO HUACHOCOLPA",
+         "poblacion":3372,
+         "provincia":"HUANCAVELICA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"HUAYTARA",
+            "latitud":-13.6040212,
+            "longitud":-75.3532422,
+            "poblacion":2097,
+            "provincia":"HUAYTARA"
+         },
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"PILPICHACA",
+            "latitud":-13.3261109,
+            "longitud":-74.9975,
+            "poblacion":3712,
+            "provincia":"HUAYTARA"
+         },
+         {
+            "departamento":"HUANCAVELICA",
+            "distrito":"SAN ANTONIO DE CUSICANCHA",
+            "latitud":-13.50116,
+            "longitud":-75.294937,
+            "poblacion":1662,
+            "provincia":"HUAYTARA"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANCAVELICA",
+         "distrito":"SAN ANTONIO DE CUSICANCHA",
+         "latitud":-13.50116,
+         "longitud":-75.294937000000004,
+         "nombre":"TAMBO SACSAQUERO",
+         "poblacion":7471,
+         "provincia":"HUAYTARA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANUCO",
+            "distrito":"CHUQUIS",
+            "latitud":-9.678173800000001,
+            "longitud":-76.70334709999999,
+            "poblacion":5945,
+            "provincia":"DOS DE MAYO"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANUCO",
+         "distrito":"CHUQUIS",
+         "latitud":-9.6781738000000015,
+         "longitud":-76.703347099999988,
+         "nombre":"TAMBO UCRUMARCA",
+         "poblacion":5945,
+         "provincia":"DOS DE MAYO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"HUANUCO",
+            "distrito":"JESUS",
+            "latitud":-10.0340399,
+            "longitud":-76.581879,
+            "poblacion":5736,
+            "provincia":"LAURICOCHA"
+         },
+         {
+            "departamento":"HUANUCO",
+            "distrito":"SAN MIGUEL DE CAURI",
+            "latitud":-10.10712,
+            "longitud":-76.60127299999999,
+            "poblacion":10304,
+            "provincia":"LAURICOCHA"
+         }
+      ],
+      "tambo":{
+         "departamento":"HUANUCO",
+         "distrito":"SAN MIGUEL DE CAURI",
+         "latitud":-10.10712,
+         "longitud":-76.601272999999992,
+         "nombre":"TAMBO SAN MIGUEL DE CAURI",
+         "poblacion":16040,
+         "provincia":"LAURICOCHA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"JUNIN",
+            "distrito":"MONOBAMBA",
+            "latitud":-11.362530099999999,
+            "longitud":-75.3237262,
+            "poblacion":1074,
+            "provincia":"JAUJA"
+         }
+      ],
+      "tambo":{
+         "departamento":"JUNIN",
+         "distrito":"MONOBAMBA",
+         "latitud":-11.362530099999999,
+         "longitud":-75.323726199999996,
+         "nombre":"TAMBO BARIO NUEVO MOLINO",
+         "poblacion":1074,
+         "provincia":"JAUJA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PASCO",
+            "distrito":"CHONTABAMBA",
+            "latitud":-10.5931441,
+            "longitud":-75.41798790000001,
+            "poblacion":3541,
+            "provincia":"OXAPAMPA"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"HUANCABAMBA",
+            "latitud":-10.4274987,
+            "longitud":-75.5235713,
+            "poblacion":6561,
+            "provincia":"OXAPAMPA"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"OXAPAMPA",
+            "latitud":-10.5852663,
+            "longitud":-75.4053367,
+            "poblacion":14283,
+            "provincia":"OXAPAMPA"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"PALCAZU",
+            "latitud":-9.951298199999998,
+            "longitud":-75.2530105,
+            "poblacion":10961,
+            "provincia":"OXAPAMPA"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"POZUZO",
+            "latitud":-10.0680289,
+            "longitud":-75.5516879,
+            "poblacion":9550,
+            "provincia":"OXAPAMPA"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"VILLA RICA",
+            "latitud":-10.734999499999999,
+            "longitud":-75.2683228,
+            "poblacion":20352,
+            "provincia":"OXAPAMPA"
+         }
+      ],
+      "tambo":{
+         "departamento":"PASCO",
+         "distrito":"HUANCABAMBA",
+         "latitud":-10.427498699999999,
+         "longitud":-75.5235713,
+         "nombre":"TAMBO HUANCABAMBA",
+         "poblacion":65248,
+         "provincia":"OXAPAMPA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"PASCO",
+            "distrito":"CHAUPIMARCA",
+            "latitud":-10.6831257,
+            "longitud":-76.2566078,
+            "poblacion":25824,
+            "provincia":"PASCO"
+         },
+         {
+            "departamento":"PASCO",
+            "distrito":"TICLACAYAN",
+            "latitud":-10.5341505,
+            "longitud":-76.16399840000001,
+            "poblacion":14027,
+            "provincia":"PASCO"
+         }
+      ],
+      "tambo":{
+         "departamento":"PASCO",
+         "distrito":"TICLACAYAN",
+         "latitud":-10.534150500000001,
+         "longitud":-76.163998400000011,
+         "nombre":"TAMBO SAN JUAN DE YANACACHI",
+         "poblacion":39851,
+         "provincia":"PASCO"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"TACNA",
+            "distrito":"PALCA",
+            "latitud":-17.776389,
+            "longitud":-69.958889,
+            "poblacion":1688,
+            "provincia":"TACNA"
+         }
+      ],
+      "tambo":{
+         "departamento":"TACNA",
+         "distrito":"PALCA",
+         "latitud":-17.776389000000002,
+         "longitud":-69.958888999999999,
+         "nombre":"TAMBO ALTO PERU",
+         "poblacion":1688,
+         "provincia":"TACNA"
+      }
+   },
+   {
+      "distritos":[
+         {
+            "departamento":"LORETO",
+            "distrito":"ALTO NANAY",
+            "latitud":-3.8884355999999998,
+            "longitud":-73.69708,
+            "poblacion":3042,
+            "provincia":"MAYNAS"
+         },
+         {
+            "departamento":"LORETO",
+            "distrito":"IQUITOS",
+            "latitud":-3.7436735,
+            "longitud":-73.2516326,
+            "poblacion":149994,
+            "provincia":"MAYNAS"
+         },
+         {
+            "departamento":"LORETO",
+            "distrito":"PUNCHANA",
+            "latitud":-3.7260517999999996,
+            "longitud":-73.24836040000001,
+            "poblacion":92284,
+            "provincia":"MAYNAS"
+         }
+      ],
+      "tambo":{
+         "departamento":"LORETO",
+         "distrito":"ALTO NANAY",
+         "latitud":-3.8884355999999998,
+         "longitud":-73.69708,
+         "nombre":"TAMBO DIAMANTE AZUL",
+         "poblacion":245320,
+         "provincia":"MAYNAS"
+      }
+   }
+]
+     
+        var myLatLng = {
+          lat: (locations.map(a => a.tambo.latitud)).reduce(function(sum, value){return sum+value}, 1) / locations.length,
+          lng: (locations.map(a => a.tambo.longitud)).reduce(function(sum, value){return sum+value}, 1) / locations.length
+        };
+
+        console.log(myLatLng);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: myLatLng
+        });
+
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position:{
+              'lat': location.tambo.latitud,
+              'lng': location.tambo.longitud,
+            },
+            // label: location.tambo.nombre + " " + location.tambo.poblacion
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue.png'
+          });
+        });
+
+        
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < markers.length; i++) {  
+          marker = markers[i];
+          marker.setMap(map);
+
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+              infowindow.setContent(locations[i].tambo.nombre + " " + locations[i].tambo.poblacion +
+               " " + locations[i].tambo.departamento + " (" + locations[i].tambo.longitud + ", " + 
+               locations[i].tambo.latitud + ")");
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+
+
+        var almacenes = [
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-80.642924,
+      "LATITUD":-5.185681,
+      "UBICACION":"Zona Industrial Mza. 241 Lote 2.",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AMAZONAS",
+      "LONGITUD":-78.53540799999999,
+      "LATITUD":-5.634881,
+      "UBICACION":"Cercado de Bagua Mz. 80 LT. 5",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LA LIBERTAD",
+      "LONGITUD":-79.039899,
+      "LATITUD":-8.103847,
+      "UBICACION":"Calle Filadelfia N\u00b0 406-Urb. Santa Isabel",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LIMA",
+      "LONGITUD":-77.1123,
+      "LATITUD":-12.049439,
+      "UBICACION":"Almacen General - Frente a la Av. Argentina S/N 3017",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ICA",
+      "LONGITUD":-75.736639,
+      "LATITUD":-14.059942999999999,
+      "UBICACION":"Av. Arenales N\u00ba 1616 (ex Pronaa) Ica",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"JUNIN",
+      "LONGITUD":-75.21731199999999,
+      "LATITUD":-12.047996000000001,
+      "UBICACION":"Ex Mercado del Pueblo \"San Isidro\" interseccion del Jr. Abelardo Qui\u00f1onez y Psje. Leoncio Prado - Huancayo",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AREQUIPA",
+      "LONGITUD":-71.51059000000001,
+      "LATITUD":-16.434164000000003,
+      "UBICACION":"Calle Colon 122 Urb. Alas del Sur-Distrito Jos\u00e9 Luis Bustamante y Rivero, Arequipa",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PUNO",
+      "LONGITUD":-70.025341,
+      "LATITUD":-15.834485,
+      "UBICACION":"Jr. Talara N\u00b0 120 - Barrio Bellavista - Puno",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TACNA",
+      "LONGITUD":-70.269941,
+      "LATITUD":-18.026282000000002,
+      "UBICACION":"Av. Ejercito N\u00ba 480",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CUZCO",
+      "LONGITUD":-71.962474,
+      "LATITUD":-13.524854999999999,
+      "UBICACION":"Av. Pedro Vilca Apaza B-7 Wanchaq",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"SAN MARTIN",
+      "LONGITUD":-76.352799,
+      "LATITUD":-6.494411,
+      "UBICACION":"Carretera Yurimaguas N\u00ba 408 - Banda Shilcayo",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LORETO",
+      "LONGITUD":-73.244136,
+      "LATITUD":-3.745511,
+      "UBICACION":"Calle Loreto 442 - Iquitos",
+      "TIPO ALMACEN":"NACIONAL"
+   },
+   {
+      "DEPARTAMENTO":"MADRE DE DIOS",
+      "LONGITUD":-69.186423,
+      "LATITUD":-12.59037,
+      "UBICACION":"Jr. Gonzales Prada N\u00b0 1127",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LAMBAYEQUE",
+      "LONGITUD":-79.859732,
+      "LATITUD":-6.763383,
+      "UBICACION":"Km. 775 de la Carretera Panamericana Norte del Pueblo Joven Ricardo Palma,",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ANCASH",
+      "LONGITUD":-77.53799599999999,
+      "LATITUD":-9.492844,
+      "UBICACION":"Campamento Vichay S/N Distrito de Independencia -Huaraz",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AYACUCHO",
+      "LONGITUD":-74.19725600000001,
+      "LATITUD":-13.179860000000001,
+      "UBICACION":"Urb. Mariscal C\u00e1ceres Mz. C, Lt. 25 (Calle Las Begonias N\u00b0 249)",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"UCAYALI",
+      "LONGITUD":-74.605246,
+      "LATITUD":-8.398375,
+      "UBICACION":"Av. Centenario 4200",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LA LIBERTAD",
+      "LONGITUD":-79.018508,
+      "LATITUD":-8.095782,
+      "UBICACION":"Cuartel del Ej\u00e9rcito El Tablazo",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AREQUIPA",
+      "LONGITUD":-71.68365,
+      "LATITUD":-16.252098,
+      "UBICACION":"Km. 7.5 de Carretera Yura - Cerro Colorado",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"MOQUEGUA",
+      "LONGITUD":-70.944909,
+      "LATITUD":-17.196428,
+      "UBICACION":"Urb. Villa Hermoza Ma. F, Lote 06, Centro Poblado San Francisco, Moquegua",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TUMBES",
+      "LONGITUD":-80.278101,
+      "LATITUD":-3.506053,
+      "UBICACION":"Prolongaci\u00f3n Tumbes N\u00b0 100 - Zarumilla",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"TACNA",
+      "LONGITUD":-70.2527,
+      "LATITUD":-18.012456,
+      "UBICACION":"Calle Inclan 402 - Tacna",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LORETO",
+      "LONGITUD":-73.287595,
+      "LATITUD":-3.774221,
+      "UBICACION":"Calle Miraflores - PP. JJ. 9 de Octubre",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"APUR\u00cdMAC",
+      "LONGITUD":-72.878424,
+      "LATITUD":-13.628498,
+      "UBICACION":"Prolongaci\u00f3n Cusco N\u00b0 1001 (Ref: Frente a Radio Amistad). Provincia y Departamento Abancay",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PASCO",
+      "LONGITUD":-76.24659799999999,
+      "LATITUD":-10.780337,
+      "UBICACION":"Carretera Central Km. 22, Ubicada en la Comunidad Campesina de Villa Pasco",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"AMAZONAS",
+      "LONGITUD":-78.534586,
+      "LATITUD":-84.167422,
+      "UBICACION":"Jr. \u00c1ncash N\u00b0 580. Almac\u00e9n 2",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-81.278765,
+      "LATITUD":-4.577138,
+      "UBICACION":"Av. Miguel Grau 905. Talara, Per\u00fa",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PIURA",
+      "LONGITUD":-80.6038,
+      "LATITUD":-5.190525,
+      "UBICACION":"Urb. San Antonio Mz. C, Lt. 6",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CAJAMARCA",
+      "LONGITUD":-78.51446,
+      "LATITUD":-7.1466535,
+      "UBICACION":"Calle Los Cipreses N\u00b0 1327",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"HU\u00c1NUCO",
+      "LONGITUD":-76.24248399999999,
+      "LATITUD":-9.926926,
+      "UBICACION":"Jr. Damaso Beraun N\u00b0 401",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"LIMA",
+      "LONGITUD":-76.822826,
+      "LATITUD":-12.330528,
+      "UBICACION":"Carretera Panamericana Sur N\u00b0 2001. Km. 38 Punta Hermosa",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"ICA",
+      "LONGITUD":-76.12329799999999,
+      "LATITUD":-13.414475,
+      "UBICACION":"Av. Arenales S/N. AAHH Se\u00f1or de los Milagros",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"JUN\u00cdN",
+      "LONGITUD":-75.287918,
+      "LATITUD":-11.945889999999999,
+      "UBICACION":"Jr. Tacna 540 (Esquina Loreto) - Huancayo",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"PUNO",
+      "LONGITUD":-70.120746,
+      "LATITUD":-15.508102,
+      "UBICACION":"Urb. Taparachi Mz. A, Lt. 3, Km. 1.5 Carretera Juliaca",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"HUANCAVELICA",
+      "LONGITUD":-74.972849,
+      "LATITUD":-12.783161999999999,
+      "UBICACION":"Av. 28 de Abril s/n. Mz. Z - Centro Poblado San Crist\u00f3bal",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CUZCO",
+      "LONGITUD":-71.96332199999999,
+      "LATITUD":-13.525304,
+      "UBICACION":"Pasaje Ram\u00f3n Castilla 1101",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"SAN MARTIN",
+      "LONGITUD":-76.988864,
+      "LATITUD":-6.021703,
+      "UBICACION":"Gobierno Regional de San Mart\u00edn - Calle Aeropuerto N\u00b0 150. Barrio Lluyllucucha - Moyobamba",
+      "TIPO ALMACEN":"REGIONAL"
+   },
+   {
+      "DEPARTAMENTO":"CALLAO",
+      "LONGITUD":-77.111094,
+      "LATITUD":-12.010658,
+      "UBICACION":"Av. Elmer Faucett 3970",
+      "TIPO ALMACEN":"REGIONAL"
+   }
+];
+
+        var almacen_markers = almacenes.map(function(almacen, i) {
+          return new google.maps.Marker({
+            position:{
+              'lat': almacen.LATITUD,
+              'lng': almacen.LONGITUD,
+            },
+            // label: "A",
+            icon: 'https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
+          });
+        }); 
+
+        for (i = 0; i < almacen_markers.length; i++) {  
+          marker = almacen_markers[i];
+          marker.setMap(map);
+
+          console.log(marker)
+
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+              infowindow.setContent(almacenes[i].DEPARTAMENTO + " " + almacenes[i].UBICACION + " (" + 
+               almacenes[i].LATITUD + ", " + almacenes[i].LONGITUD + ") ");
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+
+        // var markerCluster = new MarkerClusterer(map, markers,
+        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});    
+      
+      }
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwEGVgrRQcCARFvNqQqb622fY791_w128&callback=initMap">
+    </script>
+  </body>
+</html>
