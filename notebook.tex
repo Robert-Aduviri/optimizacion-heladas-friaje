@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Limpieza y Analisis de Datos}
+    \title{Step 2 - Nivel de Riesgo}
     
     
     
@@ -281,7 +281,7 @@
 
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}73}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
+{\color{incolor}In [{\color{incolor}69}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
          \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
          \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
          \PY{o}{\PYZpc{}}\PY{k}{config} InlineBackend.figure\PYZus{}format = \PYZsq{}retina\PYZsq{}
@@ -294,855 +294,378 @@
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}FRIAJE.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df}\PY{p}{)}\PY{p}{:}
-            \PY{n}{headers} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-            \PY{n}{headers}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}
-            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
-                \PY{n}{headers}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
-            \PY{n}{columns} \PY{o}{=} \PY{n}{headers}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
-            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
-                \PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{n}{c1} \PY{k}{if} \PY{n}{c1}\PY{o}{==}\PY{n}{c1} \PY{k}{else} \PY{n}{c2} \PY{k}{for} \PY{n}{c1}\PY{p}{,} \PY{n}{c2} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{columns}\PY{p}{,} \PY{n}{headers}\PY{p}{[}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{]}
-                \PY{n}{df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-            \PY{n}{df}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-            \PY{n}{df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{columns}
-            \PY{k}{return} \PY{n}{df}  
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{)}
-        \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{df\PYZus{}tambos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 4.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{df\PYZus{}zonas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 2.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \section{Clean data}\label{clean-data}
-
-    \subsubsection{1. df\_heladas}\label{df_heladas}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{import} \PY{n+nn}{re}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{column}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{o+ow}{not} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{isalpha}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}11}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(32, 19)
-(10, 19)
-(0, 19)
+The autoreload extension is already loaded. To reload it, use:
+  \%reload\_ext autoreload
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{} Check for non alphabetic characters}
-         \PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}72}]:} \PY{k+kn}{from} \PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{fix\PYZus{}headers}\PY{p}{,} \PY{n}{preprocess\PYZus{}df}
+         \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/distritos\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{df\PYZus{}salud} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+         \PY{n}{df\PYZus{}vivienda} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}fix\PYZus{}headers}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{n}{col} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion} \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}96}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}12}]:}      Ubigeo distrital  Departamento              Provincia  \textbackslash{}
-         277            030411      APURIMAC               AYMARAES   
-         278            030412      APURIMAC               AYMARAES   
-         291            030602      APURIMAC             CHINCHEROS   
-         329            040115      AREQUIPA               AREQUIPA   
-         358            040412      AREQUIPA               CASTILLA   
-         444            050605      AYACUCHO                LUCANAS   
-         446            050607      AYACUCHO                LUCANAS   
-         451            050612      AYACUCHO                LUCANAS   
-         463            050703      AYACUCHO           PARINACOCHAS   
-         483            050905      AYACUCHO                  SUCRE   
-         514            060105     CAJAMARCA              CAJAMARCA   
-         517            060108     CAJAMARCA              CAJAMARCA   
-         624            061304     CAJAMARCA             SANTA CRUZ   
-         686            080707         CUSCO           CHUMBIVILCAS   
-         766            090307  HUANCAVELICA               ANGARAES   
-         804            090609  HUANCAVELICA               HUAYTARA   
-         820            090710  HUANCAVELICA               TAYACAJA   
-         838            100106       HUANUCO                HUANUCO   
-         875            100509       HUANUCO              HUAMALIES   
-         886            101002       HUANUCO             LAURICOCHA   
-         935            120132         JUNIN               HUANCAYO   
-         967            120413         JUNIN                  JAUJA   
-         1003           120803         JUNIN                  YAULI   
-         1075           140202    LAMBAYEQUE             FERRE├æAFE   
-         1096           150516          LIMA                CA├æETE   
-         1166           151017          LIMA                 YAUYOS   
-         1181           151032          LIMA                 YAUYOS   
-         1192           180204      MOQUEGUA  GENERAL SANCHEZ CERRO   
-         1250           210109          PUNO                   PUNO   
-         1264           210208          PUNO               AZANGARO   
-         1315           210806          PUNO                 MELGAR   
-         1366           230404         TACNA                 TARATA   
+{\color{outcolor}Out[{\color{outcolor}28}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
          
-                          Distrito T° Mínima P10 (°C) Frecuencia de heladas (días/mes)  \textbackslash{}
-         277   SAN JUAN DE CHAC├æA             -5 a 0                       2 a 5 dias   
-         278              SA├æAYCA           -11 a -5                      5 a 10 dias   
-         291           ANCO\_HUALLO           -11 a -5                      5 a 10 dias   
-         329             QUEQUE├æA             -5 a 0                       2 a 5 dias   
-         358                 U├æON           -11 a -5                      5 a 10 dias   
-         444              CHAVI├æA           -11 a -5                       2 a 5 dias   
-         446             HUAC-HUAS           -11 a -5                       2 a 5 dias   
-         451                OCA├æA           -11 a -5                      5 a 10 dias   
-         463    CORONEL CASTA├æEDA           -11 a -5                      5 a 10 dias   
-         483              HUACA├æA          -14 a -11                      5 a 10 dias   
-         514             ENCA├æADA           -11 a -5                       2 a 5 dias   
-         517   LOS BA├æOS DEL INCA             -5 a 0                       2 a 5 dias   
-         624         CHANCAYBA├æOS              0 a 2                       0 a 2 dias   
-         686              QUI├æOTA          -14 a -11                     20 a 31 dias   
-         766         HUANCA-HUANCA           -11 a -5                      5 a 10 dias   
-         804            QUITO-ARMA             -5 a 0                      5 a 10 dias   
-         820         ├æAHUIMPUQUIO           -11 a -5                     10 a 20 dias   
-         838      QUISQUI (KICHKI)             -5 a 0                       2 a 5 dias   
-         875                PU├æOS           -11 a -5                      5 a 10 dias   
-         886                BA├æOS           -11 a -5                      5 a 10 dias   
-         935                 SA├æO           -11 a -5                     10 a 20 dias   
-         967       LEONOR ORDO├æEZ           -11 a -5                     10 a 20 dias   
-         1003            HUAY-HUAY          -14 a -11                     20 a 31 dias   
-         1075             CA├æARIS              0 a 2                       2 a 5 dias   
-         1096              ZU├æIGA              0 a 2                       0 a 2 dias   
-         1166              HUA├æEC           -11 a -5                      5 a 10 dias   
-         1181               VI├æAC          -14 a -11                      5 a 10 dias   
-         1192              ICHU├æA          -14 a -11                     20 a 31 dias   
-         1250              MA├æAZO          -14 a -11                     20 a 31 dias   
-         1264              MU├æANI          -14 a -11                     20 a 31 dias   
-         1315               NU├æOA          -14 a -11                     20 a 31 dias   
-         1366        ESTIQUE-PAMPA           -11 a -5                       0 a 2 dias   
+           Frecuencia de heladas (días/mes) Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                       0 a 2 dias                                       0   
+         1                       0 a 2 dias                                       0   
+         2                       0 a 2 dias                                       0   
+         3                       0 a 2 dias                                       0   
+         4                       0 a 2 dias                                       0   
          
-              Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
-         277                                        0   
-         278                                        0   
-         291                                        0   
-         329                                        0   
-         358                                        0   
-         444                                        0   
-         446                                        0   
-         451                                        0   
-         463                                        0   
-         483                                        0   
-         514                                        0   
-         517                                        0   
-         624                                        0   
-         686                                        0   
-         766                                        0   
-         804                                        0   
-         820                                        0   
-         838                                        0   
-         875                                        0   
-         886                                        0   
-         935                                        0   
-         967                                        0   
-         1003                                       0   
-         1075                                       0   
-         1096                                       0   
-         1166                                       0   
-         1181                                       0   
-         1192                                       0   
-         1250                                       0   
-         1264                                       0   
-         1315                                       0   
-         1366                                       0   
+           Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                                 0                                21   
+         1                                 0                                 0   
+         2                                 0                                 1   
+         3                                 0                                 0   
+         4                                 0                                 0   
          
-              Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
-         277                                  0                                 0   
-         278                                  0                                 0   
-         291                                  0                                 0   
-         329                                  0                                 3   
-         358                                  0                                 0   
-         444                                  0                                 0   
-         446                                  0                                 0   
-         451                                  0                                 0   
-         463                                  0                                 0   
-         483                                  0                                 0   
-         514                                  0                                 4   
-         517                                  0                                 0   
-         624                                  0                                 0   
-         686                                  0                                 2   
-         766                                  0                                 0   
-         804                                  0                                 0   
-         820                                  0                                 1   
-         838                                  0                                 4   
-         875                                  0                                 2   
-         886                                  0                                 0   
-         935                                  0                                 0   
-         967                                  0                                 0   
-         1003                                 0                                 0   
-         1075                                 0                                 4   
-         1096                                 0                                 0   
-         1166                                 0                                 0   
-         1181                                 0                                 0   
-         1192                                 0                                 0   
-         1250                                 0                                 0   
-         1264                                 0                                 3   
-         1315                                 0                                 2   
-         1366                                 0                                 0   
+           Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
+         0                         10.6653        0.3158                 12.27   
+         1                               0         0.035                  51.3   
+         2                         5.68182          0.17                 42.59   
+         3                               0         0.035                 60.02   
+         4                               0         0.035                 74.73   
          
-              Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
-         277                                0         0.035                 46.76   
-         278                                0         0.035                 75.23   
-         291                                0         0.035                 62.77   
-         329                          29.4118        0.3158                 21.26   
-         358                                0         0.035                    50   
-         444                                0         0.035                 70.44   
-         446                                0         0.035                  44.8   
-         451                                0         0.035                 61.87   
-         463                                0         0.035                  79.9   
-         483                                0         0.035                 61.54   
-         514                           1.6116        0.0548                 76.82   
-         517                                0         0.035                 42.61   
-         624                                0         0.035                 77.93   
-         686                          3.10078        0.0944                 58.89   
-         766                                0         0.035                 71.52   
-         804                                0         0.035                 85.43   
-         820                          3.77358        0.0944                 47.83   
-         838                          4.40529          0.17                 50.54   
-         875                           3.3389        0.0944                 54.78   
-         886                                0         0.035                 38.77   
-         935                                0         0.035                 18.72   
-         967                                0         0.035                 23.14   
-         1003                               0         0.035               6.38081   
-         1075                         1.80914        0.0548                 90.28   
-         1096                               0         0.035               17.2044   
-         1166                               0         0.035                 27.25   
-         1181                               0         0.035                 51.72   
-         1192                               0         0.035                 38.58   
-         1250                               0         0.035                 56.37   
-         1264                         2.94985        0.0944                  62.2   
-         1315                          1.4892        0.0548                 54.37   
-         1366                               0         0.035                 20.27   
+           Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
+         0                                       14.6               3.53831   
+         1                                          0               12.5926   
+         2                                       18.7               13.9423   
+         3                                       10.3               6.81818   
+         4                                       22.5               11.9691   
          
-              Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
-         277                                        18.9               31.9149   
-         278                                        28.3               20.5882   
-         291                                        29.3               20.5463   
-         329                                        10.6               4.81507   
-         358                                         5.6               9.74026   
-         444                                        28.4               17.6248   
-         446                                        25.4                9.1528   
-         451                                        32.5               13.5583   
-         463                                        21.2               24.1852   
-         483                                        25.3               19.0323   
-         514                                        45.2               25.2757   
-         517                                        32.3               16.6556   
-         624                                        27.3               19.9437   
-         686                                        44.5               26.3403   
-         766                                        58.8                    28   
-         804                                        28.8               28.7968   
-         820                                        34.2               20.1721   
-         838                                        29.9               24.1196   
-         875                                        43.2               14.5185   
-         886                                        30.9               5.34106   
-         935                                        58.2               7.85714   
-         967                                        21.5               6.64962   
-         1003                                       38.5               3.43811   
-         1075                                       50.5               30.2811   
-         1096                                       17.2               4.01396   
-         1166                                         20                3.4188   
-         1181                                       16.3                10.885   
-         1192                                       13.6               12.3816   
-         1250                                         19                14.514   
-         1264                                       25.9               14.9273   
-         1315                                       25.4               20.7221   
-         1366                                       14.3               5.46875   
+           Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
+         0                                            15.4818          
+         1                                            96.4706          
+         2                                            91.7431          
+         3                                            91.4439          
+         4                                            99.0244          
          
-              Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
-         277                                             97.7186          
-         278                                             91.5761          
-         291                                             86.4736          
-         329                                             31.6919          
-         358                                             88.4615          
-         444                                             78.9207          
-         446                                              86.771          
-         451                                             85.8875          
-         463                                             73.4483          
-         483                                             96.7949          
-         514                                             97.7179          
-         517                                             71.9723          
-         624                                                  95          
-         686                                             85.8482          
-         766                                             94.6188          
-         804                                                97.5          
-         820                                             94.2675          
-         838                                             95.6347          
-         875                                             84.8657          
-         886                                             86.6295          
-         935                                             62.8159          
-         967                                             77.5824          
-         1003                                            32.6613          
-         1075                                            93.4249          
-         1096                                            50.3289          
-         1166                                            86.8545          
-         1181                                             85.906          
-         1192                                            70.1868          
-         1250                                            83.2498          
-         1264                                            97.9135          
-         1315                                            89.0881          
-         1366                                                100          
+           Nivel de Riesgo MINSA Total del distrito Población menor a 5 años  \textbackslash{}
+         0                 MEDIO              28937                     2036   
+         1                  BAJO                288                       24   
+         2                  BAJO               1634                      176   
+         3                  BAJO                591                       50   
+         4                 MEDIO                698                       63   
          
-              Nivel de Riesgo MINSA Total del distrito Población menor a 5 años  \textbackslash{}
-         277                  MEDIO                842                       71   
-         278                   ALTO               1444                      144   
-         291                   ALTO              12531                     1293   
-         329                  MEDIO               1390                      105   
-         358                   BAJO                451                       35   
-         444                  MEDIO               2011                      230   
-         446                   BAJO               2808                      288   
-         451                  MEDIO               2907                      222   
-         463                   ALTO               1889                      191   
-         483                  MEDIO                681                       78   
-         514                   ALTO              24220                     2487   
-         517                  MEDIO              43062                     4025   
-         624                  MEDIO               3898                      380   
-         686                   ALTO               4930                      649   
-         766                   ALTO               1753                      359   
-         804                   ALTO                768                      103   
-         820                   ALTO               1883                      259   
-         838                  MEDIO               8270                      884   
-         875                   ALTO               4354                      586   
-         886                  MEDIO               7090                      732   
-         935                  MEDIO               4039                      393   
-         967                  MEDIO               1481                      129   
-         1003                  ALTO               1478                      141   
-         1075                  ALTO              14596                     2205   
-         1096                  BAJO               1850                      123   
-         1166                 MEDIO                482                       28   
-         1181                 MEDIO               1863                      226   
-         1192                 MEDIO               4911                      401   
-         1250                  ALTO               5359                      624   
-         1264              MUY ALTO               8233                     1017   
-         1315                  ALTO              11006                     1327   
-         1366                  BAJO                680                       34   
-         
-              Población de 60 años a más  
-         277                         145  
-         278                         240  
-         291                        1029  
-         329                         266  
-         358                          74  
-         444                         273  
-         446                         363  
-         451                         348  
-         463                         139  
-         483                          97  
-         514                        1941  
-         517                        3106  
-         624                         419  
-         686                         460  
-         766                         124  
-         804                         124  
-         820                         141  
-         838                         678  
-         875                         403  
-         886                         711  
-         935                         468  
-         967                         260  
-         1003                        100  
-         1075                       1068  
-         1096                        231  
-         1166                        142  
-         1181                        275  
-         1192                        643  
-         1250                        670  
-         1264                        794  
-         1315                       1122  
-         1366                        140  
+           Población de 60 años a más  
+         0                       2773  
+         1                         45  
+         2                        170  
+         3                         67  
+         4                         90  
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{character\PYZus{}map} \PY{o}{=} \PY{p}{\PYZob{}}
-             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{├æ}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ñ}\PY{l+s+s1}{\PYZsq{}}
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
+         
+           Frecuencia de heladas (días/mes)  \textbackslash{}
+         0                       0 a 2 dias   
+         1                       0 a 2 dias   
+         2                       0 a 2 dias   
+         3                       0 a 2 dias   
+         4                       0 a 2 dias   
+         
+           Indice del material predominante de la vivienda Incidencia de Pobreza  \textbackslash{}
+         0                                        0.088361                 12.27   
+         1                                        0.135062                  51.3   
+         2                                        0.123176                 42.59   
+         3                                        0.098162                 60.02   
+         4                                        0.201914                 74.73   
+         
+           Tasa de Analfabetismo Nivel de Riesgo MVCS Total de viviendas por distrito  \textbackslash{}
+         0               3.53831                 BAJO                            6414   
+         1               12.5926                 BAJO                              85   
+         2               13.9423                 BAJO                             327   
+         3               6.81818                 BAJO                             187   
+         4               11.9691                MEDIO                             205   
+         
+           Viviendas con techos de calamina o categorías menores  \textbackslash{}
+         0                                               4226      
+         1                                                 79      
+         2                                                321      
+         3                                                165      
+         4                                                199      
+         
+           Viviendas con pisos de tierra  \textbackslash{}
+         0                          1858   
+         1                            80   
+         2                           239   
+         3                           111   
+         4                           188   
+         
+           Viviendas con paredes de adobe o categorías menores Total de hogares  \textbackslash{}
+         0                                               4201              6476   
+         1                                                 59                87   
+         2                                                250               337   
+         3                                                163               193   
+         4                                                189               206   
+         
+           Número de Tambos en el distrito  
+         0                               0  
+         1                               0  
+         2                               0  
+         3                               0  
+         4                               0  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
+         
+           Frecuencia de heladas (días/mes)  \textbackslash{}
+         0                       0 a 2 dias   
+         1                       0 a 2 dias   
+         2                       0 a 2 dias   
+         3                       0 a 2 dias   
+         4                       0 a 2 dias   
+         
+           Total de Instituciones Educativas del distrito unidocentes  \textbackslash{}
+         0                                             10           3   
+         1                                              2           2   
+         2                                             15           6   
+         3                                              3           2   
+         4                                              7           3   
+         
+           unidocentes/polidoscentes no escolarizadas inicial/primaria  \textbackslash{}
+         0                         1                                 4   
+         1                         0                                 0   
+         2                         1                                 6   
+         3                         1                                 0   
+         4                         2                                 1   
+         
+           Total de instituciones educativas Valor del Porcentaje  \textbackslash{}
+         0                                 8                   80   
+         1                                 2                  100   
+         2                                13              86.6667   
+         3                                 3                  100   
+         4                                 6              85.7143   
+         
+           Incidencia de Pobreza Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                 12.27                                       14.6   
+         1                  51.3                                          0   
+         2                 42.59                                       18.7   
+         3                 60.02                                       10.3   
+         4                 74.73                                       22.5   
+         
+           Nivel de Riesgo MINEDU Total de alumnos Total de alumnos varones  \textbackslash{}
+         0                  MEDIO               79                       40   
+         1                  MEDIO               11                        8   
+         2                  MEDIO              152                       75   
+         3                  MEDIO               26                       13   
+         4                  MEDIO               41                       18   
+         
+           Total de alumnos mujeres Total de docentes  
+         0                       39                 5  
+         1                        3                 2  
+         2                       77                 7  
+         3                       13                 3  
+         4                       23                 5  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{common\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ubigeo distrital}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \subsubsection{1. Factores más importantes para determinar el nivel de
+riesgo según
+MINSA}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minsa}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{k+kn}{from} \PY{n+nn}{lightgbm} \PY{k}{import} \PY{n}{LGBMRegressor}\PY{p}{,} \PY{n}{plot\PYZus{}importance}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{n}{label\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BAJO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MEDIO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUY ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}
          \PY{p}{\PYZcb{}}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{map\PYZus{}df\PYZus{}characters}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{column}\PY{p}{,} \PY{n}{character\PYZus{}map}\PY{p}{)}\PY{p}{:}
-             \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{character\PYZus{}map}\PY{p}{:}
-                 \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{n}{c}\PY{p}{,} \PY{n}{character\PYZus{}map}\PY{p}{[}\PY{n}{c}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}78}]:} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{map\PYZus{}df\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{character\PYZus{}map}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}79}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                 \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}88}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}16}]:}      Ubigeo distrital  Departamento   Provincia          Distrito  \textbackslash{}
-         291            030602      APURIMAC  CHINCHEROS       ANCO\_HUALLO   
-         446            050607      AYACUCHO     LUCANAS         HUAC-HUAS   
-         766            090307  HUANCAVELICA    ANGARAES     HUANCA-HUANCA   
-         804            090609  HUANCAVELICA    HUAYTARA        QUITO-ARMA   
-         838            100106       HUANUCO     HUANUCO  QUISQUI (KICHKI)   
-         1003           120803         JUNIN       YAULI         HUAY-HUAY   
-         1366           230404         TACNA      TARATA     ESTIQUE-PAMPA   
-         
-              T° Mínima P10 (°C) Frecuencia de heladas (días/mes)  \textbackslash{}
-         291            -11 a -5                      5 a 10 dias   
-         446            -11 a -5                       2 a 5 dias   
-         766            -11 a -5                      5 a 10 dias   
-         804              -5 a 0                      5 a 10 dias   
-         838              -5 a 0                       2 a 5 dias   
-         1003          -14 a -11                     20 a 31 dias   
-         1366           -11 a -5                       0 a 2 dias   
-         
-              Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
-         291                                        0   
-         446                                        0   
-         766                                        0   
-         804                                        0   
-         838                                        0   
-         1003                                       0   
-         1366                                       0   
-         
-              Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
-         291                                  0                                 0   
-         446                                  0                                 0   
-         766                                  0                                 0   
-         804                                  0                                 0   
-         838                                  0                                 4   
-         1003                                 0                                 0   
-         1366                                 0                                 0   
-         
-              Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
-         291                                0         0.035                 62.77   
-         446                                0         0.035                  44.8   
-         766                                0         0.035                 71.52   
-         804                                0         0.035                 85.43   
-         838                          4.40529          0.17                 50.54   
-         1003                               0         0.035               6.38081   
-         1366                               0         0.035                 20.27   
-         
-              Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
-         291                                        29.3               20.5463   
-         446                                        25.4                9.1528   
-         766                                        58.8                    28   
-         804                                        28.8               28.7968   
-         838                                        29.9               24.1196   
-         1003                                       38.5               3.43811   
-         1366                                       14.3               5.46875   
-         
-              Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
-         291                                             86.4736          
-         446                                              86.771          
-         766                                             94.6188          
-         804                                                97.5          
-         838                                             95.6347          
-         1003                                            32.6613          
-         1366                                                100          
-         
-              Nivel de Riesgo MINSA Total del distrito Población menor a 5 años  \textbackslash{}
-         291                   ALTO              12531                     1293   
-         446                   BAJO               2808                      288   
-         766                   ALTO               1753                      359   
-         804                   ALTO                768                      103   
-         838                  MEDIO               8270                      884   
-         1003                  ALTO               1478                      141   
-         1366                  BAJO                680                       34   
-         
-              Población de 60 años a más  
-         291                        1029  
-         446                         363  
-         766                         124  
-         804                         124  
-         838                         678  
-         1003                        100  
-         1366                        140  
+{\color{outcolor}Out[{\color{outcolor}88}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                subsample\_for\_bin=200000, subsample\_freq=1)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{column}\PY{p}{)}\PY{p}{:}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{├æ}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ñ}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{([\PYZca{})]*}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}a\PYZhy{}zA\PYZhy{}Z]+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}    
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(0, 19)
-(0, 19)
-(0, 19)
-
-    \end{Verbatim}
-
-    \subsubsection{2. df\_friaje}\label{df_friaje}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}21}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(2, 18)
-(0, 18)
-(0, 18)
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}89}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}22}]:}    Ubigeo distrital Departamento      Provincia           Distrito  \textbackslash{}
-         31           100601      HUANUCO  LEONCIO PRADO          RUPA-RUPA   
-         62           120699        JUNIN         SATIPO  MAZAMARI - PANGOA   
-         
-            T° Mínima P5\textbackslash{}n (°C) Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
-         31       Menor de 15°C                                       1   
-         62         15°C a 17°C                                       0   
-         
-            Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
-         31                          0.179533                                41   
-         62                                 0                                 3   
-         
-            Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
-         31                         7.36086        0.1832                 23.95   
-         62                        0.381971        0.0548                  25.4   
-         
-            Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
-         31                                        9.3               5.42723   
-         62                                       33.4                 10.82   
-         
-            Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
-         31                                            22.9719          
-         62                                                  0          
-         
-            Nivel de Riesgo MINSA Total del distrito Población menor a 5 años  \textbackslash{}
-         31              MUY ALTO              51063                     4449   
-         62                  ALTO             122279                    16272   
-         
-            Población de 60 años a más  
-         31                       3573  
-         62                       6158  
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}24}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(0, 18)
-(0, 18)
-(0, 18)
-
-    \end{Verbatim}
-
-    \subsubsection{3. df\_tambos}\label{df_tambos}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}25}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LOCAL DE DISTRIBUCIÓN DE BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(3, 11)
-(2, 11)
-(0, 11)
-(8, 11)
-(0, 11)
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}26}]:}       N° Departamento               Provincia  Ubigeo distrital  \textbackslash{}
-         34    35         PUNO  SAN ANTONIO DE\textbackslash{}nPUTINA            211003   
-         39    40     APURIMAC               ANTABAMBA             30304   
-         103  104      HUANUCO              LAURICOCHA            101007   
-         
-                            Distrito    UBIG\_TAM  UBIGEO\_CCP  UBIGEO\_DIS  \textbackslash{}
-         34       PEDRO VILCA\textbackslash{}nAPAZA  2110030001  2110030001      211003   
-         39   JUAN ESPINOZA\textbackslash{}nMEDRANO   303040016   303040016       30304   
-         103    SAN MIGUEL DE\textbackslash{}nCAURI  1010070001  1010070001      101007   
-         
-                            DISTRITO       CCPP LOCAL DE DISTRIBUCIÓN DE BIENES  
-         34       PEDRO VILCA\textbackslash{}nAPAZA  AYRAMPUNI     TAMBO TUPAC AMARU AYRAMPUNI  
-         39   JUAN ESPINOZA\textbackslash{}nMEDRANO   CALCAUSO                  TAMBO CALCAUSO  
-         103    SAN MIGUEL DE\textbackslash{}nCAURI      CAURI       TAMBO SAN MIGUEL DE CAURI  
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{def} \PY{n+nf}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{column}\PY{p}{)}\PY{p}{:}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{├æ}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ñ}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{([\PYZca{})]*}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{)}
-             \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}a\PYZhy{}zA\PYZhy{}Z]+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}    
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LOCAL DE DISTRIBUCIÓN DE BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}29}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LOCAL DE DISTRIBUCIÓN DE BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(0, 11)
-(0, 11)
-(0, 11)
-(0, 11)
-(0, 11)
-
-    \end{Verbatim}
-
-    \subsubsection{4. df\_zonas}\label{df_zonas}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}30}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEPARTAMENTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TAMBO/LOCAL PARA ENTREGA DE  BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(0, 6)
-(0, 6)
-(2, 6)
-(10, 6)
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}31}]:}       N° DEPARTAMENTO      PROVINCIA   DISTRITO  \textbackslash{}
-         184  185      HUANUCO  LEONCIO PRADO  RUPA-RUPA   
-         192  193        JUNIN          YAULI  HUAY-HUAY   
-         
-                   TAMBO/LOCAL PARA ENTREGA DE  BIENES FECHA DE ENTREGA  
-         184  LOCAL DISTRITAL- TINGO MARÍA (RUPA-RUPA)       2017-06-13  
-         192                LOCAL DISTRITAL  HUAY-HUAY       2017-06-13  
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEPARTAMENTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TAMBO/LOCAL PARA ENTREGA DE  BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}33}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEPARTAMENTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{check\PYZus{}rare\PYZus{}characters}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TAMBO/LOCAL PARA ENTREGA DE  BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-(0, 6)
-(0, 6)
-(0, 6)
-(0, 6)
-
-    \end{Verbatim}
-
-    \subsection{Nivel de Riesgo}\label{nivel-de-riesgo}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}49}]:} \PY{n}{df\PYZus{}heladas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}49}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7fe311719ef0>
+{\color{outcolor}Out[{\color{outcolor}89}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f501da0>
 \end{Verbatim}
             
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
     \end{center}
     { \hspace*{\fill} \\}
     
+    \subsubsection{2. Factores más importantes para determinar el nivel de
+riesgo según
+MVCS}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-mvcs}
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{df\PYZus{}friaje}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}97}]:} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}98}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                 \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}99}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}48}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7fe3119b7278>
+{\color{outcolor}Out[{\color{outcolor}99}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                subsample\_for\_bin=200000, subsample\_freq=1)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}100}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}100}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f68a358>
 \end{Verbatim}
             
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_37_1.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
     \end{center}
     { \hspace*{\fill} \\}
     
+    \subsubsection{3. Factores más importantes para determinar el nivel de
+riesgo según
+MINEDU}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minedu}
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}54}]:} \PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{difference}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}friaje}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}101}]:} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}102}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+              \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                  \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}103}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+          \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}54}]:} set()
+{\color{outcolor}Out[{\color{outcolor}103}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                 learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                 min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                 n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                 reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                 subsample\_for\_bin=200000, subsample\_freq=1)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}56}]:} \PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{difference}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}104}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}56}]:} set()
+{\color{outcolor}Out[{\color{outcolor}104}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f67f048>
 \end{Verbatim}
             
-    \subsection{Checkpoint}\label{checkpoint}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}81}]:} \PY{k+kn}{from} \PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{fix\PYZus{}headers}\PY{p}{,} \PY{n}{preprocess\PYZus{}df}
-         
-         \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}FRIAJE.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{df\PYZus{}tambos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 4.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{df\PYZus{}zonas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 2.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{)}
-         \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{)}
-         
-         \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             
-         \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LOCAL DE DISTRIBUCIÓN DE BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CCPP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             
-         \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEPARTAMENTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TAMBO/LOCAL PARA ENTREGA DE  BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}95}]:} \PY{c+c1}{\PYZsh{} tambos asociados a regiones con friaje}
-         \PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PYZbs{}
-             \PY{o}{.}\PY{n}{difference}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}95}]:} \{'JUNIN-JAUJA-MONOBAMBA',
-          'LORETO-MAYNAS-ALTO NANAY',
-          'LORETO-MAYNAS-IQUITOS',
-          'LORETO-MAYNAS-PUNCHANA',
-          'PASCO-OXAPAMPA-CHONTABAMBA',
-          'PASCO-OXAPAMPA-HUANCABAMBA',
-          'PASCO-OXAPAMPA-OXAPAMPA',
-          'PASCO-OXAPAMPA-PALCAZU',
-          'PASCO-OXAPAMPA-POZUZO',
-          'PASCO-OXAPAMPA-VILLA RICA'\}
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}96}]:} \PY{c+c1}{\PYZsh{} df\PYZus{}heladas y df\PYZus{}friaje son excluyentes}
-         \PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PYZbs{}
-             \PY{o}{.}\PY{n}{intersection}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}96}]:} set()
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}97}]:} \PY{n}{ubicaciones\PYZus{}heladas} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)} \PYZbs{}
-             \PY{o}{.}\PY{n}{intersection}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}98}]:} \PY{n}{df} \PY{o}{=} \PY{n}{df\PYZus{}tambos}\PY{p}{[}\PY{n}{df\PYZus{}tambos}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{row}\PY{p}{:} \PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Departamento\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Provincia\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+si}{\PYZob{}row[\PYZsq{}Distrito\PYZsq{}]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PYZbs{}
-                                        \PY{o+ow}{in} \PY{n}{ubicaciones\PYZus{}heladas}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}106}]:} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/distritos\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
-\end{Verbatim}
-
-
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
 
     % Add a bibliography block to the postdoc
     
