@@ -1,0 +1,674 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Step 2 - Nivel de Riesgo}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
+         \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
+         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+         \PY{o}{\PYZpc{}}\PY{k}{config} InlineBackend.figure\PYZus{}format = \PYZsq{}retina\PYZsq{}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The autoreload extension is already loaded. To reload it, use:
+  \%reload\_ext autoreload
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} \PY{k+kn}{from} \PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{fix\PYZus{}headers}\PY{p}{,} \PY{n}{preprocess\PYZus{}df}
+         \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/distritos\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{df\PYZus{}salud} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+         \PY{n}{df\PYZus{}vivienda} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}fix\PYZus{}headers}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{n}{col} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion} \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}96}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
+         
+           Frecuencia de heladas (días/mes) Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                       0 a 2 dias                                       0   
+         1                       0 a 2 dias                                       0   
+         2                       0 a 2 dias                                       0   
+         3                       0 a 2 dias                                       0   
+         4                       0 a 2 dias                                       0   
+         
+           Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                                 0                                21   
+         1                                 0                                 0   
+         2                                 0                                 1   
+         3                                 0                                 0   
+         4                                 0                                 0   
+         
+           Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
+         0                         10.6653        0.3158                 12.27   
+         1                               0         0.035                  51.3   
+         2                         5.68182          0.17                 42.59   
+         3                               0         0.035                 60.02   
+         4                               0         0.035                 74.73   
+         
+           Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
+         0                                       14.6               3.53831   
+         1                                          0               12.5926   
+         2                                       18.7               13.9423   
+         3                                       10.3               6.81818   
+         4                                       22.5               11.9691   
+         
+           Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
+         0                                            15.4818          
+         1                                            96.4706          
+         2                                            91.7431          
+         3                                            91.4439          
+         4                                            99.0244          
+         
+           Nivel de Riesgo MINSA Total del distrito Población menor a 5 años  \textbackslash{}
+         0                 MEDIO              28937                     2036   
+         1                  BAJO                288                       24   
+         2                  BAJO               1634                      176   
+         3                  BAJO                591                       50   
+         4                 MEDIO                698                       63   
+         
+           Población de 60 años a más  
+         0                       2773  
+         1                         45  
+         2                        170  
+         3                         67  
+         4                         90  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
+         
+           Frecuencia de heladas (días/mes)  \textbackslash{}
+         0                       0 a 2 dias   
+         1                       0 a 2 dias   
+         2                       0 a 2 dias   
+         3                       0 a 2 dias   
+         4                       0 a 2 dias   
+         
+           Indice del material predominante de la vivienda Incidencia de Pobreza  \textbackslash{}
+         0                                        0.088361                 12.27   
+         1                                        0.135062                  51.3   
+         2                                        0.123176                 42.59   
+         3                                        0.098162                 60.02   
+         4                                        0.201914                 74.73   
+         
+           Tasa de Analfabetismo Nivel de Riesgo MVCS Total de viviendas por distrito  \textbackslash{}
+         0               3.53831                 BAJO                            6414   
+         1               12.5926                 BAJO                              85   
+         2               13.9423                 BAJO                             327   
+         3               6.81818                 BAJO                             187   
+         4               11.9691                MEDIO                             205   
+         
+           Viviendas con techos de calamina o categorías menores  \textbackslash{}
+         0                                               4226      
+         1                                                 79      
+         2                                                321      
+         3                                                165      
+         4                                                199      
+         
+           Viviendas con pisos de tierra  \textbackslash{}
+         0                          1858   
+         1                            80   
+         2                           239   
+         3                           111   
+         4                           188   
+         
+           Viviendas con paredes de adobe o categorías menores Total de hogares  \textbackslash{}
+         0                                               4201              6476   
+         1                                                 59                87   
+         2                                                250               337   
+         3                                                163               193   
+         4                                                189               206   
+         
+           Número de Tambos en el distrito  
+         0                               0  
+         1                               0  
+         2                               0  
+         3                               0  
+         4                               0  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+         0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
+         1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
+         2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
+         3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
+         4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
+         
+           Frecuencia de heladas (días/mes)  \textbackslash{}
+         0                       0 a 2 dias   
+         1                       0 a 2 dias   
+         2                       0 a 2 dias   
+         3                       0 a 2 dias   
+         4                       0 a 2 dias   
+         
+           Total de Instituciones Educativas del distrito unidocentes  \textbackslash{}
+         0                                             10           3   
+         1                                              2           2   
+         2                                             15           6   
+         3                                              3           2   
+         4                                              7           3   
+         
+           unidocentes/polidoscentes no escolarizadas inicial/primaria  \textbackslash{}
+         0                         1                                 4   
+         1                         0                                 0   
+         2                         1                                 6   
+         3                         1                                 0   
+         4                         2                                 1   
+         
+           Total de instituciones educativas Valor del Porcentaje  \textbackslash{}
+         0                                 8                   80   
+         1                                 2                  100   
+         2                                13              86.6667   
+         3                                 3                  100   
+         4                                 6              85.7143   
+         
+           Incidencia de Pobreza Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años)  \textbackslash{}
+         0                 12.27                                       14.6   
+         1                  51.3                                          0   
+         2                 42.59                                       18.7   
+         3                 60.02                                       10.3   
+         4                 74.73                                       22.5   
+         
+           Nivel de Riesgo MINEDU Total de alumnos Total de alumnos varones  \textbackslash{}
+         0                  MEDIO               79                       40   
+         1                  MEDIO               11                        8   
+         2                  MEDIO              152                       75   
+         3                  MEDIO               26                       13   
+         4                  MEDIO               41                       18   
+         
+           Total de alumnos mujeres Total de docentes  
+         0                       39                 5  
+         1                        3                 2  
+         2                       77                 7  
+         3                       13                 3  
+         4                       23                 5  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{common\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ubigeo distrital}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \subsubsection{1. Factores más importantes para determinar el nivel de
+riesgo según
+MINSA}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minsa}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{k+kn}{from} \PY{n+nn}{lightgbm} \PY{k}{import} \PY{n}{LGBMRegressor}\PY{p}{,} \PY{n}{plot\PYZus{}importance}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{n}{label\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BAJO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MEDIO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUY ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}
+         \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                 \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}88}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}88}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                subsample\_for\_bin=200000, subsample\_freq=1)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}89}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}89}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f501da0>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{2. Factores más importantes para determinar el nivel de
+riesgo según
+MVCS}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-mvcs}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}97}]:} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}98}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                 \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}99}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}99}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                subsample\_for\_bin=200000, subsample\_freq=1)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}100}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}100}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f68a358>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{3. Factores más importantes para determinar el nivel de
+riesgo según
+MINEDU}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minedu}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}101}]:} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}102}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+              \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
+                  \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}103}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
+          \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}103}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
+                 learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
+                 min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
+                 n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
+                 reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
+                 subsample\_for\_bin=200000, subsample\_freq=1)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}104}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}104}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f67f048>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
