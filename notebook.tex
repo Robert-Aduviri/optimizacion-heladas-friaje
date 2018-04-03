@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Step 2 - Nivel de Riesgo}
+    \title{Step 4 - Integration}
     
     
     
@@ -281,86 +281,139 @@
 
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}69}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
-         \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
-         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
-         \PY{o}{\PYZpc{}}\PY{k}{config} InlineBackend.figure\PYZus{}format = \PYZsq{}retina\PYZsq{}
-         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
-         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-         \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
-         \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
+        \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{o}{\PYZpc{}}\PY{k}{config} InlineBackend.figure\PYZus{}format = \PYZsq{}retina\PYZsq{}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-The autoreload extension is already loaded. To reload it, use:
-  \%reload\_ext autoreload
-
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}72}]:} \PY{k+kn}{from} \PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{fix\PYZus{}headers}\PY{p}{,} \PY{n}{preprocess\PYZus{}df}
-         \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/distritos\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.max\PYZus{}rows}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}
+        \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.max\PYZus{}columns}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{df\PYZus{}salud} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-         \PY{n}{df\PYZus{}vivienda} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}fix\PYZus{}headers}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
-         \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{n}{col} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion} \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/distritos\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}96}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-             \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{p}{,} \PY{n}{col}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df}\PY{o}{.}\PY{n}{shape}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}28}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+{\color{outcolor}Out[{\color{outcolor}4}]:} (107, 11)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{from} \PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{fix\PYZus{}headers}\PY{p}{,} \PY{n}{preprocess\PYZus{}df}
+        
+        \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}FRIAJE.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{df\PYZus{}tambos} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 4.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{df\PYZus{}zonas} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/Anexo 2.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{df\PYZus{}heladas} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{)}
+        \PY{n}{df\PYZus{}friaje} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}heladas}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}friaje}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LOCAL DE DISTRIBUCIÓN DE BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CCPP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}tambos}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DEPARTAMENTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TAMBO/LOCAL PARA ENTREGA DE  BIENES}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}zonas}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df\PYZus{}salud} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+        \PY{n}{df\PYZus{}vivienda} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{fix\PYZus{}headers}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017/DISTRITOS\PYZus{}PRIORIZADOS\PYZhy{}POR\PYZhy{}HELADAS.xlsx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sheet\PYZus{}name}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}fix\PYZus{}headers}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{df\PYZus{}educacion} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{n}{col} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion} \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+            \PY{n}{preprocess\PYZus{}df}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{p}{,} \PY{n}{col}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Datasets merge}\label{datasets-merge}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:}    N° Departamento Provincia  Ubigeo distrital  Distrito    UBIG\_TAM  \textbackslash{}
+         0   1         PUNO  CARABAYA            210302   AJOYANI  2103050035   
+         1   2         PUNO  CARABAYA            210305    CORANI  2103050035   
+         2   3         PUNO  CARABAYA            210306   CRUCERO  2103050035   
+         3   4         PUNO  CARABAYA            210301  MACUSANI  2103050035   
+         4   5         PUNO  CARABAYA            210310  USICAYOS  2103050035   
+         
+            UBIGEO\_CCP  UBIGEO\_DIS DISTRITO    CCPP LOCAL DE DISTRIBUCIÓN DE BIENES  
+         0  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA  
+         1  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA  
+         2  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA  
+         3  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA  
+         4  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
          0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
          1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
          2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
          3           010104     AMAZONAS  CHACHAPOYAS        CHETO              0 a 2   
          4           010105     AMAZONAS  CHACHAPOYAS    CHILIQUIN              0 a 2   
          
-           Frecuencia de heladas (días/mes) Defunciones por neumonías\textbackslash{}n(< a 5 años)  \textbackslash{}
-         0                       0 a 2 dias                                       0   
-         1                       0 a 2 dias                                       0   
-         2                       0 a 2 dias                                       0   
-         3                       0 a 2 dias                                       0   
-         4                       0 a 2 dias                                       0   
+           Frecuencia de heladas (días/mes) Defunciones por neumonías (< a 5 años)  \textbackslash{}
+         0                       0 a 2 dias                                      0   
+         1                       0 a 2 dias                                      0   
+         2                       0 a 2 dias                                      0   
+         3                       0 a 2 dias                                      0   
+         4                       0 a 2 dias                                      0   
          
-           Tasa de mortalidad \textbackslash{}n(< a 5 años) Casos de neumonías \textbackslash{}n(< a 5 años)  \textbackslash{}
-         0                                 0                                21   
-         1                                 0                                 0   
-         2                                 0                                 1   
-         3                                 0                                 0   
-         4                                 0                                 0   
+           Tasa de mortalidad  (< a 5 años) Casos de neumonías  (< a 5 años)  \textbackslash{}
+         0                                0                               21   
+         1                                0                                0   
+         2                                0                                1   
+         3                                0                                0   
+         4                                0                                0   
          
-           Tasa de neumonías\textbackslash{}n(< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
-         0                         10.6653        0.3158                 12.27   
-         1                               0         0.035                  51.3   
-         2                         5.68182          0.17                 42.59   
-         3                               0         0.035                 60.02   
-         4                               0         0.035                 74.73   
+           Tasa de neumonías (< a 5 años) Valor del IDS Incidencia de Pobreza  \textbackslash{}
+         0                        10.6653        0.3158                 12.27   
+         1                              0         0.035                  51.3   
+         2                        5.68182          0.17                 42.59   
+         3                              0         0.035                 60.02   
+         4                              0         0.035                 74.73   
          
-           Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años) Tasa de Analfabetismo  \textbackslash{}
-         0                                       14.6               3.53831   
-         1                                          0               12.5926   
-         2                                       18.7               13.9423   
-         3                                       10.3               6.81818   
-         4                                       22.5               11.9691   
+           Tasa de Desnutrición Crónica (< a 5 años) Tasa de Analfabetismo  \textbackslash{}
+         0                                      14.6               3.53831   
+         1                                         0               12.5926   
+         2                                      18.7               13.9423   
+         3                                      10.3               6.81818   
+         4                                      22.5               11.9691   
          
            Porc. viviendas según el material utilizado para cocinar   \textbackslash{}
          0                                            15.4818          
@@ -385,12 +438,39 @@ The autoreload extension is already loaded. To reload it, use:
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{columns}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}29}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+{\color{outcolor}Out[{\color{outcolor}27}]:} Index(['Ubigeo distrital', 'Departamento', 'Provincia', 'Distrito',
+                'T° Mínima P10 (°C)', 'Frecuencia de heladas (días/mes)',
+                'Defunciones por neumonías (< a 5 años)',
+                'Tasa de mortalidad  (< a 5 años)', 'Casos de neumonías  (< a 5 años)',
+                'Tasa de neumonías (< a 5 años)', 'Valor del IDS',
+                'Incidencia de Pobreza', 'Tasa de Desnutrición Crónica (< a 5 años)',
+                'Tasa de Analfabetismo',
+                'Porc. viviendas según el material utilizado para cocinar ',
+                'Nivel de Riesgo MINSA', 'Total del distrito',
+                'Población menor a 5 años', 'Población de 60 años a más'],
+               dtype='object')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{join\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{right\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total del distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Población menor a 5 años}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Población de 60 años a más}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{join\PYZus{}columns} \PY{o}{+} \PY{n}{right\PYZus{}columns}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{n}{join\PYZus{}columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
          0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
          1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
          2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
@@ -448,12 +528,37 @@ The autoreload extension is already loaded. To reload it, use:
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{columns}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}30}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
+{\color{outcolor}Out[{\color{outcolor}31}]:} Index(['Ubigeo distrital', 'Departamento', 'Provincia', 'Distrito',
+                'T° Mínima P10 (°C)', 'Frecuencia de heladas (días/mes)',
+                'Indice del material predominante de la vivienda',
+                'Incidencia de Pobreza', 'Tasa de Analfabetismo',
+                'Nivel de Riesgo MVCS', 'Total de viviendas por distrito',
+                'Viviendas con techos de calamina o categorías menores',
+                'Viviendas con pisos de tierra',
+                'Viviendas con paredes de adobe o categorías menores',
+                'Total de hogares', 'Número de Tambos en el distrito'],
+               dtype='object')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{right\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de viviendas por distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de hogares}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Número de Tambos en el distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{join\PYZus{}columns} \PY{o}{+} \PY{n}{right\PYZus{}columns}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{n}{join\PYZus{}columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}34}]:}   Ubigeo distrital Departamento    Provincia     Distrito T° Mínima P10 (°C)  \textbackslash{}
          0           010101     AMAZONAS  CHACHAPOYAS  CHACHAPOYAS              0 a 2   
          1           010102     AMAZONAS  CHACHAPOYAS     ASUNCION              0 a 2   
          2           010103     AMAZONAS  CHACHAPOYAS       BALSAS             -5 a 0   
@@ -488,12 +593,12 @@ The autoreload extension is already loaded. To reload it, use:
          3                                 3                  100   
          4                                 6              85.7143   
          
-           Incidencia de Pobreza Tasa de Desnutrición Crónica\textbackslash{}n(< a 5 años)  \textbackslash{}
-         0                 12.27                                       14.6   
-         1                  51.3                                          0   
-         2                 42.59                                       18.7   
-         3                 60.02                                       10.3   
-         4                 74.73                                       22.5   
+           Incidencia de Pobreza Tasa de Desnutrición Crónica (< a 5 años)  \textbackslash{}
+         0                 12.27                                      14.6   
+         1                  51.3                                         0   
+         2                 42.59                                      18.7   
+         3                 60.02                                      10.3   
+         4                 74.73                                      22.5   
          
            Nivel de Riesgo MINEDU Total de alumnos Total de alumnos varones  \textbackslash{}
          0                  MEDIO               79                       40   
@@ -511,154 +616,159 @@ The autoreload extension is already loaded. To reload it, use:
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{common\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ubigeo distrital}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
-                             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-\end{Verbatim}
-
-
-    \subsubsection{1. Factores más importantes para determinar el nivel de
-riesgo según
-MINSA}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minsa}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}76}]:} \PY{k+kn}{from} \PY{n+nn}{lightgbm} \PY{k}{import} \PY{n}{LGBMRegressor}\PY{p}{,} \PY{n}{plot\PYZus{}importance}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}77}]:} \PY{n}{label\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}
-             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BAJO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
-             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MEDIO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
-             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,}
-             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUY ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}
-         \PY{p}{\PYZcb{}}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}78}]:} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}79}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
-             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
-                 \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}88}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
-         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}salud}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}salud}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{columns}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}88}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
-                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
-                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
-                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
-                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
-                subsample\_for\_bin=200000, subsample\_freq=1)
+{\color{outcolor}Out[{\color{outcolor}35}]:} Index(['Ubigeo distrital', 'Departamento', 'Provincia', 'Distrito',
+                'T° Mínima P10 (°C)', 'Frecuencia de heladas (días/mes)',
+                'Total de Instituciones Educativas del distrito', 'unidocentes',
+                'unidocentes/polidoscentes', 'no escolarizadas inicial/primaria',
+                'Total de instituciones educativas', 'Valor del Porcentaje',
+                'Incidencia de Pobreza', 'Tasa de Desnutrición Crónica (< a 5 años)',
+                'Nivel de Riesgo MINEDU', 'Total de alumnos',
+                'Total de alumnos varones', 'Total de alumnos mujeres',
+                'Total de docentes'],
+               dtype='object')
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}89}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{right\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de instituciones educativas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de alumnos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                          \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de docentes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df}\PY{p}{,} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{join\PYZus{}columns} \PY{o}{+} \PY{n}{right\PYZus{}columns}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{on}\PY{o}{=}\PY{n}{join\PYZus{}columns}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/merged\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}89}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f501da0>
-\end{Verbatim}
-            
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \subsubsection{2. Factores más importantes para determinar el nivel de
-riesgo según
-MVCS}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-mvcs}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}97}]:} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}98}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
-             \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
-                 \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}99}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
-         \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}vivienda}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}vivienda}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}99}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
-                learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
-                min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
-                n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
-                reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
-                subsample\_for\_bin=200000, subsample\_freq=1)
+{\color{outcolor}Out[{\color{outcolor}45}]:} array(['10 a 20 dias', '20 a 31 dias', '5 a 10 dias', '2 a 5 dias'],
+               dtype=object)
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}100}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}100}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f68a358>
+{\color{outcolor}Out[{\color{outcolor}41}]:}    N° Departamento Provincia  Ubigeo distrital  Distrito    UBIG\_TAM  \textbackslash{}
+         0   1         PUNO  CARABAYA            210302   AJOYANI  2103050035   
+         1   2         PUNO  CARABAYA            210305    CORANI  2103050035   
+         2   3         PUNO  CARABAYA            210306   CRUCERO  2103050035   
+         3   4         PUNO  CARABAYA            210301  MACUSANI  2103050035   
+         4   5         PUNO  CARABAYA            210310  USICAYOS  2103050035   
+         
+            UBIGEO\_CCP  UBIGEO\_DIS DISTRITO    CCPP LOCAL DE DISTRIBUCIÓN DE BIENES  \textbackslash{}
+         0  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+         1  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+         2  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+         3  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+         4  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+         
+           T° Mínima P10 (°C) Frecuencia de heladas (días/mes) Total del distrito  \textbackslash{}
+         0          -14 a -11                     10 a 20 dias               2099   
+         1          -20 a -14                     10 a 20 dias               3956   
+         2          -20 a -14                     10 a 20 dias               9306   
+         3          -14 a -11                     20 a 31 dias              13015   
+         4          -14 a -11                      5 a 10 dias              23937   
+         
+           Población menor a 5 años Población de 60 años a más Nivel de Riesgo MINSA  \textbackslash{}
+         0                      289                        179                  ALTO   
+         1                      549                        301                  ALTO   
+         2                     1184                        765                 MEDIO   
+         3                     1845                        831              MUY ALTO   
+         4                     2911                       1371                  ALTO   
+         
+           Total de viviendas por distrito Total de hogares  \textbackslash{}
+         0                             576              576   
+         1                             951              952   
+         2                            1751             1839   
+         3                            3103             3111   
+         4                            2999             2999   
+         
+           Número de Tambos en el distrito Nivel de Riesgo MVCS  \textbackslash{}
+         0                               0             MUY ALTO   
+         1                               1                 ALTO   
+         2                               0                MEDIO   
+         3                               0                 ALTO   
+         4                               0                 ALTO   
+         
+           Total de instituciones educativas Total de alumnos Total de docentes  \textbackslash{}
+         0                                 3               42                 4   
+         1                                11              102                 8   
+         2                                55              331                25   
+         3                                13              105                10   
+         4                                11               65                10   
+         
+           Nivel de Riesgo MINEDU  
+         0                   ALTO  
+         1                   ALTO  
+         2                   ALTO  
+         3               MUY ALTO  
+         4                   ALTO  
 \end{Verbatim}
             
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \subsubsection{3. Factores más importantes para determinar el nivel de
-riesgo según
-MINEDU}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seguxfan-minedu}
-
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}101}]:} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{label\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/merged\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}102}]:} \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
-              \PY{k}{if} \PY{n}{col} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{common\PYZus{}columns}\PY{p}{:}
-                  \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{float}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}44}]:} \PY{n}{temperature\PYZus{}levels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}20 a \PYZhy{}14}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}14 a \PYZhy{}11}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}11 a \PYZhy{}5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{categories}\PY{o}{=}\PY{n}{temperature\PYZus{}levels}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}103}]:} \PY{n}{lgbm} \PY{o}{=} \PY{n}{LGBMRegressor}\PY{p}{(}\PY{p}{)}
-          \PY{n}{lgbm}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}educacion}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{common\PYZus{}columns} \PY{o}{+} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{df\PYZus{}educacion}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}46}]:} \PY{n}{frequency\PYZus{}levels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2 a 5 dias}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{5 a 10 dias}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10 a 20 dias}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20 a 31 dias}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{categories}\PY{o}{=}\PY{n}{frequency\PYZus{}levels}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{risk\PYZus{}levels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BAJO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MEDIO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUY ALTO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{categories}\PY{o}{=}\PY{n}{risk\PYZus{}levels}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{categories}\PY{o}{=}\PY{n}{risk\PYZus{}levels}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{categories}\PY{o}{=}\PY{n}{risk\PYZus{}levels}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{13}\PY{p}{)}\PY{p}{)}
+         \PY{n}{fig}\PY{o}{.}\PY{n}{subplots\PYZus{}adjust}\PY{p}{(}\PY{n}{hspace}\PY{o}{=}\PY{l+m+mf}{0.35}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total del distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de viviendas por distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de instituciones educativas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de Riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{barh}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima P10 (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}index}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n}{ax}\PY{o}{=}\PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{rot}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Población total}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de viviendas por distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total de instituciones educativas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de riesgo MINSA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de riesgo MVCS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nivel de riesgo MINEDU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T° Mínima (°C)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Frecuencia de heladas (días/mes)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}103}]:} LGBMRegressor(boosting\_type='gbdt', class\_weight=None, colsample\_bytree=1.0,
-                 learning\_rate=0.1, max\_depth=-1, min\_child\_samples=20,
-                 min\_child\_weight=0.001, min\_split\_gain=0.0, n\_estimators=100,
-                 n\_jobs=-1, num\_leaves=31, objective=None, random\_state=None,
-                 reg\_alpha=0.0, reg\_lambda=0.0, silent=True, subsample=1.0,
-                 subsample\_for\_bin=200000, subsample\_freq=1)
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}104}]:} \PY{n}{plot\PYZus{}importance}\PY{p}{(}\PY{n}{lgbm}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}104}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x7f4b2f67f048>
+{\color{outcolor}Out[{\color{outcolor}51}]:} Text(0.5,1,'Frecuencia de heladas (días/mes)')
 \end{Verbatim}
             
     \begin{center}
@@ -666,6 +776,873 @@ MINEDU}\label{factores-muxe1s-importantes-para-determinar-el-nivel-de-riesgo-seg
     \end{center}
     { \hspace*{\fill} \\}
     
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{df}\PY{p}{[}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total del distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZgt{}}\PY{l+m+mi}{30000}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:}     N° Departamento  Provincia  Ubigeo distrital Distrito    UBIG\_TAM  \textbackslash{}
+         11  12         PUNO  EL COLLAO            210501    ILAVE  2105010022   
+         71  72        CUSCO    CANCHIS             80601  SICUANI   806030013   
+         83  84        CUSCO    ESPINAR             80801  ESPINAR   808070083   
+         
+             UBIGEO\_CCP  UBIGEO\_DIS     DISTRITO       CCPP  \textbackslash{}
+         11  2105010022      210501        ILAVE  CAMICACHI   
+         71   806030013       80603    COMBAPATA  CULLCUIRE   
+         83   808070083       80807  SUYCKUTAMBO   ESCALERA   
+         
+            LOCAL DE DISTRIBUCIÓN DE BIENES T° Mínima P10 (°C)  \textbackslash{}
+         11                 TAMBO CAMICACHI          -14 a -11   
+         71                 TAMBO CULLCUIRE          -20 a -14   
+         83               TAMBO ESCALERAYOC          -14 a -11   
+         
+            Frecuencia de heladas (días/mes)  Total del distrito  \textbackslash{}
+         11                     20 a 31 dias               58210   
+         71                     20 a 31 dias               60363   
+         83                     20 a 31 dias               33520   
+         
+             Población menor a 5 años  Población de 60 años a más  \textbackslash{}
+         11                      5044                        6178   
+         71                      5452                        5969   
+         83                      3186                        2561   
+         
+            Nivel de Riesgo MINSA  Total de viviendas por distrito  Total de hogares  \textbackslash{}
+         11                 MEDIO                            14623             14741   
+         71              MUY ALTO                            13160             13170   
+         83                  ALTO                             7380              7427   
+         
+             Número de Tambos en el distrito Nivel de Riesgo MVCS  \textbackslash{}
+         11                                3                 ALTO   
+         71                                0                MEDIO   
+         83                                0                MEDIO   
+         
+             Total de instituciones educativas  Total de alumnos  Total de docentes  \textbackslash{}
+         11                                197              1214                 71   
+         71                                 46               476                 33   
+         83                                 27               254                 23   
+         
+            Nivel de Riesgo MINEDU  
+         11                   ALTO  
+         71                   ALTO  
+         83                   ALTO  
+\end{Verbatim}
+            
+    \subsection{Geospatial Information}\label{geospatial-information}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{)}
+         \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{)}
+         \PY{n}{not\PYZus{}found} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{address} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distrito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} 
+                                 \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Provincia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} 
+                                 \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{k}{if} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://maps.googleapis.com/maps/api/geocode/json?address=}\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZam{}key=}\PY{l+s+si}{\PYZob{}API\PYZus{}KEY\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{k}{try}\PY{p}{:}
+                     \PY{n}{location} \PY{o}{=} \PY{n}{response}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geometry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lng}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{k}{except}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Location not found: }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(idx)\PYZcb{} }\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                     \PY{n}{not\PYZus{}found}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{idx}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Location not found: 9 CAPAZO,EL+COLLAO,PUNO
+Location not found: 34 PEDRO+VILCA+APAZA,SAN+ANTONIO+DE+PUTINA,PUNO
+Location not found: 61 KUNTURKANKI,CANAS,CUSCO
+Location not found: 72 CAPACMARCA,CHUMBIVILCAS,CUSCO
+Location not found: 84 OCORURO,ESPINAR,CUSCO
+Location not found: 87 SUYCKUTAMBO,ESPINAR,CUSCO
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{n}{locations} \PY{o}{=} \PY{p}{[}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{17°11′01″S 69°44′40″O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{15°03′44″S 69°53′01″O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{14°32′05″S 71°18′25″O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{14°00′28″S 72°00′06″O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{15°03′09″S 71°07′44″O}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{15°04′08″S 71°44′52″O}\PY{l+s+s1}{\PYZsq{}}
+         \PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}83}]:} \PY{k+kn}{import} \PY{n+nn}{re}
+         \PY{k}{def} \PY{n+nf}{DMStoLL}\PY{p}{(}\PY{n}{coordinates}\PY{p}{)}\PY{p}{:}
+             \PY{n}{lat} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}0\PYZhy{}9]+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{coordinates}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{60} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{3600}\PY{p}{)}\PY{p}{,}
+                     \PY{o}{\PYZhy{}}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{60} \PY{o}{+} \PY{n+nb}{float}\PY{p}{(}\PY{n}{lat}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{3600}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}85}]:} \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{loc} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{not\PYZus{}found}\PY{p}{,} \PY{n}{locations}\PY{p}{)}\PY{p}{:}
+             \PY{n}{latlong} \PY{o}{=} \PY{n}{DMStoLL}\PY{p}{(}\PY{n}{loc}\PY{p}{)}
+             \PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{latlong}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{latlong}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}87}]:} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/merged\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Geospatial Visualization}\label{geospatial-visualization}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/merged\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} (107, 27)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{import} \PY{n+nn}{folium}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{folium\PYZus{}colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{purple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cadetblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkgreen}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkpurple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgreen}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{beige}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Categorical}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{m} \PY{o}{=} \PY{n}{folium}\PY{o}{.}\PY{n}{Map}\PY{p}{(}
+            \PY{n}{location}\PY{o}{=}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+m+mi}{56}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+m+mi}{56}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{p}{,}
+            \PY{n}{zoom\PYZus{}start}\PY{o}{=}\PY{l+m+mi}{6}\PY{p}{,}
+            \PY{n}{tiles}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{stamenterrain}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} openstreetmap stamenterrain}
+        
+        \PY{n}{m}\PY{o}{.}\PY{n}{choropleth}\PY{p}{(}
+            \PY{n}{geo\PYZus{}data}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/peru\PYZus{}departamental\PYZus{}simple.geojson}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{choropleth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{fill\PYZus{}color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{fill\PYZus{}opacity}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,}
+            \PY{n}{line\PYZus{}opacity}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+        \PY{p}{)}
+        
+        \PY{n}{folium}\PY{o}{.}\PY{n}{LayerControl}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}to}\PY{p}{(}\PY{n}{m}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{folium}\PY{o}{.}\PY{n}{CircleMarker}\PY{p}{(}\PY{p}{[}\PY{n}{row}\PY{o}{.}\PY{n}{Latitud}\PY{p}{,} \PY{n}{row}\PY{o}{.}\PY{n}{Longitud}\PY{p}{]}\PY{p}{,} \PY{n}{radius}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}
+                    \PY{n}{popup}\PY{o}{=}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZlt{}b\PYZgt{}}\PY{l+s+si}{\PYZob{}row.Distrito\PYZcb{}}\PY{l+s+s1}{\PYZlt{}/b\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{folium\PYZus{}colors}\PY{p}{[}\PY{n}{df}\PY{o}{.}\PY{n}{Departamento}\PY{o}{.}\PY{n}{cat}\PY{o}{.}\PY{n}{codes}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}to}\PY{p}{(}\PY{n}{m}\PY{p}{)}
+        
+        \PY{n}{m}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} <folium.folium.Map at 0x7fdd00829c88>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}145}]:} \PY{n}{df}\PY{o}{.}\PY{n}{to\PYZus{}feather}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/df\PYZus{}checkpoint.feather}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:}    N° Departamento Provincia  Ubigeo distrital  Distrito    UBIG\_TAM  \textbackslash{}
+        0   1         PUNO  CARABAYA            210302   AJOYANI  2103050035   
+        1   2         PUNO  CARABAYA            210305    CORANI  2103050035   
+        2   3         PUNO  CARABAYA            210306   CRUCERO  2103050035   
+        3   4         PUNO  CARABAYA            210301  MACUSANI  2103050035   
+        4   5         PUNO  CARABAYA            210310  USICAYOS  2103050035   
+        
+           UBIGEO\_CCP  UBIGEO\_DIS DISTRITO    CCPP LOCAL DE DISTRIBUCIÓN DE BIENES  \textbackslash{}
+        0  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+        1  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+        2  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+        3  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+        4  2103050035      210305   CORANI  AYMAÑA                    TAMBO AYMAÑA   
+        
+          T° Mínima P10 (°C) Frecuencia de heladas (días/mes)  Total del distrito  \textbackslash{}
+        0          -14 a -11                     10 a 20 dias                2099   
+        1          -20 a -14                     10 a 20 dias                3956   
+        2          -20 a -14                     10 a 20 dias                9306   
+        3          -14 a -11                     20 a 31 dias               13015   
+        4          -14 a -11                      5 a 10 dias               23937   
+        
+           Población menor a 5 años  Población de 60 años a más Nivel de Riesgo MINSA  \textbackslash{}
+        0                       289                         179                  ALTO   
+        1                       549                         301                  ALTO   
+        2                      1184                         765                 MEDIO   
+        3                      1845                         831              MUY ALTO   
+        4                      2911                        1371                  ALTO   
+        
+           Total de viviendas por distrito  Total de hogares  \textbackslash{}
+        0                              576               576   
+        1                              951               952   
+        2                             1751              1839   
+        3                             3103              3111   
+        4                             2999              2999   
+        
+           Número de Tambos en el distrito Nivel de Riesgo MVCS  \textbackslash{}
+        0                                0             MUY ALTO   
+        1                                1                 ALTO   
+        2                                0                MEDIO   
+        3                                0                 ALTO   
+        4                                0                 ALTO   
+        
+           Total de instituciones educativas  Total de alumnos  Total de docentes  \textbackslash{}
+        0                                  3                42                  4   
+        1                                 11               102                  8   
+        2                                 55               331                 25   
+        3                                 13               105                 10   
+        4                                 11                65                 10   
+        
+          Nivel de Riesgo MINEDU    Latitud   Longitud  
+        0                   ALTO -14.100000 -70.200000  
+        1                   ALTO -13.889910 -70.647842  
+        2                   ALTO -14.345380 -70.032097  
+        3               MUY ALTO -14.072176 -70.425339  
+        4                   ALTO -14.125468 -69.966159  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{almacenes} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/almacenes\PYZus{}raw.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:}                                   DESCRIPCION        Unnamed: 1 AREA EN m2  \textbackslash{}
+         0                     TOTAL ALMACENES GENERAL  7RWDO \$OPDFHQHV           3   
+         1  LIMA ALMACEN GENERAL DE LIMA - LA VICTORIA               NaN    1500 m2   
+         2    LIMA (ALMACEN GRUPO AEREO  Nº 8)(CALLAO)               NaN     300 m2   
+         3                          LIMA ALMACEN SUNAT               NaN    1200 m2   
+         4                    TOTAL ALMACENES AMAZONAS  7RWDO \$OPDFHQHV           7   
+         
+           TIPO ALMACEN NIVEL DE ALMACEN  
+         0            3              NaN  
+         1      General                0  
+         2      General                0  
+         3      General                0  
+         4                           NaN  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} (192, 4)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed: 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{almacenes}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NIVEL DE ALMACEN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{almacenes} \PY{o}{=} \PY{n}{almacenes}\PY{p}{[}\PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NIVEL DE ALMACEN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{.}\PY{n}{isdigit}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+         \PY{n}{almacenes} \PY{o}{=} \PY{n}{almacenes}\PY{p}{[}\PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TOTAL}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{x}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} (162, 4)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/almacenes.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:}                                       DESCRIPCION AREA EN m2 TIPO ALMACEN  \textbackslash{}
+         1      LIMA ALMACEN GENERAL DE LIMA - LA VICTORIA    1500 m2      General   
+         2        LIMA (ALMACEN GRUPO AEREO  Nº 8)(CALLAO)     300 m2      General   
+         3                              LIMA ALMACEN SUNAT    1200 m2      General   
+         5  AMAZONAS BAGUA ARAMANGO - 'ARAMANGO'-MUNI DIST      40 m2   Adelantado   
+         6                       AMAZONAS IMAZA - CHIRIACO     100 m2   Adelantado   
+         
+           NIVEL DE ALMACEN  
+         1                0  
+         2                0  
+         3                0  
+         5                2  
+         6                1  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{k+kn}{import} \PY{n+nn}{re}
+         \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}a\PYZhy{}zA\PYZhy{}ZñÑ]+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{departamentos} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{l+s+s1}{Amazonas}
+         \PY{l+s+s1}{Ancash}
+         \PY{l+s+s1}{Apurimac}
+         \PY{l+s+s1}{Arequipa}
+         \PY{l+s+s1}{Ayacucho}
+         \PY{l+s+s1}{Cajamarca}
+         \PY{l+s+s1}{Cusco}
+         \PY{l+s+s1}{Huancavelica}
+         \PY{l+s+s1}{Huanuco}
+         \PY{l+s+s1}{Ica}
+         \PY{l+s+s1}{Junin}
+         \PY{l+s+s1}{La Libertad}
+         \PY{l+s+s1}{Lambayeque}
+         \PY{l+s+s1}{Lima}
+         \PY{l+s+s1}{Loreto}
+         \PY{l+s+s1}{Madre de Dios}
+         \PY{l+s+s1}{Moquegua}
+         \PY{l+s+s1}{Pasco}
+         \PY{l+s+s1}{Piura}
+         \PY{l+s+s1}{Puno}
+         \PY{l+s+s1}{San Martin}
+         \PY{l+s+s1}{Tacna}
+         \PY{l+s+s1}{Tumbes}
+         \PY{l+s+s1}{Ucayali}\PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         
+         \PY{n}{departamentos} \PY{o}{=} \PY{p}{[}\PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[\PYZca{}a\PYZhy{}zA\PYZhy{}ZñÑ]+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dep}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{departamentos}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{departamentos}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['AMAZONAS', 'ANCASH', 'APURIMAC', 'AREQUIPA', 'AYACUCHO', 'CAJAMARCA', 'CUSCO', 'HUANCAVELICA', 'HUANUCO', 'ICA', 'JUNIN', 'LA LIBERTAD', 'LAMBAYEQUE', 'LIMA', 'LORETO', 'MADRE DE DIOS', 'MOQUEGUA', 'PASCO', 'PIURA', 'PUNO', 'SAN MARTIN', 'TACNA', 'TUMBES', 'UCAYALI']
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{API\PYZus{}KEY} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AIzaSyDfPTFcufdrhScawnXFHZTPIcNT6NUfvNo}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+         \PY{c+c1}{\PYZsh{} almacenes[\PYZsq{}Latitud\PYZsq{}] = pd.Series()}
+         \PY{c+c1}{\PYZsh{} almacenes[\PYZsq{}Longitud\PYZsq{}] = pd.Series()}
+         \PY{n}{not\PYZus{}found} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{almacenes}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{departamento} \PY{o}{=} \PY{p}{[}\PY{n}{dep} \PY{k}{for} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{departamentos} \PY{k}{if} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{descripcion}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{descripcion}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{departamento}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}
+             \PY{n}{address} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{descripcion}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{departamento}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{k}{if} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://maps.googleapis.com/maps/api/geocode/json?address=}\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZam{}key=}\PY{l+s+si}{\PYZob{}API\PYZus{}KEY\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{k}{try}\PY{p}{:}
+                     \PY{n}{location} \PY{o}{=} \PY{n}{response}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geometry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lng}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{k}{except}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Location not found: }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(idx)\PYZcb{} }\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                     \PY{n}{not\PYZus{}found}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{idx}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Location not found: 5 BAGUA+ARAMANGO+ARAMANGO+MUNI+DIST,AMAZONAS
+Location not found: 7 BAGUA+LA+PECA+DIRECCION+REGIONAL+DC,AMAZONAS
+Location not found: 9 CONDORCANQUI+NIEVA+MUNI,AMAZONAS
+Location not found: 10 LUYA+LAMUD+LUYA+MUNI+PROV,AMAZONAS
+Location not found: 16 CHOTA+CHOTA+GOB+REG,CAJAMARCA
+Location not found: 17 CONTUMAZA+CONTUMAZA+MUNI,CAJAMARCA
+Location not found: 18 CUTERVO+CUTERVO+GOB+REG,CAJAMARCA
+Location not found: 24 BOLIVAR+BOLIVAR+GOB+REG,LA+LIBERTAD
+Location not found: 25 GRAN+CHIMU+SAYAPULLO+MUNI,LA+LIBERTAD
+Location not found: 27 PATAZ+TAYABAMBA+GOB+REG,LA+LIBERTAD
+Location not found: 28 S+CARRION+HUAMACHUCO+GOB+REG,LA+LIBERTAD
+Location not found: 45 HUANCABAMBA+HUARMACA+HUARMACA+MUN+DIST,PIURA
+Location not found: 49 MORROPON+SANTO+DOMINGO+STO+DOMINGO+MUN+DIS,PIURA
+Location not found: 50 MORROPON+YAMANGO+YAMANGO+MUNI+DIST,PIURA
+Location not found: 51 CURA+MORI+CURA+MORI+MUNI+DIST,PIURA
+Location not found: 53 LAS+LOMAS+LAS+LOMAS+MUNI+DIST,PIURA
+Location not found: 56 TALARA+LOBITOS+TALARA+MUNI+PROV,PIURA
+Location not found: 58 CONTRAL+VILLAR+CASITAS+CASITAS+MUNI,TUMBES
+Location not found: 59 CONTRAL+VILLAR+ZORRITOS+ZORRITOS+MUNI,TUMBES
+Location not found: 60 SAN+JACINTO+SAN+JACINTO+MUN,TUMBES
+Location not found: 67 PALLASCA+CABANA+CABANA+MUNI+PROV,ANCASH
+Location not found: 68 SANTA+NVO+CHIMBOTE+CHIMBOTE+SUB+REG+PACIF,ANCASH
+Location not found: 70 HUAMANGA+DRDC,AYACUCHO
+Location not found: 73 PAUCAR+DEL+SARA+SARA+PAUSA+PAUSA+MUN+PR,AYACUCHO
+Location not found: 85 P+INCA+C+POZUZO+MUNI,HUANUCO
+Location not found: 90 CHINCHA+CHINCHA+ALTA+CHINCHA+MUNI+PROV,ICA
+Location not found: 91 GOB+REG,ICA
+Location not found: 92 NAZCA+NAZCA+NAZCA+MUNI+PROV,ICA
+Location not found: 94 CHANCHAMAYO+CHANCHAMAYO+CHANCHAMAYO+MUN+PR,JUNIN
+Location not found: 101 LIMA+LIMA+LURIGANCHO+CHOS+MUNI+PROV,ICA
+Location not found: 103 D+A+CARRION+YANAHUANCA+YANAHUANCA+MUN+PROV,PASCO
+Location not found: 104 OXAPAMPA+OXAPAMPA+OXAPAMPA+MUN+PROV,PASCO
+Location not found: 105 YANACANCHA+GOB+REG,PASCO
+Location not found: 107 J+L+BUSTAM+Y+RIVERO+AREQUIP+DRDC,AREQUIPA
+Location not found: 108 CARAVELI+ACARI+ACARI+MUNI+DIST,AREQUIPA
+Location not found: 109 CARAVELI+CARAVELI+CARAVELI+MUNI+PROV,AREQUIPA
+Location not found: 110 CASTILLA+VIRACO+VIRACO+MUNI+DIST,AREQUIPA
+Location not found: 113 CHUQUIBAMBA+CONDESUYOS+MUNI,AREQUIPA
+Location not found: 124 CARABAYA+COAZA+MUNI,PUNO
+Location not found: 133 S+ANTONIO+P+SINA+MUNI,PUNO
+Location not found: 137 SANDIA+LIMBANI+MUNI,PUNO
+Location not found: 138 SANDIA+S+JUAN+DEL+ORO+MUNI,PUNO
+Location not found: 139 SANDIA+SANDIA+MUNI,PUNO
+Location not found: 141 CANDARAVE+CANDARAVE+CANDAVERE+MUNI+PROV,TACNA
+Location not found: 142 J+BASADRE+ILABAYA+ILABAYA+MUNI+DIST,TACNA
+Location not found: 144 PALCA+PALCA+MUNI+DIST,TACNA
+Location not found: 150 ANTABAMBA+ANTABAMBA+MUNI+PROV,APURIMAC
+Location not found: 151 CHINCHEROS+CHINCHEROS+CPDC+CHINCHEROS,APURIMAC
+Location not found: 152 COTABAMBAS+COTABAMBAS+COTABAMBAS+MUN+DI,APURIMAC
+Location not found: 153 GRAU+CHUQUIBAMBILLA+MUNI+PROV,APURIMAC
+Location not found: 155 CANAS+YANAOCA+YANAOCA+MUNI+PROV,CUSCO
+Location not found: 157 CHUMBIVILCAS+STO+TOMAS+SANTO+TOMAS+MUNI+PR,CUSCO
+Location not found: 162 MANU+HUEPETUHE+HUEPETUHE+MUNI+DIST,MADRE+DE+DIOS
+Location not found: 164 TAHUAMANU+IÑAPARI+IÑAPARI+GOB+REG,MADRE+DE+DIOS
+Location not found: 167 LORETO+ALTO+BARRANCA+SAN+LORENZO+MUN+PR,AMAZONAS
+Location not found: 170 M+R+CASTILLA+R+CASTILLA+CABALLO+COCHA+MUN,LORETO
+Location not found: 173 MAYNAS+PUTUMAYO+PUTUMAYO+MUNI+PROV,LORETO
+Location not found: 175 REQUENA+YAQUERANA+YAQUERANA+MUNI+PROV,LORETO
+Location not found: 177 UCAYALI+SARAYACU+T+BLANCA+MUNI,LORETO
+Location not found: 181 HUIMBAYOC+MUN+DIST,SAN+MARTIN
+Location not found: 190 PURUS+PURUS+PTO+ESPERANZA+MUNI,UCAYALI
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{almacenes}\PY{p}{[}\PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{almacenes}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}65}]:} (101, 162)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{Counter}
+         \PY{n}{c} \PY{o}{=} \PY{n}{Counter}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{desc} \PY{o+ow}{in} \PY{n}{almacenes}\PY{o}{.}\PY{n}{DESCRIPCION}\PY{p}{:}
+             \PY{n}{c}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{n}{desc}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{n}{c}\PY{o}{.}\PY{n}{most\PYZus{}common}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}73}]:} [('MUNI', 100),
+          ('PROV', 36),
+          ('PIURA', 22),
+          ('PUNO', 18),
+          ('DIST', 17),
+          ('SAN', 16),
+          ('DIRECCION', 14),
+          ('REG', 14),
+          ('LA', 13),
+          ('REGIONAL', 13)]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}83}]:} \PY{p}{[}\PY{n}{w} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{c} \PY{k}{if} \PY{n}{w}\PY{o}{.}\PY{n}{startswith}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{REG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}83}]:} ['REGIONAL', 'REG']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}85}]:} \PY{n}{replace\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUNICIPALIDAD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUNI}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MUNICIPALIDAD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PROVINCIAL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DIS}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITAL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DIST}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DISTRITAL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GOB}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GOBIERNO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{REG}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{REGIONAL}\PY{l+s+s1}{\PYZsq{}}
+         \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}86}]:} \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{almacenes}\PY{o}{.}\PY{n}{DESCRIPCION}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{desc}\PY{p}{:} \PYZbs{}
+                                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{replace\PYZus{}dict}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{desc}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}80}]:} \PY{c+c1}{\PYZsh{} almacenes2 = almacenes.copy()}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}87}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+         \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{)}
+         \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{)}
+         \PY{n}{not\PYZus{}found} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{almacenes}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{departamento} \PY{o}{=} \PY{p}{[}\PY{n}{dep} \PY{k}{for} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{departamentos} \PY{k}{if} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{descripcion}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{descripcion}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{departamento}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}
+             \PY{n}{address} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{descripcion}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{departamento}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{k}{if} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://maps.googleapis.com/maps/api/geocode/json?address=}\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZam{}key=}\PY{l+s+si}{\PYZob{}API\PYZus{}KEY\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{k}{try}\PY{p}{:}
+                     \PY{n}{location} \PY{o}{=} \PY{n}{response}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geometry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                     \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lng}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{k}{except}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Location not found: }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(idx)\PYZcb{} }\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                     \PY{n}{not\PYZus{}found}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{idx}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Location not found: 7 BAGUA+LA+PECA+DIRECCION+REGIONAL+DC,AMAZONAS
+Location not found: 24 BOLIVAR+BOLIVAR+GOBIERNO+REGIONAL,LA+LIBERTAD
+Location not found: 27 PATAZ+TAYABAMBA+GOBIERNO+REGIONAL,LA+LIBERTAD
+Location not found: 56 TALARA+LOBITOS+TALARA+MUNICIPALIDAD+PROVINCIAL,PIURA
+Location not found: 58 CONTRAL+VILLAR+CASITAS+CASITAS+MUNICIPALIDAD,TUMBES
+Location not found: 59 CONTRAL+VILLAR+ZORRITOS+ZORRITOS+MUNICIPALIDAD,TUMBES
+Location not found: 70 HUAMANGA+DRDC,AYACUCHO
+Location not found: 73 PAUCAR+DEL+SARA+SARA+PAUSA+PAUSA+MUNICIPALIDAD+PR,AYACUCHO
+Location not found: 85 INCA+POZUZO+MUNICIPALIDAD,HUANUCO
+Location not found: 107 BUSTAM+RIVERO+AREQUIP+DRDC,AREQUIPA
+Location not found: 151 CHINCHEROS+CHINCHEROS+CPDC+CHINCHEROS,APURIMAC
+Location not found: 157 CHUMBIVILCAS+STO+TOMAS+SANTO+TOMAS+MUNICIPALIDAD+PR,CUSCO
+Location not found: 162 MANU+HUEPETUHE+HUEPETUHE+MUNICIPALIDAD+DISTRITAL,MADRE+DE+DIOS
+Location not found: 164 TAHUAMANU+IÑAPARI+IÑAPARI+GOBIERNO+REGIONAL,MADRE+DE+DIOS
+Location not found: 167 LORETO+ALTO+BARRANCA+SAN+LORENZO+MUNICIPALIDAD+PR,AMAZONAS
+Location not found: 173 MAYNAS+PUTUMAYO+PUTUMAYO+MUNICIPALIDAD+PROVINCIAL,LORETO
+Location not found: 175 REQUENA+YAQUERANA+YAQUERANA+MUNICIPALIDAD+PROVINCIAL,LORETO
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}88}]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{almacenes}\PY{p}{[}\PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{almacenes}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}88}]:} (145, 162)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}91}]:} \PY{n}{almacenes}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{idx}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{almacenes}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{row}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{departamento} \PY{o}{=} \PY{p}{[}\PY{n}{dep} \PY{k}{for} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{departamentos} \PY{k}{if} \PY{n}{dep} \PY{o+ow}{in} \PY{n}{descripcion}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{descripcion} \PY{o}{=} \PY{n}{descripcion}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{n}{departamento}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}
+             \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Departamento}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{departamento}
+             \PY{n}{almacenes}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{idx}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DESCRIPCION}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{descripcion}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}92}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}92}]:}                                        DESCRIPCION AREA EN m2 TIPO ALMACEN  \textbackslash{}
+         1                  ALMACEN GENERAL DE  LA VICTORIA    1500 m2      General   
+         2                       ALMACEN GRUPO AEREO CALLAO     300 m2      General   
+         3                                    ALMACEN SUNAT    1200 m2      General   
+         5  BAGUA ARAMANGO ARAMANGO MUNICIPALIDAD DISTRITAL      40 m2   Adelantado   
+         6                                   IMAZA CHIRIACO     100 m2   Adelantado   
+         
+           NIVEL DE ALMACEN    Latitud   Longitud Departamento  
+         1                0 -12.041769 -77.040296         LIMA  
+         2                0 -12.010117 -77.112275         LIMA  
+         3                0 -12.079817 -76.966883         LIMA  
+         5                2  -5.408247 -78.429719     AMAZONAS  
+         6                1  -5.154135 -78.342552     AMAZONAS  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}93}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/almacenes\PYZus{}geocoded.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}96}]:} \PY{n}{df}\PY{o}{.}\PY{n}{Departamento}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}96}]:} array(['PUNO', 'APURIMAC', 'AREQUIPA', 'AYACUCHO', 'CUSCO',
+                'HUANCAVELICA', 'HUANUCO', 'PASCO', 'TACNA'], dtype=object)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}97}]:} \PY{n}{almacenes}\PY{o}{.}\PY{n}{Departamento}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}97}]:} array(['LIMA', 'AMAZONAS', 'CAJAMARCA', 'LA LIBERTAD', 'LAMBAYEQUE',
+                'PIURA', 'TUMBES', 'ANCASH', 'AYACUCHO', 'HUANCAVELICA', 'HUANUCO',
+                'ICA', 'JUNIN', 'PASCO', 'AREQUIPA', 'MOQUEGUA', 'PUNO', 'TACNA',
+                'APURIMAC', 'CUSCO', 'MADRE DE DIOS', 'LORETO', 'SAN MARTIN',
+                'UCAYALI'], dtype=object)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}98}]:} \PY{n}{departamentos\PYZus{}heladas} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LIMA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ANCASH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AYACUCHO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HUANCAVELICA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HUANUCO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ICA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{JUNIN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PASCO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AREQUIPA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MOQUEGUA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PUNO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TACNA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{APURIMAC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CUSCO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}103}]:} \PY{n+nb}{set}\PY{p}{(}\PY{n}{departamentos\PYZus{}heladas}\PY{p}{)}\PY{o}{.}\PY{n}{difference}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{Departamento}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}103}]:} \{'ANCASH', 'ICA', 'JUNIN', 'LIMA', 'MOQUEGUA'\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}104}]:} \PY{n}{almacenes\PYZus{}heladas} \PY{o}{=} \PY{n}{almacenes}\PY{p}{[}\PY{n}{almacenes}\PY{o}{.}\PY{n}{Departamento}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o+ow}{in} \PY{n}{departamentos\PYZus{}heladas}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}106}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}106}]:} (86, 7)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}108}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{Latitud}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}108}]:}                                            DESCRIPCION AREA EN m2  \textbackslash{}
+          70                                     HUAMANGA   DRDC     180 m2   
+          73   PAUCAR DEL SARA SARA PAUSA PAUSA MUNICIPALIDAD PR      60 m2   
+          85                           INCA POZUZO MUNICIPALIDAD      24 m2   
+          107                         BUSTAM RIVERO AREQUIP DRDC     800 m2   
+          151              CHINCHEROS CHINCHEROS CPDC CHINCHEROS     300 m2   
+          157  CHUMBIVILCAS STO TOMAS SANTO TOMAS MUNICIPALID{\ldots}      40 m2   
+          
+              TIPO ALMACEN NIVEL DE ALMACEN  Latitud  Longitud Departamento  
+          70       Central                3      NaN       NaN     AYACUCHO  
+          73    Adelantado                2      NaN       NaN     AYACUCHO  
+          85    Adelantado                1      NaN       NaN      HUANUCO  
+          107      Central                3      NaN       NaN     AREQUIPA  
+          151   Adelantado                2      NaN       NaN     APURIMAC  
+          157   Adelantado                2      NaN       NaN        CUSCO  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}109}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+          \PY{n}{latitudes} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{longitudes} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{addresses} \PY{o}{=} \PY{p}{[}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HUAMANGA,AYACUCHO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PAUCAR+DEL+SARA,AYACUCHO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CODO+DEL+POZUZO,HUANUCO}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BUSTAMANTE+Y+RIVERO,AREQUIPA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CHINCHEROS,APURIMAC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CHUMBIVILCAS,CUSCO}\PY{l+s+s1}{\PYZsq{}}
+          \PY{p}{]}
+          \PY{n}{not\PYZus{}found} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{address} \PY{o+ow}{in} \PY{n}{addresses}\PY{p}{:}
+              \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://maps.googleapis.com/maps/api/geocode/json?address=}\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZam{}key=}\PY{l+s+si}{\PYZob{}API\PYZus{}KEY\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{k}{try}\PY{p}{:}
+                  \PY{n}{location} \PY{o}{=} \PY{n}{response}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{results}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{geometry}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                  \PY{n}{latitudes}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} 
+                  \PY{n}{longitudes}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{location}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lng}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{k}{except}\PY{p}{:}
+                  \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Location not found: }\PY{l+s+si}{\PYZob{}address\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}113}]:} \PY{n}{indices} \PY{o}{=} \PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{Latitud}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{index}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}115}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{indices}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}115}]:}                                            DESCRIPCION AREA EN m2  \textbackslash{}
+          70                                     HUAMANGA   DRDC     180 m2   
+          73   PAUCAR DEL SARA SARA PAUSA PAUSA MUNICIPALIDAD PR      60 m2   
+          85                           INCA POZUZO MUNICIPALIDAD      24 m2   
+          107                         BUSTAM RIVERO AREQUIP DRDC     800 m2   
+          151              CHINCHEROS CHINCHEROS CPDC CHINCHEROS     300 m2   
+          157  CHUMBIVILCAS STO TOMAS SANTO TOMAS MUNICIPALID{\ldots}      40 m2   
+          
+              TIPO ALMACEN NIVEL DE ALMACEN  Latitud  Longitud Departamento  
+          70       Central                3      NaN       NaN     AYACUCHO  
+          73    Adelantado                2      NaN       NaN     AYACUCHO  
+          85    Adelantado                1      NaN       NaN      HUANUCO  
+          107      Central                3      NaN       NaN     AREQUIPA  
+          151   Adelantado                2      NaN       NaN     APURIMAC  
+          157   Adelantado                2      NaN       NaN        CUSCO  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}116}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{indices}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{latitudes}
+          \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{indices}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitud}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{longitudes}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/raduviri/anaconda3/envs/chana/lib/python3.6/site-packages/pandas/core/indexing.py:537: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row\_indexer,col\_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  self.obj[item] = s
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}117}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{indices}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}117}]:}                                            DESCRIPCION AREA EN m2  \textbackslash{}
+          70                                     HUAMANGA   DRDC     180 m2   
+          73   PAUCAR DEL SARA SARA PAUSA PAUSA MUNICIPALIDAD PR      60 m2   
+          85                           INCA POZUZO MUNICIPALIDAD      24 m2   
+          107                         BUSTAM RIVERO AREQUIP DRDC     800 m2   
+          151              CHINCHEROS CHINCHEROS CPDC CHINCHEROS     300 m2   
+          157  CHUMBIVILCAS STO TOMAS SANTO TOMAS MUNICIPALID{\ldots}      40 m2   
+          
+              TIPO ALMACEN NIVEL DE ALMACEN    Latitud   Longitud Departamento  
+          70       Central                3 -13.163874 -74.223564     AYACUCHO  
+          73    Adelantado                2 -15.179905 -73.185490     AYACUCHO  
+          85    Adelantado                1  -9.673406 -75.462147      HUANUCO  
+          107      Central                3 -16.434110 -71.521948     AREQUIPA  
+          151   Adelantado                2 -13.517766 -73.723513     APURIMAC  
+          157   Adelantado                2 -14.450192 -72.081979        CUSCO  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AREA EN m2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}122}]:}                                        DESCRIPCION AREA EN m2 TIPO ALMACEN  \textbackslash{}
+          100  HUAURA HUACHO HUACHO MUNICIPALIDAD PROVINCIAL        NaN   Adelantado   
+          
+              NIVEL DE ALMACEN    Latitud   Longitud Departamento  
+          100                1 -11.122722 -77.610568         LIMA  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}125}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{Departamento} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LIMA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}125}]:}                                        DESCRIPCION AREA EN m2 TIPO ALMACEN  \textbackslash{}
+          1                  ALMACEN GENERAL DE  LA VICTORIA    1500 m2      General   
+          2                       ALMACEN GRUPO AEREO CALLAO     300 m2      General   
+          3                                    ALMACEN SUNAT    1200 m2      General   
+          98                            HUAROCHIRI ANTIOQUIA      80 m2   Adelantado   
+          99                             HUAROCHIRI MATUCANA     100 m2   Adelantado   
+          100  HUAURA HUACHO HUACHO MUNICIPALIDAD PROVINCIAL        NaN   Adelantado   
+          183                ALMACEN GENERAL DE  LA VICTORIA     150 m2   Adelantado   
+          185                                  ALMACEN SUNAT      49 m2   Adelantado   
+          
+              NIVEL DE ALMACEN    Latitud   Longitud Departamento  
+          1                  0 -12.041769 -77.040296         LIMA  
+          2                  0 -12.010117 -77.112275         LIMA  
+          3                  0 -12.079817 -76.966883         LIMA  
+          98                 1 -12.079273 -76.509079         LIMA  
+          99                 1 -11.840732 -76.379645         LIMA  
+          100                1 -11.122722 -77.610568         LIMA  
+          183                0 -12.041769 -77.040296         LIMA  
+          185                0 -12.079817 -76.966883         LIMA  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}126}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AREA EN m2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{fillna}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{200 m2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/raduviri/anaconda3/envs/chana/lib/python3.6/site-packages/pandas/core/generic.py:4355: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  self.\_update\_inplace(new\_data)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}130}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}130}]:}                                       DESCRIPCION AREA EN m2 TIPO ALMACEN  \textbackslash{}
+          1                 ALMACEN GENERAL DE  LA VICTORIA    1500 m2      General   
+          2                      ALMACEN GRUPO AEREO CALLAO     300 m2      General   
+          3                                   ALMACEN SUNAT    1200 m2      General   
+          65  HUARAZ INDEPENDENCIA HUARAZ GOBIERNO REGIONAL     100 m2   Adelantado   
+          66     HUARI HUARI HUARI MUNICIPALIDAD PROVINCIAL      50 m2   Adelantado   
+          
+             NIVEL DE ALMACEN    Latitud   Longitud Departamento  
+          1                 0 -12.041769 -77.040296         LIMA  
+          2                 0 -12.010117 -77.112275         LIMA  
+          3                 0 -12.079817 -76.966883         LIMA  
+          65                3  -9.494546 -77.537359       ANCASH  
+          66                1  -9.348727 -77.171926       ANCASH  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}129}]:} \PY{n}{almacenes\PYZus{}heladas}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/almacenes\PYZus{}heladas.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
 
     % Add a bibliography block to the postdoc
     
