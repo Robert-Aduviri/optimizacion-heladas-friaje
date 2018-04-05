@@ -26,7 +26,7 @@ subject to Update_Invent {k in K, t in 1..T}:
 				- Consumo[k,t] 
 				- sum {(k,j) in LINKS} Transp[k,j,t-1]; # Salida de transporte que se fue ayer
 	
-subject to Transporation_Requirement {k in K, t in 0..T}:
+subject to Transportation_Requirement {k in K, t in 0..T}:
 	sum {(k,j) in LINKS} Transp[k,j,t] <= Inv[k,t];	
 	
 subject to Update_Demand {k in K, t in 1..T}:
@@ -38,7 +38,10 @@ subject to Update_Vehicles {k in K, t in 1..T}:
 	    			- sum {(k,j) in LINKS} Veh[k,j,t-1];
 
 subject to Vehicle_Capacity {(k,j) in LINKS, t in 0..T}:
-	Transp[k,j,t] = Veh[k,j,t] * CapacidadVeh;
+	Transp[k,j,t] <= Veh[k,j,t] * CapacidadVeh; # Check (forces multiples)
+
+subject to Vehicle_Requirement {k in K, t in 0..T}:
+	sum {(k,j) in LINKS} Veh[k,j,t] <= VehDisp[k,t];
 
 subject to Initial_Demand {k in K}:
 	DemandaNS[k,0] = Demanda0[k];
