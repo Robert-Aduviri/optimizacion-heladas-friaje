@@ -1,87 +1,90 @@
-set S; # SUPPLIERS
-set W; # WAREHOUSES
-set R; # RECIPIENTS
-set A; # AIRPORTS;
-set F; # SEAPORTS;
-set B; # RAIL TERMINALS;
+set K;
+set LINKS within {K, K};
 
-set I; # ITEMS;
-set V; # VEHICLE TYPES;
-set K = S union W union R union A union F union B; # NODES
-set G = S union W union A union F union B; # INTERMEDIATE NODES;
-# set L; # LINKS
+param T >= 0;
+param CapacidadVeh >= 0;
+param CostoTransp {LINKS};
 
-set T; # DAYS
+param Demanda0 {K};
+param Inv0 {K};
+param VehDisp0 {K};
 
-# i : items transported
-# v : vehicles
-# j, k : network nodes (S, W, R, A, F, B)
-# t : day within the planning horizon
+var Transp    {LINKS, 0..T} >= 0 integer;
+var Veh       {LINKS, 0..T} >= 0 integer;
+var DemandaNS {K, 0..T} >= 0 integer;
+var Consumo   {K, 0..T} >= 0 integer;
+var Inv       {K, 0..T} >= 0 integer;
+var VehDisp   {K, 0..T} >= 0 integer;
 
-param Cap       {T}; # available capacity time in each period t
-param Invent0    {K, I}; # initial inventory at node k of item i
-param Demand    {K, I, T}; # demand at node k for item i on day t
-param Udemand0  {K, I}; # unsatisfied demand at node k for item i
-
-param VehCap    {V}; # maximum capacity that each vehicle v can carry
-param VehAvail  {K, V, T}; # number of vehicles available at node k of a vehicle type v on day t
-param LeadTime  {K, K, V}; # lead time from node k to node j using a vehicle of type v
-param Transp0   {K, K, V, I}; # * amount of item i already sent from node k to node j, using a vehicle of type v, i at past times t <= 0
-param FixedCost {K, K, V}; # fixed transport cost of using each vehicle type v between node k and node j
-param Weight    {I}; # weight of each item i
-param CapNode   {K}; # capacity limits of each node k
-
-var Transp {K, K, V, I, T}; # amount of item i sent from node k to node j, using vehicle type v, on day t
-var Vehicles {K, K, V, T}; # number of vehicles of type v sent from node k to node j on day t
-
-var Invent   {K, I, T}; # inventory at node k of item i at the end of day t
-var Udemand {K, I, T}; # unsatisfied demand at node k for item i at the end of day t
- 
 minimize Cost:
-	        sum {k in K, i in I, t in T}         Udemand[k,i,t] +
-	0.001 * sum {k in K, j in K, v in V, t in T} FixedCost[k,j,v] * Vehicles[k,j,v,t] +
-	0.01  * sum {k in K, i in I, t in T}         Invent[k,i,t] +
-	        sum {k in K, j in K, v in V, t in T} Vehicles[k,j,v,t];
-	        
-subject to Initial_Udemand {k in K, i in I}:
-	Udemand[k,i,0] = Udemand0[k,i];
+	sum {k in K, t in 0..T}         100 * DemandaNS[k,t] + 
+	sum {(k,j) in LINKS, t in 1..T} CostoTransp[k,j] * Veh[k,j,t];
+	
+subject to Update_Invent {k in K, t in 1..T}:
+	Inv[k,t] = Inv[k,t-1] 
+				+ sum {(j,k) in LINKS} Transp[j,k,t-1] # Llegada de viajes que empezaron ayer 
+				- Consumo[k,t] 
+				- sum {(k,j) in LINKS} Transp[k,j,t-1]; # Salida de transporte que se fue ayer
+	
+subject to Transportation_Requirement {k in K, t in 0..T}:
+	sum {(k,j) in LINKS} Transp[k,j,t] <= Inv[k,t];	
+	
+subject to Update_Demand {k in K, t in 1..T}:
+	DemandaNS[k,t] = DemandaNS[k,t-1] - Consumo[k,t];
+	
+subject to Update_Vehicles {k in K, t in 1..T}:
+	VehDisp[k,t] = VehDisp[k,t-1] 
+	    			+ sum {(j,k) in LINKS} Veh[j,k,t-1]
+	    			- sum {(k,j) in LINKS} Veh[k,j,t-1];
 
-subject to Initial_Invent {k in K, i in I}:
-	Invent[k,i,0] = Invent0[k,i];
-	
-subject to Initial_Transp {k in K, j in K, v in V, i in I}:
-	Transp[k,j,v,i,0] = Transp0[k,j,v,i]; # * t = 0, could be < 0 
+subject to Vehicle_Capacity {(k,j) in LINKS, t in 0..T}:
+	Transp[k,j,t] <= Veh[k,j,t] * CapacidadVeh; # Check (forces multiples)
 
-subject to Invent_Balance {k in K, i in I, t in T}:
-	sum {j in K, v in V} Transp[j,k,v,i,t - LeadTime[j,k,v]] + Invent[k,i,t-1] - Udemand[k,i,t-1] =
-	sum {j in K, v in V} Transp[k,j,v,i,t] + Invent[k,i,t] - Udemand[k,i,t] + Demand[k,i,t];
+subject to Vehicle_Requirement {k in K, t in 0..T}:
+	sum {(k,j) in LINKS} Veh[k,j,t] <= VehDisp[k,t];
+
+subject to Initial_Demand {k in K}:
+	DemandaNS[k,0] = Demanda0[k];
 	
-subject to Enough_Vehicles {k in K, j in K, v in V, t in T}:
-	Vehicles[k,j,v,t] >= 0.001 * (sum {i in I} Transp[k,j,v,i,t] * Weight[i]) / VehCap[v];
+subject to Initial_Invent {k in K}:
+	Inv[k,0] = Inv0[k];
 	
-subject to Capacity_Limit {k in K, t in T}:
-	0.001 * sum {i in I} Invent[k,i,t] * Weight[i] <= CapNode[k];	   
+subject to Initial_Vehicles {k in K}:
+	VehDisp[k,0] = VehDisp0[k];
+	
+	
+data;
+
+# param T := 2;
+
+# set K := a b c;
+# set LINKS := (a, b) (b, c);
+
+# param CapacidadVeh := 20;
+# param CostoTransp := a b 10 b c 10;
+# param Demanda0 := a 0 b 20 c 10;
+# param Inv0 := a 50 b 0 c 0;
+# param VehDisp0 := a 4 b 0 c 0;
+
+#        f
+#       / 
+#  a   d
+#   \ / \
+#    c   g
+#   / \ /
+#  b   e
+#       \
+#        h
+
+param T := 6;
+set K := a b c d e f g h;
+set LINKS := (a,c) (b,c) (c,d) (c,e) (d,f) (d,g) (e,g) (e,h);
+param CapacidadVeh := 20;
+param CostoTransp default 10;
+param Demanda0 := a   0 b  0 c  0 d 30 e 20 f 40 g 40 h 40;
+param Inv0     := a 100 b 80 c 10 d  0 e  0 f  0 g  0 h  0;
+param VehDisp0 default 0 := a 10 b 10;
 
 
 
-# data;
 
-# 10-day planning horizon
-# 5 items
-# 4 vehicle types
-# 54 nodes (83)
-#    25 suppliers (49)
-#    6 warehouses (6)
-#    8 recipients (13)
-#    8 airports or heliports (8)
-#    1 seaport (1)
-#    6 rail terminals (6)
-# UNJLC website for the 2005 Pakistan earthquake
-
-
-	
-	
-	
-	
-	
-	
