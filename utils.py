@@ -1,3 +1,4 @@
+import re
 import random
 from functools import partial
 
@@ -71,9 +72,12 @@ def chromosome_fitness(ch, E, D, W, d, t, a, c, g, v):
 
 ######################## GENETIC ALGORITHM ########################
 
-def init_genetic_algorithm(chromosome_fitness, E, D, W, d, t, a, c, g, v):
-    del creator.FitnessMin
-    del creator.Individual
+def init_genetic_algorithm(chromosome_fitness, E, D, W, d, g, v, t, a, c):
+    try:
+        del creator.FitnessMin
+        del creator.Individual
+    except:
+        pass
     creator.create('FitnessMin', base.Fitness, weights=(-1.0,))
     creator.create('Individual', list, fitness=creator.FitnessMin)
     N_NODES = len(D) + len(W) # num plants + num DCs
@@ -96,11 +100,117 @@ def init_genetic_algorithm(chromosome_fitness, E, D, W, d, t, a, c, g, v):
     stats.register('Max', np.max)
     return toolbox, stats
 
+######################## LOAD AND GENERATE FILES ########################
+
+def load_file(input_file):
+    '''
+    Outputs: [E, D, W, d, g, v, t, a, c]
+    '''
+    with open(input_file, 'r') as f:
+        lines = f.read().strip().split('\n')
+        var_order = 'EDWdgvtac'
+        params = {}
+        for i in range(6):
+            params[var_order[i]] = [int(n) for n in lines[i].split()[1:]]
+        idx = 6
+        for i in range(3):
+            n_rows = len(params[var_order[i]])
+            params[lines[idx]] = np.array(
+                            [line.split() for line in \
+                            lines[idx+1 : idx+1+n_rows]],
+                            dtype=float)
+            idx += 1 + n_rows
+    return [params[var] for var in var_order]
+
+def generate_file(output_file, 
+                  n_S, S_cap, n_P, P_cap, 
+                  n_D, D_cap, n_C, C_dem, 
+                  P_cost, D_cost, 
+                  SP_cost, PD_cost, DC_cost, random_state=None):
+    '''
+    output_file: path to the output file
+    n_S: number of suppliers
+    S_cap: capacity range of suppliers (S_cap_min, S_cap_max)
+    n_P: number of plants
+    P_cap: capacity range of plants (P_cap_min, P_cap_max)
+    n_D: number of DCs
+    D_cap: capacity range of DCs (D_cap_min, D_cap_max)
+    n_C: number of customers
+    C_dem: demand range of customers (C_dem_min, D_dem_max)
+    P_cost: operation cost range of plants (P_cost_min, P_cost_max)
+    D_cost: operation cost range of DCs (D_cost_min, D_cost_max)
+    SP_cost: transportation cost from suppliers to plants (SP_cost_min, SP_cost_max)
+    PD_cost: transportation cost from plants to DCs (PD_cost_min, PD_cost_max)
+    DC_cost: transportation cost from DCs to customers (DC_cost_min, DC_cost_max)
+    random_state: initial random seed
+    '''
+    if random_state:
+        np.random.seed(random_state)
+    with open(output_file, 'w') as f:
+        var_order = 'EDWdgvtac'
+        vals_order = [(n_S, S_cap), (n_P, P_cap), (n_D, D_cap), 
+                      (n_C, C_dem), (n_P, P_cost), (n_D, D_cost),
+                      SP_cost, PD_cost, DC_cost]
+        for i in range(6):
+            print(' '.join([var_order[i]] + [str(n) for n in \
+                10 * np.random.randint(vals_order[i][1][0]//10, 
+                                       vals_order[i][1][1]//10, 
+                                       vals_order[i][0])]), file=f)
+        for i in range(3):
+            print(var_order[6+i], file=f)
+            for j in range(vals_order[i][0]):
+                print(' '.join([str(n) for n in \
+                        np.random.randint(vals_order[6+i][0],
+                                          vals_order[6+i][1],
+                                          vals_order[i+1][0])]), file=f)
+
+def generate_ampl(data_file, output_file, ampl_model='modelos/priority_encoding.mod'):
+    with open(ampl_model, 'r') as f_model, \
+         open(output_file, 'w') as f_output:
+        lines = f_model.read().strip().split('\n')
+        idx = [i for i, val in enumerate(lines) if 'data;' in val][0]
+        for line in lines[:idx+2]:
+            print(line, file=f_output)
+        E, D, W, d, g, v, t, a, c = load_file(data_file)
+        values = [E, D, W, d, g, v, t, a, c]
+        sets = 'SKJI'
+        params = 'EDWd'
+        for i in range(4):
+            elements = [f'{sets[i]}{j+1}' for j in range(len(values[i]))]
+            print(f'set {sets[i]} := {" ".join(elements)};', file=f_output)
+        print(file=f_output)
+        
+        for i in range(4):
+            elements = [f'{sets[i]}{j+1} {values[i][j]}' for j in range(len(values[i]))]
+            print(f'param {params[i]} := {" ".join(elements)};', file=f_output)
+        print(file=f_output)
+        
+        params = 'gv'
+        for i in range(2):
+            elements = [f'{sets[i+1]}{j+1} {values[i+4][j]}' for j in range(len(values[i+1]))]
+            print(f'param {params[i]} := {" ".join(elements)};', file=f_output)
+        print(file=f_output)
+        
+        params = 'tac'
+        for i in range(3):
+            elements = [f'{sets[i+1]}{j+1}' for j in range(len(values[i+1]))]
+            print(f'param {params[i]}: {" ".join(elements)} :=', file=f_output)
+            for j in range(len(values[i])):
+                elements = [str(n) for n in values[i+6][j]]
+                print(f'      {sets[i]}{j+1} {" ".join(elements)}', file=f_output)
+            print(';\n', file=f_output)
+        
+        idx = [i for i, val in enumerate(lines) if 'P_max :=' in val][0]
+        for line in lines[idx:]:
+            line = re.sub('P_max := \d', f'P_max := {len(D)}', line)
+            line = re.sub('W_max := \d', f'W_max := {len(W)}', line)
+            print(line, file=f_output)
+                
 ######################## PLOT FUNCTIONS ########################
 
-def plot_graph(b, f, q):
+def plot_graph(b, f, q, figsize=(10,5)):
     G = nx.DiGraph()
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=figsize)
 
     v_space = max(b.shape + f.shape + q.shape)
 
