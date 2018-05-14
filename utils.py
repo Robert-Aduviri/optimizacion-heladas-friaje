@@ -100,6 +100,18 @@ def init_genetic_algorithm(chromosome_fitness, E, D, W, d, g, v, t, a, c):
     stats.register('Max', np.max)
     return toolbox, stats
 
+def run_genetic_algorithm(chromosome_fitness, E, D, W, d, g, v, t, a, c, 
+                          pop_size=100, n_generations=30, n_solutions=5,
+                          crossover_p=0.5, mutation_p=0.2):
+    toolbox, stats = init_genetic_algorithm(chromosome_fitness, E, D, W, d, 
+                                            g, v, t, a, c)
+    pop = toolbox.population(n=pop_size)
+    hof = tools.HallOfFame(n_solutions)
+    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=crossover_p, mutpb=mutation_p,
+                              ngen=n_generations, stats=stats, halloffame=hof,
+                              verbose=True)
+    return pop, hof, log
+    
 ######################## LOAD AND GENERATE FILES ########################
 
 def load_file(input_file):
@@ -250,11 +262,22 @@ def plot_graph(b, f, q, figsize=(10,5)):
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, 
                                  label_pos=0.5)
     
-def plot_log(log):
+def plot_log(log, optimal_value=None, min_max=False):
     fig, ax = plt.subplots(figsize=(10,5))
     ax.plot([x['gen'] for x in log],
-            [x['Avg'] for x in log])
-    ax.fill_between([x['gen'] for x in log],
-                     [x['Avg'] - x['Std'] for x in log],
-                     [x['Avg'] + x['Std'] for x in log],
+            [x['Avg'] for x in log], label='Genetic Algorithm')
+    if min_max:
+        ax.fill_between([x['gen'] for x in log],
+                     [x['Min'] for x in log],
+                     [x['Max'] for x in log],
                      alpha=0.3)
+    else:
+        ax.fill_between([x['gen'] for x in log],
+                         [x['Avg'] - x['Std'] for x in log],
+                         [x['Avg'] + x['Std'] for x in log],
+                         alpha=0.3)
+    if optimal_value:
+        ax.plot([x['gen'] for x in log],
+                [optimal_value for x in log], dashes=[6,2],
+                label='GLPK solver')
+    ax.legend()
