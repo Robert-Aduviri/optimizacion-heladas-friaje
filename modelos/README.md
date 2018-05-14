@@ -6,3 +6,4 @@
 - `option display_1col 0;`
 - `display Variable;`
 
+- `glpsol --math model.mod`
