@@ -100,7 +100,7 @@ def init_genetic_algorithm(chromosome_fitness, E, D, W, d, g, v, t, a, c):
     stats.register('Max', np.max)
     return toolbox, stats
 
-def run_genetic_algorithm(chromosome_fitness, E, D, W, d, g, v, t, a, c, 
+def run_genetic_algorithm(E, D, W, d, g, v, t, a, c, 
                           pop_size=100, n_generations=30, n_solutions=5,
                           crossover_p=0.5, mutation_p=0.2):
     toolbox, stats = init_genetic_algorithm(chromosome_fitness, E, D, W, d, 
@@ -281,3 +281,6 @@ def plot_log(log, optimal_value=None, min_max=False):
                 [optimal_value for x in log], dashes=[6,2],
                 label='GLPK solver')
     ax.legend()
+    ax.set_xlabel('# Generations')
+    ax.set_ylabel('Objective value')
+    return ax
