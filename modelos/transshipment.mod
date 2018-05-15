@@ -12,8 +12,8 @@ var x {E} >= 0 integer;
 
 minimize Cost:
 	(sum {(k,j) in E} c[k,j] * x[k,j]) +
-	(sum {k in K} d[k] * (sum {(j,k) in E} (x[j,k] * (1 - dummies[j])) ^ 2)); # equidad de distribucion
-	# - (sum {k in K} priority[k] * (b[k] + sum {(j,k) in E} x[j,k] * (1 - dummies[j]))); prioridad en ciertos nodos
+	100 * (sum {k in K} d[k] * (sum {(j,k) in E} (x[j,k] * (1 - dummies[j])) ^ 2)); # equidad de distribucion
+	# - (sum {k in K} priority[k] * (b[k] + sum {(j,k) in E} x[j,k] * (1 - dummies[j]))); # prioridad en ciertos nodos
 
 subject to Balance  {k in K}:
 	sum {(k,j) in E} x[k,j] - sum {(j,k) in E} x[j,k] = b[k];
