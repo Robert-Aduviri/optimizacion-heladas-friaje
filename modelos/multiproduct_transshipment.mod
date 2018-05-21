@@ -9,30 +9,32 @@ set DU; # dummy nodes
 set KDU := K union DU; # all nodes + dummies
 set EDU within {KDU,KDU}; # all edges + dummies
 
+param item_priority {I};
 param transp_cost {E};
-param supply_demand {KDU};
+param supply_demand {KDU, I};
 param node_capacity {K};
 
-var X {EDU} >= 0 integer; # items to be transported
+var X {EDU, I} >= 0 integer; # items to be transported
 
-minimize Cost:
-	(sum {(k,j) in E} transp_cost[k,j] * X[k,j]) + 
-	(sum {k in D} (sum {(j,k) in E} X[j,k] ^ 2)); # fairness
+minimize Objectives:
+	(sum {(k,j) in E, i in I} item_priority[i] * transp_cost[k,j] * X[k,j,i]) + 
+	10000*(sum {k in D, i in I} ((sum {(j,k) in E} X[j,k,i]) / -supply_demand[k,i]) ^ 2); # fairness
 	
-subject to Transportation_Balance {k in KDU}:
-	sum {(k,j) in EDU} X[k,j] - sum {(j,k) in EDU} X[j,k] = supply_demand[k];
+subject to Transportation_Balance {k in KDU, i in I}:
+	sum {(k,j) in EDU} X[k,j,i] - sum {(j,k) in EDU} X[j,k,i] = supply_demand[k,i];
 
 subject to Inbound_Capacity {k in K}:
-	sum {(j,k) in E} X[j,k] <= node_capacity[k];
+	sum {(j,k) in E, i in I} X[j,k,i] <= node_capacity[k];
 	
 subject to Outbound_Capacity {k in K}:
-	sum {(k,j) in E} X[k,j] <= node_capacity[k];
+	sum {(k,j) in E, i in I} X[k,j,i] <= node_capacity[k];
 	
 data;
 
+set I := I1 I2 I3;
 set ST := A B C D E F G;
 set D  := H I J;
-set DU := dummy;
+set DU := dummy_supply dummy_demand;
 
 set E := (A,D) (A,E) (B,D) (B,E) (C,D) (C,E)
 		 (D,F) (D,G) (E,F) (E,G)
@@ -41,7 +43,8 @@ set E := (A,D) (A,E) (B,D) (B,E) (C,D) (C,E)
 set EDU := (A,D) (A,E) (B,D) (B,E) (C,D) (C,E)
 		 (D,F) (D,G) (E,F) (E,G)
 		 (F,H) (F,I) (F,J) (G,H) (G,I) (G,J)
-		 (dummy,H) (dummy,I) (dummy,J);
+		 (dummy_supply,H) (dummy_supply,I) (dummy_supply,J)
+		 (A,dummy_demand) (B,dummy_demand) (C,dummy_demand);
 		 
 param transp_cost :=
 	A D 11 
@@ -64,13 +67,16 @@ param transp_cost :=
 	G J 16
 	;
 	
-param supply_demand := 
-	A 10 B 10 C 10 
-	D 0 E 0 F 0 G 0 
-	H -80 I -80 J -80 
-	dummy 210;
+param item_priority := 
+	I1 10 I2 10 I3 10; 
+	
+param supply_demand (tr): A  B  C  D  E  F  G   H   I   J dummy_demand dummy_supply :=
+				     I1  20 20 20  0  0  0  0 -50 -80 -20       0           90
+				     I2  40 40 40  0  0  0  0 -30 -20 -30     -40            0     
+				     I3  30 30 30  0  0  0  0 -20 -40 -40       0           10
+				     ; 	 
 	
 param node_capacity := 
-	A 100 B 100 C 100 
-	D 20 E 20 F 20 G 20 
-	H 100 I 100 J 100;
+	A 200 B 200 C 200 
+	D 150 E 150 F 150 G 150 
+	H 200 I 200 J 200;
