@@ -9,15 +9,15 @@ set DU; # dummy nodes
 set KDU := K union DU; # all nodes + dummies
 set EDU within {KDU,KDU}; # all edges + dummies
 
-param item_priority {I};
+# param item_priority {I};
 param transp_cost {E};
 param supply_demand {KDU, I};
 param node_capacity {K};
 
 var X {EDU, I} >= 0 integer; # items to be transported
 
-minimize Objectives:
-	(sum {(k,j) in E, i in I} item_priority[i] * transp_cost[k,j] * X[k,j,i]) + 
+minimize Objectives: # item_priority[i] 
+	(sum {(k,j) in E, i in I} transp_cost[k,j] * X[k,j,i]) + 
 	10000*(sum {k in D, i in I} ((sum {(j,k) in E} X[j,k,i]) / -supply_demand[k,i]) ^ 2); # fairness
 	
 subject to Transportation_Balance {k in KDU, i in I}:
@@ -67,8 +67,8 @@ param transp_cost :=
 	G J 16
 	;
 	
-param item_priority := 
-	I1 10 I2 10 I3 10; 
+# param item_priority := 
+# 	I1 10 I2 10 I3 10; 
 	
 param supply_demand (tr): A  B  C  D  E  F  G   H   I   J dummy_demand dummy_supply :=
 				     I1  20 20 20  0  0  0  0 -50 -80 -20       0           90
