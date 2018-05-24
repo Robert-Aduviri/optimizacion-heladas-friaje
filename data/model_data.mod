@@ -51,7 +51,7 @@ set EDU :=
 
 param transp_cost := S1 T11 37 S1 T12 37 T11 T21 37 T12 T21 22 T21 D1 18 T21 D2 38 T21 D3 24 T21 D4 22 T21 D5 10 T21 D6 34;
 
-param supply_demand (tr): S1 T11 T12 T21 D1 D2 D3 D4 D5 D6 dummy_supply dummy_demand := 
+param supply_demand (tr): S1 T11 T12 T21 D1 D2 D3 D4 D5 D6 dummy_sup dummy_dem := 
     I1 25 0 0 0 -4 -4 -4 -2 -5 -9 3 0
     I2 30 0 0 0 -5 -3 -5 -7 -1 -4 0 -5
 ;
