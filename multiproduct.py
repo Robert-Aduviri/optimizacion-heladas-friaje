@@ -13,13 +13,19 @@ sns.set()
 
 ############################## DATASET ##############################
 
-def random_partition(n, k, rand_generator):
+def random_partition(n, k, rand_generator, min_val=0):
     ''' Generate k values that sum to n '''
     p = []
     for i in range(k):
-        v = rand_generator()
+        v = max(min_val, rand_generator())
         p.append(min(n, v) if i < k-1 else n)
         n -= p[-1]
+    safe_idxs = [i for i,v in enumerate(p) if v - min_val >= min_val]
+    bad_idxs = [i for i,v in enumerate(p) if v < min_val]
+    for i in bad_idxs:
+        p[i] += min_val
+        p[safe_idxs[0]] -= min_val
+        del safe_idxs[0]
     return p
         
 def generate_n_nodes(nodes, levels):    
@@ -38,7 +44,7 @@ def generate_supply_demand(total_items, nodes, factor=1):
         reduced_total = total_item // factor
         res.append([factor * x for x in random_partition(
                 reduced_total, nodes, 
-                partial(np.random.poisson, lam=reduced_total // nodes))])
+                partial(np.random.poisson, lam=reduced_total // nodes), min_val=1)])
         assert sum(res[-1]) == total_item # partition
     return res
     
@@ -299,7 +305,8 @@ def transportation_tree(chromosome, n_nodes, supplies, demands, costs, capacitie
     return X
 
 def chromosome_fitness(chromosome, n_nodes, supplies, demands,
-                       costs, capacities, variable_demands=False):
+                       costs, capacities, variable_demands=False, 
+                       multiobjective=False):
     chrom_demands = None
     if variable_demands:
         n_items = len(supplies)
@@ -312,7 +319,9 @@ def chromosome_fitness(chromosome, n_nodes, supplies, demands,
     transportation_cost = sum(np.multiply(x.sum(0), c).sum() \
                                for c, x in zip(costs, X))
     fairness = (np.divide(X[-1].sum(1), np.array(demands)[:,:-1]) ** 2).sum()
-    return transportation_cost, fairness
+    if multiobjective:
+        return transportation_cost, fairness
+    return transportation_cost + 10000 * fairness,
 
 ############################## GENETIC ALGORITHM ##############################
 
@@ -346,7 +355,9 @@ def custom_mutation(ind, permutation_size):
         ind[i] = mut[i]
     return ind,
 
-def init_multiobjective_GA(chromosome, n_nodes, supplies, demands, costs, 
+##### MULTI OBJECTIVE
+
+def init_multiobjective_GA(n_nodes, supplies, demands, costs, 
                            capacities):
     try:
         del creator.FitnessMin
@@ -372,7 +383,8 @@ def init_multiobjective_GA(chromosome, n_nodes, supplies, demands, costs,
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
-                         variable_demands=True)(x)
+                         variable_demands=True,
+                         multiobjective=True)(x)
     
     toolbox.register('evaluate', ga_fitness)
     toolbox.register('mate', custom_crossover, 
@@ -386,10 +398,10 @@ def init_multiobjective_GA(chromosome, n_nodes, supplies, demands, costs,
     
     return toolbox, stats
 
-def run_multiobjective_GA(chromosome, n_nodes, supplies, demands, costs, 
+def run_multiobjective_GA(n_nodes, supplies, demands, costs, 
                           capacities, pop_size=100, n_generations=30, 
                           n_solutions=20, crossover_p=0.5, mutation_p=0.2):
-    toolbox, stats = init_multiobjective_GA(chromosome, n_nodes, supplies, 
+    toolbox, stats = init_multiobjective_GA(n_nodes, supplies, 
                                             demands, costs, capacities)
     pop = toolbox.population(n=pop_size)
     hof = tools.HallOfFame(n_solutions)
@@ -399,6 +411,126 @@ def run_multiobjective_GA(chromosome, n_nodes, supplies, demands, costs,
                              cxpb=crossover_p, mutpb=mutation_p, ngen=n_generations, 
                              stats=stats, halloffame=hof, verbose=False)
     return pop, hof, log
+
+##### SINGLE OBJECTIVE
+
+def init_singleobjective_GA(n_nodes, supplies, demands, costs, 
+                           capacities):
+    try:
+        del creator.FitnessMin
+        del creator.Individual
+    except:
+        pass
+    creator.create('FitnessMin', base.Fitness, weights=(-1.0,))
+    creator.create('Individual', list, fitness=creator.FitnessMin)
+    
+    n_items = len(supplies)
+    permutation_size = sum([n_items * sum(n_nodes[1:])])
+    demand_size = n_items * n_nodes[-1]
+    
+    toolbox = base.Toolbox()
+    toolbox.register('chromosome', create_chromosome, 
+                    permutation_size=permutation_size,
+                    demand_size=demand_size)
+    toolbox.register('individual', tools.initIterate, creator.Individual,
+                    toolbox.chromosome)
+    toolbox.register('population', tools.initRepeat, list, toolbox.individual)
+    
+    ga_fitness = lambda x: partial(chromosome_fitness, 
+                         n_nodes=n_nodes, supplies=supplies, 
+                         demands=demands, costs=costs, 
+                         capacities=capacities,
+                         variable_demands=True,
+                         multiobjective=False)(x)
+    
+    toolbox.register('evaluate', ga_fitness)
+    toolbox.register('mate', custom_crossover, 
+                             permutation_size=permutation_size)
+    toolbox.register('mutate', custom_mutation,
+                             permutation_size=permutation_size)
+    toolbox.register('select', tools.selTournament, tournsize=20)
+    
+    stats = tools.Statistics(lambda ind: ind.fitness.values)
+    stats.register('Avg', np.mean)
+    stats.register('Std', np.std)
+    stats.register('Min', np.min)
+    stats.register('Max', np.max)
+    
+    return toolbox, stats
+
+def run_singleobjective_GA(n_nodes, supplies, demands, costs, 
+                          capacities, pop_size=100, n_generations=30, 
+                          n_solutions=20, crossover_p=0.5, mutation_p=0.2,
+                          early_stopping_rounds=30):
+    toolbox, stats = init_singleobjective_GA(n_nodes, supplies, 
+                                            demands, costs, capacities)
+    pop = toolbox.population(n=pop_size)
+    hof = tools.HallOfFame(n_solutions)
+    pop, log = eaMuPlusLambdaEarlyStopping(pop, toolbox, 
+                             mu=pop_size,
+                             lambda_=pop_size,
+                             cxpb=crossover_p, mutpb=mutation_p,
+                             ngen=n_generations, stats=stats, 
+                             halloffame=hof, verbose=True,
+                             early_stopping_rounds=early_stopping_rounds)
+    return pop, hof, log
+
+def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
+                   stats=None, halloffame=None, verbose=__debug__,
+                   early_stopping_rounds=30):
+    logbook = tools.Logbook()
+    logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
+
+    # Evaluate the individuals with an invalid fitness
+    invalid_ind = [ind for ind in population if not ind.fitness.valid]
+    fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+    for ind, fit in zip(invalid_ind, fitnesses):
+        ind.fitness.values = fit
+
+    if halloffame is not None:
+        halloffame.update(population)
+
+    record = stats.compile(population) if stats is not None else {}
+    logbook.record(gen=0, nevals=len(invalid_ind), **record)
+    if verbose:
+        print(logbook.stream)
+    
+    patience = early_stopping_rounds
+    
+    # Begin the generational process
+    for gen in range(1, ngen + 1):
+        # Vary the population
+        offspring = algorithms.varOr(population, toolbox, lambda_, cxpb, mutpb)
+
+        # Evaluate the individuals with an invalid fitness
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
+
+        # Update the hall of fame with the generated individuals
+        if halloffame is not None:
+            halloffame.update(offspring)
+
+        # Select the next generation population
+        population[:] = toolbox.select(population + offspring, mu)
+
+        # Update the statistics with the new population
+        record = stats.compile(population) if stats is not None else {}
+        logbook.record(gen=gen, nevals=len(invalid_ind), **record)
+        if verbose:
+            print(logbook.stream)
+            
+        if gen > 1:
+            if logbook[-1]['Avg'] < logbook[-2]['Avg']:
+                patience = early_stopping_rounds
+            else:
+                patience -= 1
+        if patience == 0:
+            print('Early stopping...')
+            break
+
+    return population, logbook
 
 ############################## PLOTTING ##############################
 
