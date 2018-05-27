@@ -2,6 +2,7 @@ from functools import partial
 from itertools import product
 import copy
 import random
+import multiprocessing
 
 import numpy as np
 import pandas as pd
@@ -414,6 +415,8 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
 
 ##### SINGLE OBJECTIVE
 
+
+
 def init_singleobjective_GA(n_nodes, supplies, demands, costs, 
                            capacities):
     try:
@@ -436,12 +439,12 @@ def init_singleobjective_GA(n_nodes, supplies, demands, costs,
                     toolbox.chromosome)
     toolbox.register('population', tools.initRepeat, list, toolbox.individual)
     
-    ga_fitness = lambda x: partial(chromosome_fitness, 
+    ga_fitness = partial(chromosome_fitness, 
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
                          variable_demands=True,
-                         multiobjective=False)(x)
+                         multiobjective=False)
     
     toolbox.register('evaluate', ga_fitness)
     toolbox.register('mate', custom_crossover, 
@@ -450,19 +453,22 @@ def init_singleobjective_GA(n_nodes, supplies, demands, costs,
                              permutation_size=permutation_size)
     toolbox.register('select', tools.selTournament, tournsize=20)
     
+    pool = multiprocessing.Pool()
+    toolbox.register("map", pool.map)  
+    
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register('Avg', np.mean)
     stats.register('Std', np.std)
     stats.register('Min', np.min)
     stats.register('Max', np.max)
     
-    return toolbox, stats
+    return toolbox, stats, pool
 
 def run_singleobjective_GA(n_nodes, supplies, demands, costs, 
                           capacities, pop_size=100, n_generations=30, 
                           n_solutions=20, crossover_p=0.5, mutation_p=0.2,
-                          early_stopping_rounds=30):
-    toolbox, stats = init_singleobjective_GA(n_nodes, supplies, 
+                          early_stopping_rounds=30, verbose=True):
+    toolbox, stats, pool = init_singleobjective_GA(n_nodes, supplies, 
                                             demands, costs, capacities)
     pop = toolbox.population(n=pop_size)
     hof = tools.HallOfFame(n_solutions)
@@ -471,8 +477,9 @@ def run_singleobjective_GA(n_nodes, supplies, demands, costs,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p,
                              ngen=n_generations, stats=stats, 
-                             halloffame=hof, verbose=True,
+                             halloffame=hof, verbose=verbose,
                              early_stopping_rounds=early_stopping_rounds)
+    pool.close()
     return pop, hof, log
 
 def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
@@ -527,7 +534,8 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
             else:
                 patience -= 1
         if patience == 0:
-            print('Early stopping...')
+            if verbose:
+                print('Early stopping...')
             break
 
     return population, logbook
