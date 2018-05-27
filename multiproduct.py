@@ -350,7 +350,8 @@ def custom_mutation(ind, permutation_size):
     perm = ind[:permutation_size]
     demand = ind[permutation_size:]
     perm_mut = tools.mutShuffleIndexes(perm, 2.0/len(perm))
-    demand_mut = tools.mutPolynomialBounded(demand, 20, 0, 1, 1.0/len(demand))
+    len_demand = max(1, len(demand))
+    demand_mut = tools.mutPolynomialBounded(demand, 20, 0, 1, 1.0/len_demand)        
     mut = list(perm_mut[0]) + list(demand_mut[0])
     for i, x in enumerate(mut):
         ind[i] = mut[i]
@@ -384,7 +385,7 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
-                         variable_demands=True,
+                         variable_demands=True, # True
                          multiobjective=True)
     
     toolbox.register('evaluate', ga_fitness)
@@ -545,16 +546,19 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
 
 ############################## PLOTTING ##############################
 
-def plot_fronts(fronts, toolbox):
+def plot_fronts(fronts, toolbox, gen=None):
     plot_colors = sns.color_palette("Set1", n_colors=10)
     fig, ax = plt.subplots(1, figsize=(6,6))
     for i,inds in enumerate(fronts):
-        par = [toolbox.evaluate(ind) for ind in inds]
+        # par = [toolbox.evaluate(ind) for ind in inds]
+        par = [ind.fitness.values for ind in inds]
         df = pd.DataFrame(par)
         df.plot(ax=ax, kind='scatter', label='Front ' + str(i+1), 
                      x=df.columns[0], y=df.columns[1], 
                      color=plot_colors[i % len(plot_colors)])
     plt.xlabel('$f_1(\mathbf{x})$');plt.ylabel('$f_2(\mathbf{x})$')
+    if gen is not None:
+        ax.set_title('$Generación$ ' + str(gen))
 
 def animate(frame_index, logbook, toolbox, ax):
     plot_colors = sns.color_palette("Set1", n_colors=10)
@@ -563,13 +567,14 @@ def animate(frame_index, logbook, toolbox, ax):
     fronts = tools.emo.sortLogNondominated(logbook.select('pop')[frame_index], 
                                            len(logbook.select('pop')[frame_index]))
     for i,inds in enumerate(fronts):
-        par = [toolbox.evaluate(ind) for ind in inds]
+        # par = [toolbox.evaluate(ind) for ind in inds]
+        par = [ind.fitness.values for ind in inds]
         df = pd.DataFrame(par)
         df.plot(ax=ax, kind='scatter', label='Front ' + str(i+1), 
                  x=df.columns[0], y=df.columns[1], alpha=0.47,
                  color=plot_colors[i % len(plot_colors)])
         
-    ax.set_title('$t=$' + str(frame_index))
+    ax.set_title('$Generación$ ' + str(frame_index))
     ax.set_xlabel('$f_1(\mathbf{x})$');ax.set_ylabel('$f_2(\mathbf{x})$')
     return []
 
