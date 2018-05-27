@@ -380,12 +380,12 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
                     toolbox.chromosome)
     toolbox.register('population', tools.initRepeat, list, toolbox.individual)
     
-    ga_fitness = lambda x: partial(chromosome_fitness, 
+    ga_fitness = partial(chromosome_fitness, 
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
                          variable_demands=True,
-                         multiobjective=True)(x)
+                         multiobjective=True)
     
     toolbox.register('evaluate', ga_fitness)
     toolbox.register('mate', custom_crossover, 
@@ -393,6 +393,9 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
     toolbox.register('mutate', custom_mutation,
                              permutation_size=permutation_size)
     toolbox.register('select', tools.selNSGA2)
+    
+    pool = multiprocessing.Pool()
+    toolbox.register("map", pool.map)  
     
     stats = tools.Statistics()
     stats.register("pop", copy.deepcopy)
@@ -411,7 +414,7 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p, ngen=n_generations, 
                              stats=stats, halloffame=hof, verbose=False)
-    return pop, hof, log
+    return pop, hof, log, toolbox
 
 ##### SINGLE OBJECTIVE
 
