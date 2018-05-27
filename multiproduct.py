@@ -546,19 +546,32 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
 
 ############################## PLOTTING ##############################
 
-def plot_fronts(fronts, toolbox, gen=None):
+def plot_fronts(fronts, toolbox, gen=None, solver_sols=None, extra_fronts=None):
     plot_colors = sns.color_palette("Set1", n_colors=10)
     fig, ax = plt.subplots(1, figsize=(6,6))
     for i,inds in enumerate(fronts):
         # par = [toolbox.evaluate(ind) for ind in inds]
         par = [ind.fitness.values for ind in inds]
         df = pd.DataFrame(par)
-        df.plot(ax=ax, kind='scatter', label='Front ' + str(i+1), 
+        df.plot(ax=ax, kind='scatter', label='Gen 1 - Front ' + str(i+1), 
                      x=df.columns[0], y=df.columns[1], 
                      color=plot_colors[i % len(plot_colors)])
+    if extra_fronts is not None:
+        for i,inds in enumerate(extra_fronts):
+            # par = [toolbox.evaluate(ind) for ind in inds]
+            par = [ind.fitness.values for ind in inds]
+            df = pd.DataFrame(par)
+            df.plot(ax=ax, kind='scatter', label='Gen 100 - Front ' + str(i+1), 
+                         x=df.columns[0], y=df.columns[1], 
+                         color=plot_colors[i % len(plot_colors)])
+    if solver_sols is not None:
+        df = pd.DataFrame(solver_sols)
+        df.plot(ax=ax, kind='scatter', label='Couenne Solver', 
+                     x=df.columns[0], y=df.columns[1], 
+                     color=plot_colors[len(fronts) % len(plot_colors)])
     plt.xlabel('$f_1(\mathbf{x})$');plt.ylabel('$f_2(\mathbf{x})$')
     if gen is not None:
-        ax.set_title('$Generación$ ' + str(gen))
+        ax.set_title(f'Couenne Solver | Algoritmo Genético ($Generaciones$ {gen})')
 
 def animate(frame_index, logbook, toolbox, ax):
     plot_colors = sns.color_palette("Set1", n_colors=10)
@@ -576,6 +589,7 @@ def animate(frame_index, logbook, toolbox, ax):
         
     ax.set_title('$Generación$ ' + str(frame_index))
     ax.set_xlabel('$f_1(\mathbf{x})$');ax.set_ylabel('$f_2(\mathbf{x})$')
+    ax.legend(loc='bottom right')
     return []
 
 def get_animation(log, toolbox):
