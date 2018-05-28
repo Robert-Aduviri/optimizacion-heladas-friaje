@@ -2,6 +2,7 @@ from functools import partial
 from itertools import product
 import copy
 import random
+import multiprocessing
 
 import numpy as np
 import pandas as pd
@@ -349,7 +350,8 @@ def custom_mutation(ind, permutation_size):
     perm = ind[:permutation_size]
     demand = ind[permutation_size:]
     perm_mut = tools.mutShuffleIndexes(perm, 2.0/len(perm))
-    demand_mut = tools.mutPolynomialBounded(demand, 20, 0, 1, 1.0/len(demand))
+    len_demand = max(1, len(demand))
+    demand_mut = tools.mutPolynomialBounded(demand, 20, 0, 1, 1.0/len_demand)        
     mut = list(perm_mut[0]) + list(demand_mut[0])
     for i, x in enumerate(mut):
         ind[i] = mut[i]
@@ -379,12 +381,12 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
                     toolbox.chromosome)
     toolbox.register('population', tools.initRepeat, list, toolbox.individual)
     
-    ga_fitness = lambda x: partial(chromosome_fitness, 
+    ga_fitness = partial(chromosome_fitness, 
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
-                         variable_demands=True,
-                         multiobjective=True)(x)
+                         variable_demands=True, # True
+                         multiobjective=True)
     
     toolbox.register('evaluate', ga_fitness)
     toolbox.register('mate', custom_crossover, 
@@ -393,8 +395,17 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
                              permutation_size=permutation_size)
     toolbox.register('select', tools.selNSGA2)
     
-    stats = tools.Statistics()
-    stats.register("pop", copy.deepcopy)
+    pool = multiprocessing.Pool()
+    toolbox.register("map", pool.map)  
+    
+    stats = tools.Statistics(lambda ind: ind.fitness.values)
+    stats.register('Avg', np.mean, axis=0)
+    stats.register('Std', np.std, axis=0)
+    stats.register('Min', np.min, axis=0)
+    stats.register('Max', np.max, axis=0)
+    
+    # stats = tools.Statistics()
+    # stats.register("pop", copy.deepcopy)
     
     return toolbox, stats
 
@@ -409,10 +420,12 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                              mu=pop_size,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p, ngen=n_generations, 
-                             stats=stats, halloffame=hof, verbose=False)
-    return pop, hof, log
+                             stats=stats, halloffame=hof, verbose=True)
+    return pop, hof, log, toolbox
 
 ##### SINGLE OBJECTIVE
+
+
 
 def init_singleobjective_GA(n_nodes, supplies, demands, costs, 
                            capacities):
@@ -436,12 +449,12 @@ def init_singleobjective_GA(n_nodes, supplies, demands, costs,
                     toolbox.chromosome)
     toolbox.register('population', tools.initRepeat, list, toolbox.individual)
     
-    ga_fitness = lambda x: partial(chromosome_fitness, 
+    ga_fitness = partial(chromosome_fitness, 
                          n_nodes=n_nodes, supplies=supplies, 
                          demands=demands, costs=costs, 
                          capacities=capacities,
                          variable_demands=True,
-                         multiobjective=False)(x)
+                         multiobjective=False)
     
     toolbox.register('evaluate', ga_fitness)
     toolbox.register('mate', custom_crossover, 
@@ -450,19 +463,22 @@ def init_singleobjective_GA(n_nodes, supplies, demands, costs,
                              permutation_size=permutation_size)
     toolbox.register('select', tools.selTournament, tournsize=20)
     
+    pool = multiprocessing.Pool()
+    toolbox.register("map", pool.map)  
+    
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register('Avg', np.mean)
     stats.register('Std', np.std)
     stats.register('Min', np.min)
     stats.register('Max', np.max)
     
-    return toolbox, stats
+    return toolbox, stats, pool
 
 def run_singleobjective_GA(n_nodes, supplies, demands, costs, 
                           capacities, pop_size=100, n_generations=30, 
                           n_solutions=20, crossover_p=0.5, mutation_p=0.2,
-                          early_stopping_rounds=30):
-    toolbox, stats = init_singleobjective_GA(n_nodes, supplies, 
+                          early_stopping_rounds=30, verbose=True):
+    toolbox, stats, pool = init_singleobjective_GA(n_nodes, supplies, 
                                             demands, costs, capacities)
     pop = toolbox.population(n=pop_size)
     hof = tools.HallOfFame(n_solutions)
@@ -471,8 +487,9 @@ def run_singleobjective_GA(n_nodes, supplies, demands, costs,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p,
                              ngen=n_generations, stats=stats, 
-                             halloffame=hof, verbose=True,
+                             halloffame=hof, verbose=verbose,
                              early_stopping_rounds=early_stopping_rounds)
+    pool.close()
     return pop, hof, log
 
 def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
@@ -527,23 +544,40 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
             else:
                 patience -= 1
         if patience == 0:
-            print('Early stopping...')
+            if verbose:
+                print('Early stopping...')
             break
 
     return population, logbook
 
 ############################## PLOTTING ##############################
 
-def plot_fronts(fronts, toolbox):
+def plot_fronts(fronts, toolbox, gen=None, solver_sols=None, extra_fronts=None):
     plot_colors = sns.color_palette("Set1", n_colors=10)
     fig, ax = plt.subplots(1, figsize=(6,6))
     for i,inds in enumerate(fronts):
-        par = [toolbox.evaluate(ind) for ind in inds]
+        # par = [toolbox.evaluate(ind) for ind in inds]
+        par = [ind.fitness.values for ind in inds]
         df = pd.DataFrame(par)
-        df.plot(ax=ax, kind='scatter', label='Front ' + str(i+1), 
+        df.plot(ax=ax, kind='scatter', label='Gen 1 - Front ' + str(i+1), 
                      x=df.columns[0], y=df.columns[1], 
-                     color=plot_colors[i % len(plot_colors)])
+                     color=plot_colors[i % (len(plot_colors)-3) + 2])
+    if extra_fronts is not None:
+        for i,inds in enumerate(extra_fronts):
+            # par = [toolbox.evaluate(ind) for ind in inds]
+            par = [ind.fitness.values for ind in inds]
+            df = pd.DataFrame(par)
+            df.plot(ax=ax, kind='scatter', label='Gen 300 - Front ' + str(i+1), 
+                         x=df.columns[0], y=df.columns[1], 
+                         color=plot_colors[(1+i) % len(plot_colors)])
+    if solver_sols is not None:
+        df = pd.DataFrame(solver_sols)
+        df.plot(ax=ax, kind='scatter', label='Couenne Solver', 
+                     x=df.columns[0], y=df.columns[1], 
+                     color=plot_colors[(0 ) % len(plot_colors)])
     plt.xlabel('$f_1(\mathbf{x})$');plt.ylabel('$f_2(\mathbf{x})$')
+    if gen is not None:
+        ax.set_title(f'Couenne Solver | Algoritmo Genético ($Generaciones$ {gen})')
 
 def animate(frame_index, logbook, toolbox, ax):
     plot_colors = sns.color_palette("Set1", n_colors=10)
@@ -552,14 +586,16 @@ def animate(frame_index, logbook, toolbox, ax):
     fronts = tools.emo.sortLogNondominated(logbook.select('pop')[frame_index], 
                                            len(logbook.select('pop')[frame_index]))
     for i,inds in enumerate(fronts):
-        par = [toolbox.evaluate(ind) for ind in inds]
+        # par = [toolbox.evaluate(ind) for ind in inds]
+        par = [ind.fitness.values for ind in inds]
         df = pd.DataFrame(par)
         df.plot(ax=ax, kind='scatter', label='Front ' + str(i+1), 
                  x=df.columns[0], y=df.columns[1], alpha=0.47,
                  color=plot_colors[i % len(plot_colors)])
         
-    ax.set_title('$t=$' + str(frame_index))
+    ax.set_title('$Generación$ ' + str(frame_index))
     ax.set_xlabel('$f_1(\mathbf{x})$');ax.set_ylabel('$f_2(\mathbf{x})$')
+    ax.legend(loc='bottom right')
     return []
 
 def get_animation(log, toolbox):

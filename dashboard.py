@@ -10,9 +10,9 @@ sns.set()
 optimization_log = None
 
 def render_dashboard():
-    inp_pop_size = widgets.IntSlider(100, 50, 300, description='Population size',
+    inp_pop_size = widgets.IntSlider(100, 50, 300, description='Tamaño de Población',
                           style={'description_width': 'initial'})
-    inp_n_generations = widgets.IntSlider(20, 5, 100, description='# Generations',
+    inp_n_generations = widgets.IntSlider(20, 5, 100, description='# Generaciones',
                           style={'description_width': 'initial'})
 
     sel_dataset_options = {file[:-4]: [file, file.replace('.txt', '_ampl.mod')] \
@@ -25,8 +25,12 @@ def render_dashboard():
         value=sel_dataset_options[sorted(list(sel_dataset_options))[0]]
     )
 
-    btn_run_ga   = widgets.Button(description='Run genetic algorithm')
-    btn_run_glpk = widgets.Button(description='Run GLPK solver')
+    btn_run_ga   = widgets.Button(description='Ejecutar Algoritmo Genético',
+                                 style={'description_width': 'initial'},
+                                 layout=widgets.Layout(width='99%'))
+    btn_run_glpk = widgets.Button(description='Ejecutar Couenne Solver',
+                                 style={'description_width': 'initial'},
+                                 layout=widgets.Layout(width='99%'))
     output_log    = widgets.Output()
     output_plots  = widgets.Output()
 
@@ -44,8 +48,12 @@ def render_dashboard():
         output_log.clear_output(wait=True)
     btn_run_ga.on_click(run_ga)
 
-    btn_plot_opt_log  = widgets.Button(description='Plot optimization log')
-    btn_plot_solution = widgets.Button(description='Plot solution')
+    btn_plot_opt_log  = widgets.Button(description='Mostrar registro de optimización',
+                                      style={'description_width': 'initial'},
+                                      layout=widgets.Layout(width='99%'))
+    btn_plot_solution = widgets.Button(description='Mostrar solución',
+                                      style={'description_width': 'initial'},
+                                      layout=widgets.Layout(width='99%'))
 
     def plot_opt_log(e):
         with output_plots:
@@ -56,6 +64,7 @@ def render_dashboard():
 
     btn_plot_opt_log.on_click(plot_opt_log)
 
+    space = widgets.Box(layout=widgets.Layout(width='200px'))
     options = widgets.VBox([inp_pop_size,
                             inp_n_generations,
                             sel_dataset])
@@ -63,7 +72,7 @@ def render_dashboard():
                             btn_run_glpk])
     plots = widgets.VBox([btn_plot_opt_log,
                           btn_plot_solution])
-    input_panel  = widgets.HBox([options, actions, plots])
+    input_panel  = widgets.HBox([options, space, actions, plots])
     output_panel = widgets.HBox([output_log, output_plots])
     return widgets.VBox([input_panel,
                   output_panel])
