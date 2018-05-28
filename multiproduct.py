@@ -398,8 +398,14 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
     pool = multiprocessing.Pool()
     toolbox.register("map", pool.map)  
     
-    stats = tools.Statistics()
-    stats.register("pop", copy.deepcopy)
+    stats = tools.Statistics(lambda ind: ind.fitness.values)
+    stats.register('Avg', np.mean, axis=0)
+    stats.register('Std', np.std, axis=0)
+    stats.register('Min', np.min, axis=0)
+    stats.register('Max', np.max, axis=0)
+    
+    # stats = tools.Statistics()
+    # stats.register("pop", copy.deepcopy)
     
     return toolbox, stats
 
@@ -414,7 +420,7 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                              mu=pop_size,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p, ngen=n_generations, 
-                             stats=stats, halloffame=hof, verbose=False)
+                             stats=stats, halloffame=hof, verbose=True)
     return pop, hof, log, toolbox
 
 ##### SINGLE OBJECTIVE
@@ -555,20 +561,20 @@ def plot_fronts(fronts, toolbox, gen=None, solver_sols=None, extra_fronts=None):
         df = pd.DataFrame(par)
         df.plot(ax=ax, kind='scatter', label='Gen 1 - Front ' + str(i+1), 
                      x=df.columns[0], y=df.columns[1], 
-                     color=plot_colors[i % len(plot_colors)])
+                     color=plot_colors[i % (len(plot_colors)-3) + 2])
     if extra_fronts is not None:
         for i,inds in enumerate(extra_fronts):
             # par = [toolbox.evaluate(ind) for ind in inds]
             par = [ind.fitness.values for ind in inds]
             df = pd.DataFrame(par)
-            df.plot(ax=ax, kind='scatter', label='Gen 100 - Front ' + str(i+1), 
+            df.plot(ax=ax, kind='scatter', label='Gen 300 - Front ' + str(i+1), 
                          x=df.columns[0], y=df.columns[1], 
-                         color=plot_colors[i % len(plot_colors)])
+                         color=plot_colors[(1+i) % len(plot_colors)])
     if solver_sols is not None:
         df = pd.DataFrame(solver_sols)
         df.plot(ax=ax, kind='scatter', label='Couenne Solver', 
                      x=df.columns[0], y=df.columns[1], 
-                     color=plot_colors[len(fronts) % len(plot_colors)])
+                     color=plot_colors[(0 ) % len(plot_colors)])
     plt.xlabel('$f_1(\mathbf{x})$');plt.ylabel('$f_2(\mathbf{x})$')
     if gen is not None:
         ax.set_title(f'Couenne Solver | Algoritmo Genético ($Generaciones$ {gen})')
