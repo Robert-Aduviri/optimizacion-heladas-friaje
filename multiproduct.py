@@ -552,9 +552,9 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
 
 ############################## PLOTTING ##############################
 
-def plot_fronts(fronts, toolbox, gen=None, solver_sols=None, extra_fronts=None):
+def plot_fronts(fronts, toolbox, gen=None, solver_sols=None, extra_fronts=None, figsize=(6,6)):
     plot_colors = sns.color_palette("Set1", n_colors=10)
-    fig, ax = plt.subplots(1, figsize=(6,6))
+    fig, ax = plt.subplots(1, figsize=figsize)
     for i,inds in enumerate(fronts):
         # par = [toolbox.evaluate(ind) for ind in inds]
         par = [ind.fitness.values for ind in inds]
