@@ -1,5 +1,6 @@
 from functools import partial
 from itertools import product
+from collections import namedtuple
 import copy
 import random
 import multiprocessing
@@ -9,6 +10,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib import animation
+import networkx as nx
 from deap import creator, base, tools, algorithms
 sns.set()
 
@@ -239,9 +241,14 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                           capacities, pop_size=100, n_generations=30, 
                           n_solutions=20, crossover_p=0.5, mutation_p=0.2, 
                           early_stopping_rounds=None,
-                          print_log=False, plot_pop=False, plot_log=False):
+                          print_log=False, plot_pop=False, plot_log=False,
+                          plot_fairness=False):
     toolbox, stats, pool = init_multiobjective_GA(n_nodes, supplies, 
                                             demands, costs, capacities)
+    
+    Params = namedtuple('Params', ['nodes', 'supplies', 'demands', 'costs', 
+                                   'capacities'])
+    
     pop = toolbox.population(n=pop_size)
     hof = tools.HallOfFame(n_solutions)
     pop, log = eaMuPlusLambdaEarlyStopping(pop, toolbox, 
@@ -249,8 +256,11 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                              lambda_=pop_size,
                              cxpb=crossover_p, mutpb=mutation_p, ngen=n_generations, 
                              stats=stats, halloffame=hof, verbose=False,
-                             plot_pop=plot_pop, print_log=print_log, plot_log=plot_log,
-                             early_stopping_rounds=early_stopping_rounds)
+                             plot_pop=plot_pop, print_log=print_log,
+                             plot_log=plot_log, plot_fairness=plot_fairness,
+                             early_stopping_rounds=early_stopping_rounds,
+                             params=Params(n_nodes, supplies, demands, costs,
+                                           capacities))
     pool.close()
     pool.join()
     return pop, hof, log, toolbox
@@ -315,7 +325,8 @@ def plot_fronts(pop, fig, ax, pop_output, gen):
         
 def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
                    stats=None, halloffame=None, verbose=__debug__,
-                   early_stopping_rounds=None, plot_pop=False, plot_log=False, print_log=False):
+                   early_stopping_rounds=None, plot_pop=False, plot_log=False,
+                   plot_fairness=False, print_log=False, params=None):
     logbook = tools.Logbook()
     logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
 
@@ -333,25 +344,63 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
     if verbose:
         print(logbook.stream)
     
+    ############ WIDGETS #############
+    
     gen = 0
         
     if plot_log:
         plot_log_every = 1
         fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(15,5))
         log_output = widgets.Output()
-        display(log_output)
+        # display(log_output)
         plot_logbook(logbook, fig, ax, log_output)
     
     if plot_pop:
         plot_pop_every = 1
         fig_pop, ax_pop = plt.subplots(figsize=(5,5))
         pop_output = widgets.Output()
-        display(pop_output)
+        # display(pop_output)
         plot_fronts(population, fig_pop, ax_pop, pop_output, gen)
     
-    if print_log:
-        print(f'Gen: {gen} | Min f1(x): {record["Min"][0]:.2f} | Min f2(x): {record["Min"][1]:.2f}')
+    if plot_fairness:
+        assert params is not None
+        plot_fairness_every = 1
+        fig_fairness, ax_fairness = plt.subplots(figsize=(5,4))
+        fairness_output = widgets.Output()
+        # display(fairness_output)
+        plot_demands(population, params.nodes, params.supplies, params.demands,
+                      params.costs, params.capacities, fig_fairness, ax_fairness,
+                      fairness_output)
+    
+    # Main Plot Box
+    if plot_pop and plot_fairness:
+        hbox_layout = widgets.Layout(display='flex',
+                    flex_flow='row',
+                    align_items='center',
+                    justify_content='space-around',
+                    width='100%',
+                    max_width='800px',
+                    margin='0 auto')
+        vbox_layout = widgets.Layout(display='flex',
+                    flex_flow='column',
+                    align_items='center',
+                    justify_content='space-around',
+                    width='100%',
+                    max_width='800px',
+                    margin='0 auto')
         
+        pop_fairness_box = widgets.HBox([pop_output, fairness_output], 
+                                        layout=hbox_layout)
+        plots_box = widgets.VBox([log_output, 
+                                  pop_fairness_box], 
+                                 layout=vbox_layout)
+        display(plots_box)
+    
+    if print_log:
+        print(f'Gen: {gen:>3} | Min f1(x): {record["Min"][0]:.2f} | Min f2(x): {record["Min"][1]:.2f}')
+        
+    
+    ########## ITERATIONS ############
     
     if early_stopping_rounds is None:
         early_stopping_rounds = ngen
@@ -382,13 +431,22 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
             print(logbook.stream)
         
         if print_log:
-            print(f'Gen: {gen} | Min f1(x): {record["Min"][0]:.3f} | Min f2(x): {record["Min"][1]:.3f}')
+            print(f'Gen: {gen:>3} | Min f1(x): {record["Min"][0]:.3f} | Min f2(x): {record["Min"][1]:.3f}')
             
         if plot_log and gen % plot_log_every == 0:
             plot_logbook(logbook, fig, ax, log_output)
             
         if plot_pop and gen % plot_pop_every == 0:
             plot_fronts(population, fig_pop, ax_pop, pop_output, gen)
+        
+        if plot_fairness and gen % plot_fairness_every == 0:
+            assert params is not None
+            current_sol = logbook[-1]['Min']
+            last_sol = logbook[-2]['Min']
+            if current_sol[1] < last_sol[1]:
+                plot_demands(population, params.nodes, params.supplies, params.demands,
+                          params.costs, params.capacities, fig_fairness, ax_fairness,
+                          fairness_output)
         
         if gen > 1:
             current_sol = logbook[-1]['Min']
@@ -405,3 +463,74 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
     plt.close(fig)
     plt.close(fig_pop)
     return population, logbook
+
+def plot_graph(X, figsize=(10,5)):
+    # X: [stages, #items, source, destination]
+    G = nx.DiGraph()
+    plt.figure(figsize=figsize)
+    plt.xticks([])
+    plt.yticks([])
+    v_space = max(s for x in X for s in x.shape[1:])
+
+    x0 = np.transpose(X[0], (1,2,0)) # (src,dest,items)
+    spacing = v_space / (x0.shape[0] + 1)
+    for i in range(x0.shape[0]):         
+        G.add_node(f'A{i+1}', pos=(1, v_space - spacing * (i+1)))
+    
+    for idx, x in enumerate(X): # for each stage
+        x = np.transpose(x, (1,2,0)) # (src, dest, items)
+        spacing = v_space / (x.shape[1] + 1)
+        for i in range(x.shape[1]):
+            s = chr(ord('B') + idx)
+            G.add_node(f'{s}{i+1}', pos=(idx+2, v_space - spacing * (i+1)))
+
+    for idx, x in enumerate(X):
+        x = np.transpose(x, (1,2,0)) # (src, dest, items)
+        s1 = chr(ord('A') + idx)
+        s2 = chr(ord('A') + idx + 1)
+        for i in range(len(x)):
+            for j in range(len(x[i])):
+                if sum(x[i][j]) > 0: # [items]
+                    G.add_edge(f'{s1}{i+1}', f'{s2}{j+1}', transp=x[i][j])
+
+    pos = nx.get_node_attributes(G, 'pos')
+    edge_labels = nx.get_edge_attributes(G, 'transp')
+    nx.draw_networkx_nodes(G, pos, node_size=2000, edgecolors='black', 
+                           node_color='white')
+    nx.draw_networkx_labels(G, pos)
+    nx.draw_networkx_edges(G, pos)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, 
+                                 label_pos=0.5)
+    
+def best_individual(pop, nodes, supplies, demands, costs, capacities, obj=1):
+    assert obj in [1,2]
+    best = pop[min(range(len(pop)), key=lambda i: pop[i].fitness.values[obj-1])]
+    n_items = len(supplies)
+    permutation_size = sum([n_items * sum(nodes[1:])])
+    Solution = namedtuple('Solution', ['X', 'chromosome', 'fitness'])
+    return Solution(transportation_tree(best[:permutation_size], nodes, 
+                       supplies, demands, costs, capacities, 
+                       best[permutation_size:]), best, best.fitness.values)    
+    
+def plot_demands(pop, nodes, supplies, demands, costs, capacities, fig, ax, 
+                  fairness_output, obj=2):
+    # obj 1: best cost | obj 2: best fairness
+    ax.clear()
+    best_fairness = best_individual(pop, nodes, supplies, demands, 
+                                    costs, capacities, obj=obj)
+    satisfied_demand = best_fairness.X[-1].sum(1)
+    pending_demand = np.array(demands)[:,:-1]
+    relative_satisfied_demand = np.divide(satisfied_demand,
+                                          pending_demand).transpose(1,0).reshape(-1)
+    plot_colors = sns.color_palette("Set1", n_colors=10)
+    colors = [plot_colors[i%len(plot_colors)] for i in range(pending_demand.shape[1]) \
+                                              for j in range(pending_demand.shape[0])]
+    ax.bar(x=range(len(relative_satisfied_demand)),
+            height=relative_satisfied_demand, color=colors)
+    ax.set_xlabel('Item demand for each location')
+    ax.set_ylabel('% satisfied demand')
+    ax.set_title(f'Best individual ($f_2(x)$)')
+    
+    with fairness_output:
+        clear_output(wait=True)
+        display(fig)
