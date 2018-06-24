@@ -242,7 +242,8 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                           n_solutions=20, crossover_p=0.5, mutation_p=0.2, 
                           early_stopping_rounds=None,
                           print_log=False, plot_pop=False, plot_log=False,
-                          plot_fairness=False):
+                          plot_fairness=False, log_output=None, 
+                          pop_output=None, fairness_output=None):
     toolbox, stats, pool = init_multiobjective_GA(n_nodes, supplies, 
                                             demands, costs, capacities)
     
@@ -260,7 +261,9 @@ def run_multiobjective_GA(n_nodes, supplies, demands, costs,
                              plot_log=plot_log, plot_fairness=plot_fairness,
                              early_stopping_rounds=early_stopping_rounds,
                              params=Params(n_nodes, supplies, demands, costs,
-                                           capacities))
+                                           capacities),
+                             log_output=log_output, pop_output=pop_output, 
+                             fairness_output=fairness_output)
     pool.close()
     pool.join()
     return pop, hof, log, toolbox
@@ -326,7 +329,8 @@ def plot_fronts(pop, fig, ax, pop_output, gen):
 def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, ngen,
                    stats=None, halloffame=None, verbose=__debug__,
                    early_stopping_rounds=None, plot_pop=False, plot_log=False,
-                   plot_fairness=False, print_log=False, params=None):
+                   plot_fairness=False, print_log=False, params=None,
+                   log_output=None, pop_output=None, fairness_output=None):
     logbook = tools.Logbook()
     logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
 
@@ -351,14 +355,14 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
     if plot_log:
         plot_log_every = 1
         fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(15,5))
-        log_output = widgets.Output()
+        # log_output = widgets.Output()
         # display(log_output)
         plot_logbook(logbook, fig, ax, log_output)
     
     if plot_pop:
         plot_pop_every = 1
         fig_pop, ax_pop = plt.subplots(figsize=(5,5))
-        pop_output = widgets.Output()
+        # pop_output = widgets.Output()
         # display(pop_output)
         plot_fronts(population, fig_pop, ax_pop, pop_output, gen)
     
@@ -366,14 +370,14 @@ def eaMuPlusLambdaEarlyStopping(population, toolbox, mu, lambda_, cxpb, mutpb, n
         assert params is not None
         plot_fairness_every = 1
         fig_fairness, ax_fairness = plt.subplots(figsize=(5,4))
-        fairness_output = widgets.Output()
+        # fairness_output = widgets.Output()
         # display(fairness_output)
         plot_demands(population, params.nodes, params.supplies, params.demands,
                       params.costs, params.capacities, fig_fairness, ax_fairness,
                       fairness_output)
     
     # Main Plot Box
-    if plot_pop and plot_fairness:
+    if False and plot_pop and plot_fairness:
         hbox_layout = widgets.Layout(display='flex',
                     flex_flow='row',
                     align_items='center',
