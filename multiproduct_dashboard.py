@@ -16,6 +16,7 @@ sns.set()
 
 import ipywidgets as widgets
 from IPython.display import display, clear_output
+from multiproduct import generate_ampl
 
 ############################## CHROMOSOME ##############################
 
@@ -538,3 +539,84 @@ def plot_demands(pop, nodes, supplies, demands, costs, capacities, fig, ax,
     with fairness_output:
         clear_output(wait=True)
         display(fig)
+        
+###### EXPORT / LOAD DATASETS ######
+
+def export_dataset(dataset, file_name):
+    with open(f'datasets/evaluation/{file_name}', 'w') as f:
+#         f = sys.stdout
+        print('# ITEMS:', file=f)
+        print('  ', len(dataset.supplies), file=f)
+        print(file=f)
+        
+        print('# NODES:', file=f)
+        print('  ', ' '.join([str(n) for n in dataset.nodes]), file=f)
+        print(file=f)
+        
+        print('# SUPPLIES:', file=f)
+        supplies = np.array(dataset.supplies).transpose(1,0)
+        for i, sup in enumerate(supplies[:-1]): # without dummy
+            print(f'  # A{i+1}:', file=f)
+            print( '    ', ' '.join([str(s) for s in sup]), file=f)
+        print(file=f)
+        
+        print('# DEMANDS:', file=f)
+        demands = np.array(dataset.demands).transpose(1,0)
+        for i, dem in enumerate(demands[:-1]): # without dummy
+            ch = chr(ord('A') + len(dataset.nodes) - 1)
+            print(f'  # {ch}{i+1}:', file=f)
+            print( '    ', ' '.join([str(d) for d in dem]), file=f)
+        print(file=f)
+        
+        print('# COSTS:', file=f)
+        for i, cost in enumerate(dataset.costs):
+            ch1 = chr(ord('A') + i)
+            ch2 = chr(ord('A') + i + 1)
+            print(f'  # {ch1} => {ch2}:', file=f)
+            for j_cost in cost:
+                print('    ', ' '.join([str(c) for c in j_cost]), file=f)
+        print(file=f)
+        
+        print('# CAPACITIES:', file=f)
+        for i, cap in enumerate(dataset.capacities):
+            ch = chr(ord('A') + i)
+            print(f'  # {ch}:', file=f)
+            print( '    ', ' '.join([str(c) for c in cap]), file=f)
+        print(file=f)
+        
+def read_dataset(file_name):
+    with open(f'datasets/evaluation/{file_name}', 'r') as f:
+        lines = [x.strip() for x in f.readlines() \
+                           if '#' not in x and x.strip() != '']
+        items = int(lines[0])
+        nodes = [int(n) for n in lines[1].split()]
+        supplies = [[int(s) for s in lines[i].split()] \
+                            for i in range(2, 2 + nodes[0])]
+        idx = 2 + nodes[0]
+        demands = [[int(d) for d in lines[i].split()] \
+                           for i in range(idx, idx + nodes[-1])]
+        idx = 2 + nodes[0] + nodes[-1]
+        costs = [np.array([[float(c) for c in lines[i].split()] \
+                            for i in range(idx + sum(nodes[:stage]), 
+                                           idx + sum(nodes[:stage]) + nodes[stage])]) \
+                            for stage in range(len(nodes)-1)]
+        idx = 2 + nodes[0] + nodes[-1] + sum(nodes[:len(nodes)-1])
+        capacities = [[int(c) for c in lines[i].split()] \
+                              for i in range(idx, idx + len(nodes))]
+        
+        # DUMMIES
+        
+        supplies = np.array(supplies).transpose(1,0)
+        demands = np.array(demands).transpose(1,0)
+        
+        total_supplies = np.sum(supplies, 1)
+        total_demands = np.sum(demands, 1)
+        
+        dummy_supplies = [max(0, d - s) for s,d in zip(total_supplies, total_demands)]
+        dummy_demands = [max(0, s - d) for s,d in zip(total_supplies, total_demands)]
+        
+        supplies = [list(sup) + [dum] for sup,dum in zip(supplies, dummy_supplies)]
+        demands = [list(dem) + [dum] for dem,dum in zip(demands, dummy_demands)]
+       
+    Dataset = namedtuple('Dataset', ['nodes', 'supplies', 'demands', 'costs', 'capacities'])
+    return Dataset(nodes, supplies, demands, costs, capacities)
