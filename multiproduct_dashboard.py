@@ -3,7 +3,8 @@ from itertools import product
 from collections import namedtuple
 import copy
 import random
-import multiprocessing
+import multiprocessing as mp
+import subprocess as sp
 
 import numpy as np
 import pandas as pd
@@ -16,7 +17,6 @@ sns.set()
 
 import ipywidgets as widgets
 from IPython.display import display, clear_output
-from multiproduct import generate_ampl
 
 ############################## CHROMOSOME ##############################
 
@@ -224,7 +224,7 @@ def init_multiobjective_GA(n_nodes, supplies, demands, costs,
                              permutation_size=permutation_size)
     toolbox.register('select', tools.selNSGA2)
     
-    pool = multiprocessing.Pool()
+    pool = mp.Pool()
     toolbox.register("map", pool.map)  
     
     stats = tools.Statistics(lambda ind: ind.fitness.values)
@@ -620,3 +620,188 @@ def read_dataset(file_name):
        
     Dataset = namedtuple('Dataset', ['nodes', 'supplies', 'demands', 'costs', 'capacities'])
     return Dataset(nodes, supplies, demands, costs, capacities)
+
+####### EXPORT SOLUTIONS
+
+def decode_chromosome(chromosome, dataset):
+    n_items = len(dataset.supplies)
+    permutation_size = sum([n_items * sum(dataset.nodes[1:])])
+    return transportation_tree(chromosome[:permutation_size], dataset.nodes, 
+                       dataset.supplies, dataset.demands, dataset.costs, 
+                       dataset.capacities, chromosome[permutation_size:])
+
+def print_solution(X, f):
+    records = []
+    for i, x in enumerate(X):
+        x = x.transpose(1,2,0)
+        ch1 = chr(ord('A') + i)
+        ch2 = chr(ord('A') + i + 1)
+        print(f'  # {ch1} => {ch2}:', file=f)
+        for j in range(len(x)):
+            for k in range(len(x[j])):
+                if x[j,k].sum() > 0:
+                    print(f'    # {ch1}{j+1} => {ch2}{k+1}:', file=f)
+                    print( '      ', ' '.join([str(t) for t in x[j,k]]), file=f)
+                    records.append([f'{ch1}{j+1}', f'{ch2}{k+1}'] + list(x[j,k]))
+        print(file=f)
+    return records
+
+def print_best_solutions(population, dataset, file_name):
+    fronts = tools.emo.sortLogNondominated(population, len(population))
+    unique_solutions = {x.fitness.values: x for x in fronts[0]}
+    unique_solutions = sorted(unique_solutions.values(), 
+                              key=lambda x: x.fitness.values)
+    solutions = pd.DataFrame()
+    with open(f'datasets/evaluation/{file_name}', 'w') as f:
+        for i, solution in enumerate(unique_solutions):
+            X = decode_chromosome(solution, dataset)
+            fitness = solution.fitness.values
+            print(f'# Solution {i+1} | (f1, f2) = ({fitness[0]:.3f}, {fitness[1]:.3f}):', file=f)
+            print(file=f)
+            records = pd.DataFrame(print_solution(X, f), 
+                        columns=['Source', 'Destination'] + \
+                                [f'Item {i+1}' for i in range(len(dataset.supplies))])
+            records['Solution'] = i + 1
+            solutions = solutions.append(records)
+            print(file=f)    
+    cols = list(solutions.columns)
+    cols = [cols[-1]] + cols[:-1]
+    csv_name = file_name.replace(".out", ".csv")
+    solutions[cols].to_csv(f'datasets/evaluation/{csv_name}', index=False)
+    return solutions
+
+########### EXPORT SOLVER SOLUTION ################
+
+def print_solver_solution(dataset, file_name):
+    with open(f'datasets/evaluation/{file_name}', 'w') as f:
+        X, f1, f2 = load_solution(dataset)
+        print(f'# Solution 1 | (f1, f2) = ({f1:.3f}, {f2:.3f}):', file=f)
+        print(file=f)
+        solution = pd.DataFrame(print_solution(X, f), 
+                    columns=['Source', 'Destination'] + \
+                            [f'Item {i+1}' for i in range(len(dataset.supplies))])
+        solution['Solution'] = 1
+        print(file=f)    
+    cols = list(solution.columns)
+    cols = [cols[-1]] + cols[:-1]
+    csv_name = file_name.replace(".out", ".csv")
+    solution[cols].to_csv(f'datasets/evaluation/{csv_name}', index=False)
+    return solution
+
+def load_solution(dataset):
+    p = sp.run("~/Downloads/ampl.linux64/ampl < export.ampl", shell=True, stdout=sp.PIPE)
+    lines = [x.strip() for x in p.stdout.decode().split('\n') \
+                   if '#' not in x and 'couenne' not in x and x.strip() != '']
+    f1, f2 = float(lines[0]), float(lines[1])
+    item_codes = lines[2].split()
+    node_codes = lines[3].split()
+    n_items = len(dataset.demands)
+    X = [np.zeros((n_items, dataset.nodes[i], dataset.nodes[i+1])) \
+          for i in range(len(dataset.nodes)-1)]
+    node_labels = [chr(ord('A') + i) + f'{j+1}' for i, n in enumerate(dataset.nodes) \
+                                       for j in range(n)]
+    node_idxs = [j for i, n in enumerate(dataset.nodes) for j in range(n)]
+    stages = [i for i, n in enumerate(dataset.nodes) for j in range(n)]
+    node2label = {code: label for code, label in zip(node_codes, node_labels)}
+    label2idx = {label: idx for label, idx in zip(node_labels, node_idxs)}
+    item2idx = {code: i for i, code in enumerate(item_codes)}
+    node2stage = {code: stage for code, stage in zip(node_codes, stages)}
+    for line in lines[4:]:
+        j, k, i, t = line.split()
+        X[node2stage[j]][item2idx[i]][label2idx[node2label[j]]][label2idx[node2label[k]]] = int(t)
+    return X, f1, f2
+
+############################## AMPL ##############################
+
+def print_items(n_items, fout):
+    items = ' '.join([f'I{i+1}' for i in range(n_items)])
+    print(f'set I := {items};', file=fout)        
+    
+def print_nodes(n_nodes, fout):
+    supply = ' '.join([f'S{i+1}' for i in range(n_nodes[0])])
+    trans = ' '.join([f'T{i+1}{j+1}' for i in range(len(n_nodes[1:-1])) \
+                                     for j in range(n_nodes[1:-1][i])])
+    demand = ' '.join([f'D{i+1}' for i in range(n_nodes[-1])])
+    print(f'set ST := {supply} {trans};', file=fout)
+    print(f'set D := {demand};', file=fout)
+    print(f'set DU := dummy_sup dummy_dem;\n', file=fout)
+
+def print_edges(set_name, n_nodes, fout, dummies=False):
+    print(f'set {set_name} := ', file=fout)
+    supply_trans = ' '.join([f'(S{j+1},T1{k+1})' \
+                             for j in range(n_nodes[0]) \
+                             for k in range(n_nodes[1])])
+    trans_trans = ' '.join([f'(T{i+1}{j+1},T{i+2}{k+1})' \
+                             for i in range(len(n_nodes[1:-1])-1) \
+                             for j in range(n_nodes[1:-1][i]) \
+                             for k in range(n_nodes[1:-1][i+1])])
+    trans_demand = ' '.join([f'(T{len(n_nodes[1:-1])}{j+1},D{k+1})' \
+                             for j in range(n_nodes[-2]) \
+                             for k in range(n_nodes[-1])])
+    print(f'   {supply_trans}', file=fout)
+    print(f'   {trans_trans}', file=fout)
+    print(f'   {trans_demand}', file=fout)
+    
+    if dummies:
+        dummy_supply = ' '.join(f'(S{j+1},dummy_dem)' \
+                                 for j in range(n_nodes[0]))
+        dummy_demand = ' '.join(f'(dummy_sup,D{j+1})' \
+                                 for j in range(n_nodes[-1]))
+        print(f'   {dummy_supply}', file=fout)
+        print(f'   {dummy_demand}', file=fout)
+        
+    print(';\n', file=fout)
+    
+def print_transp_cost(n_nodes, costs, fout):
+    supply_trans = ' '.join([f'S{j+1} T1{k+1} {costs[0][j][k]}' \
+                             for j in range(n_nodes[0]) \
+                             for k in range(n_nodes[1])])
+    trans_trans = ' '.join([f'T{i+1}{j+1} T{i+2}{k+1} {costs[i+1][j][k]}' \
+                             for i in range(len(n_nodes[1:-1])-1) \
+                             for j in range(n_nodes[1:-1][i]) \
+                             for k in range(n_nodes[1:-1][i+1])])
+    trans_demand = ' '.join([f'T{len(n_nodes[1:-1])}{j+1} D{k+1} {costs[-1][j][k]}' \
+                             for j in range(n_nodes[-2]) \
+                             for k in range(n_nodes[-1])])    
+    print(f'param transp_cost := {supply_trans} {trans_trans} {trans_demand};\n', 
+                             file=fout)
+    
+def print_supply_demand(n_nodes, supplies, demands, fout):
+    supply = ' '.join([f'S{i+1}' for i in range(n_nodes[0])])
+    trans = ' '.join([f'T{i+1}{j+1}' for i in range(len(n_nodes[1:-1])) \
+                                     for j in range(n_nodes[1:-1][i])])
+    demand = ' '.join([f'D{i+1}' for i in range(n_nodes[-1])])
+    print(f'param supply_demand (tr): {supply} {trans} {demand} '
+           'dummy_sup dummy_dem := ', file=fout)
+    for i in range(len(supplies)):
+        supply_demand = ' '.join([str(x) for x in supplies[i][:-1] + \
+                                 [0]*sum(n_nodes[1:-1]) + \
+                                 [-x for x in demands[i][:-1]] + \
+                                 [supplies[i][-1]] + [-demands[i][-1]]])
+        print(f'    I{i+1} {supply_demand}', file=fout)
+    print(';\n', file=fout)
+    
+def print_capacities(n_nodes, capacities, fout):
+    supply = ' '.join([f'S{i+1} {capacities[0][i]}' \
+                              for i in range(n_nodes[0])])
+    trans = ' '.join([f'T{i+1}{j+1} {capacities[i+1][j]}' 
+                              for i in range(len(n_nodes[1:-1])) \
+                              for j in range(n_nodes[1:-1][i])])
+    demand = ' '.join([f'D{i+1} {capacities[-1][i]}' 
+                              for i in range(n_nodes[-1])])
+    print(f'param node_capacity := {supply} {trans} {demand};\n', 
+                              file=fout)
+    
+def generate_ampl(n_nodes, supplies, demands, costs, capacities, 
+                  weight='10000', output_file='data/model_data.mod'):
+    with open('data/model.mod', 'r') as f_model, \
+         open(output_file, 'w') as fout:
+        print(f_model.read().replace('10000', weight), file=fout)
+        print('data;', file=fout)
+        print_items(len(supplies), fout)
+        print_nodes(n_nodes, fout)        
+        print_edges('E', n_nodes, fout)
+        print_edges('EDU', n_nodes, fout, dummies=True)
+        print_transp_cost(n_nodes, costs, fout)
+        print_supply_demand(n_nodes, supplies, demands, fout)
+        print_capacities(n_nodes, capacities, fout)
